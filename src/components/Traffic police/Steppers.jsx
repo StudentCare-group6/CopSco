@@ -145,7 +145,7 @@ const steps = ['Select Option', 'Verify Driver Info', 'Fine Details', 'Issue Fin
 
 export default function CustomizedSteppers() {
   return (
-    <Stack sx={{ width: '100%', marginTop:10 }} spacing={4}>
+    <Stack className='mt-10' sx={{ width: '100%' }} spacing={4}>
       <Stepper alternativeLabel activeStep={0} connector={<ColorlibConnector />}>
         {steps.map((label) => (
           <Step key={label}>

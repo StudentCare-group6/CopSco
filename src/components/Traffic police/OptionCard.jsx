@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useTheme } from '@mui/material/styles';
+import BasicModal from './Modal.jsx';
 
 
 export default function OptionCard(props) {
@@ -26,7 +26,7 @@ export default function OptionCard(props) {
         justifyContent: 'flex-end',  // Align items to the bottom
         paddingBottom: '50px',
         [theme.breakpoints.up('sm')]: {
-          height: 500
+          height:400,
         },
       
         [theme.breakpoints.up('xs')]: {
@@ -36,8 +36,8 @@ export default function OptionCard(props) {
 
       }}>
         <Box className='bg-white' sx={{ height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity:0.8 }}>
-          <Typography variant='h5' align='center' className='font-bold text-black'>{props.txt} <ChevronRightIcon fontSize='large' className='font-bold text-gray-700' /> </Typography>
-
+          {/* <Typography variant='h5' align='center' className='font-bold text-black'>{props.txt} <ChevronRightIcon fontSize='large' className='font-bold text-gray-700' /> </Typography> */}
+          <BasicModal txt = {props.txt} status = {props.status}/>
         </Box>
       </Grid>
       );

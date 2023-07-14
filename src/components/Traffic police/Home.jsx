@@ -28,7 +28,7 @@ export default function Home() {
                     <Box>
                         
                         <Grid container sx={{ justifyContent: 'center', marginTop: 10 }}>
-                            <OptionCard txt={'Scan QR'} img={qr} />
+                            <OptionCard txt={'Scan QR'} img={qr} status = 'qr'/>
                             <Grid item xs={12} sm={3} sx={{
                                 display: 'flex', justifyContent: 'center', alignItems: 'center', [theme.breakpoints.up('sm')]: {
                                    height: 500
@@ -43,7 +43,7 @@ export default function Home() {
                                 <Typography variant='h3' align='center' className='font-bold text-gray-700'>OR</Typography>
 
                             </Grid>
-                            <OptionCard txt={'Enter License No.'} img={license} />
+                            <OptionCard txt={'Enter License No.'} img={license} status = 'license'/>
 
                         </Grid>
                     </Box>
