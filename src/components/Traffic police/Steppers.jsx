@@ -98,11 +98,11 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   justifyContent: 'center',
   alignItems: 'center',
   ...(ownerState.active && {
-    backgroundColor: '#00AAFF',
+    backgroundColor: '#94a3b8',
     
   }),
   ...(ownerState.completed && {
-    backgroundColor: 'black',
+    backgroundColor: '#020617',
   }),
 }));
 
@@ -143,10 +143,10 @@ ColorlibStepIcon.propTypes = {
 
 const steps = ['Select Option', 'Verify Driver Info', 'Fine Details', 'Issue Fine'];
 
-export default function CustomizedSteppers() {
+export default function CustomizedSteppers(props) {
   return (
     <Stack className='mt-10' sx={{ width: '100%' }} spacing={4}>
-      <Stepper alternativeLabel activeStep={0} connector={<ColorlibConnector />}>
+      <Stepper alternativeLabel activeStep={props.step} connector={<ColorlibConnector />}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>

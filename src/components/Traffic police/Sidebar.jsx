@@ -11,14 +11,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import InfoIcon from '@mui/icons-material/Info';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { Link, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
+import { HomeIcon, UserCircleIcon, BellIcon, PresentationChartLineIcon, InformationCircleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 
 const drawerWidth = 240;
 
@@ -37,10 +32,10 @@ const closedMixin = (theme) => ({
         duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
+    width: `calc(${theme.spacing(10)} + 1px)`,
     [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
-    },
+        width: `calc(${theme.spacing(10)} + 1px)`,
+    }
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -51,6 +46,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
+
 
 
 
@@ -68,17 +64,34 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
             ...closedMixin(theme),
             '& .MuiDrawer-paper': closedMixin(theme),
         }),
-        
+
     }),
 );
 
+
+
 export default function Sidebar() {
     const darkTheme = createTheme({
-        palette: {
-            mode: 'dark'
-        },
+        components: {
+            MuiDrawer: {
+                styleOverrides: {
+                    paper: {
+                        background: "#020617",
+                        color: "#fff",
+                        boxShadow: "46px 5px 36px -36px rgba(0,0,0,0.1)",
+                        padding: "10px 10px"
+
+                    }
+                }
+            }
+        }
     });
 
+    const location = useLocation();
+
+    const isActiveRoute = (route) => {
+        return location.pathname === route;
+    };
     const [open, setOpen] = React.useState(false);
 
 
@@ -91,78 +104,88 @@ export default function Sidebar() {
 
     };
 
-    const icons1 = [<HomeIcon />, <PersonIcon />, <NotificationsIcon />];
-    const icons2 = [<BarChartIcon />, <InfoIcon />, <LogoutIcon />];
+
+
+    const icons = [
+        {
+            active: <HomeIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <HomeIcon className="h-6 w-6 text-slate-400" />,
+        },
+        {
+            active: <UserCircleIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <UserCircleIcon className="h-6 w-6 text-slate-400" />,
+        },
+        {
+            active: <BellIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <BellIcon className="h-6 w-6 text-slate-400" />,
+        },
+        {
+            active: <PresentationChartLineIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <PresentationChartLineIcon className="h-6 w-6 text-slate-400" />,
+        },
+        {
+            active: <InformationCircleIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <InformationCircleIcon className="h-6 w-6 text-slate-400" />,
+        },
+        {
+            active: <ArrowLeftOnRectangleIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <ArrowLeftOnRectangleIcon className="h-6 w-6 text-slate-400" />,
+        }
+
+    ];
+
+    const routes = ['/', '/profile', '/notifications', '/statistics', '/information', '/logout'];
 
     return (
 
-            <ThemeProvider theme={darkTheme} >
-                <Drawer variant="permanent" open={open} >
-                    <DrawerHeader>
-                        <Box p={2} width='250px' textAlign='center' role='presentation'>
-                            {/* <img src={`../images/logo.png`} alt='logo' width='auto' height='50px' /> */}
-                            <Typography variant='h6' component='div'>CopSco</Typography>
-                        </Box>
+        <ThemeProvider theme={darkTheme}>
+            <Drawer variant="permanent" open={open}>
+                <DrawerHeader>
+                    <Box p={3} width='250px' textAlign='center' role='presentation'>
+                        <Typography variant='h6' component='div'>CopSco</Typography>
+                    </Box>
+                    <IconButton onClick={handleDrawerOpen}>
+                        <MenuIcon className=' text-slate-400' />
+                    </IconButton>
 
-                        <IconButton onClick={handleDrawerOpen}>
-                            <MenuIcon />
-                        </IconButton>
+                </DrawerHeader>
+                <Divider />
+                <List sx={{ height: '50%' }} className='flex flex-col justify-between'>
+                    {['Home', 'Profile', 'Notifications', 'Analytics', 'Information', 'Log out'].map((text, index) => {
+                        const route = routes[index];
+                        const isActive = isActiveRoute(route);
 
-                    </DrawerHeader>
-                    <Divider />
-                    <List>
-                        {['Home', 'Profile', 'Notifications'].map((text, index) => (
-                            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
-                                >
-                                    <ListItemIcon
+                        return (
+                            <Link to={routes[index]}>
+                                <ListItem key={text} disablePadding sx={{ display: 'block' }} className={isActive ? 'text-slate-950 bg-slate-400 rounded-lg' : ' text-slate-400 hover:bg-slate-600 rounded-lg'}>
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
+                                            minHeight: 48,
+                                            justifyContent: open ? 'initial' : 'center',
+                                            px: 2.5,
                                         }}
                                     >
+                                        <Link to={routes[index]}><ListItemIcon
+                                            sx={{
+                                                minWidth: 0,
+                                                mr: open ? 3 : 'auto',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
 
-                                        {icons1[index]}
+                                            {isActive ? icons[index].active : icons[index].inactive}
 
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {['Analytics', 'Information', 'Log out'].map((text, index) => (
-                            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
-                                    sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
-                                    }}
-                                >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        {icons2[index]}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
-            </ThemeProvider>
+                                        </ListItemIcon></Link>
+                                        <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                                    </ListItemButton>
+                                </ListItem>
+                            </Link>
+                        );
+                    })}
+                </List>
+            </Drawer>
+        </ThemeProvider>
 
     );
 }
+

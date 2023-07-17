@@ -1,29 +1,22 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
-import Header from '../Traffic police/Header';
-import Sidebar from '../Traffic police/Sidebar';
+import Header from '../../components/Traffic police/Header';
 import Grid from '@mui/material/Grid';
-import qr from './qr.png'
-import license from './license.png'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import OptionCard from './OptionCard';
+import qr from '../../images/qr.png'
+import license from '../../images/license.png'
+import OptionCard from '../../components/Traffic police/OptionCard';
 import { useTheme } from '@mui/material/styles';
-import CustomizedSteppers from './Steppers.jsx';
+import CustomizedSteppers from '../../components/Traffic police/Steppers.jsx';
 
 
 export default function Home() {
     const theme = useTheme();
     return (
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <Sidebar />
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <Box>
                     <Header />
                     <Box>
-                        <CustomizedSteppers />
+                        <CustomizedSteppers step = {0} />
                     </Box>
                     <Box>
                         
@@ -48,7 +41,6 @@ export default function Home() {
                         </Grid>
                     </Box>
                 </Box>
-            </Box>
-        </Box>
+            
     );
 }

@@ -1,22 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Home from './components/Traffic police/Home';
-// import ProfileData from './data/profileData.js';
-import './index.css';
-import Test from './components/Traffic police/QR_Scanner.jsx';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { BrowserRouter} from "react-router-dom";
 
-
-function Page(){
-
-    return (
-        <div className = 'page'>
-            {/* <MiniDrawer /> */}
-            {/* <Home/> */}
-            <Home/>
-        </div>
-
-        
-    )
-}
-
-ReactDOM.render(<Page />,document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </React.StrictMode>
+)

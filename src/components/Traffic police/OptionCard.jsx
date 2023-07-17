@@ -26,7 +26,7 @@ export default function OptionCard(props) {
         justifyContent: 'flex-end',  // Align items to the bottom
         paddingBottom: '50px',
         [theme.breakpoints.up('sm')]: {
-          height:400,
+          height:500,
         },
       
         [theme.breakpoints.up('xs')]: {
