@@ -18,22 +18,17 @@ export default function UserDetails() {
                 <CustomizedSteppers step={1} />
             </Box>
             <Box>
-                <Stack direction="row" className='bg-red-500' sx={{ height: '100%' }}>
-                    <Grid container spacing={0}>
-                        <Grid item>
+                <Stack direction="row" className='bg-red-500' sx = {{height:500}}>
+                    <Grid container spacing={0} className = 'bg-red-400'>
+                        <Grid item lg={12} className='bg-slate-700'>
 
                         </Grid>
-                        <Grid item>
+                        <Grid item lg={12} className='bg-sky-300'>
 
                         </Grid>
                     </Grid>
-                    <Grid container>
-                        <Grid item>
-
-                        </Grid>
-                        <Grid item>
-
-                        </Grid>
+                    <Grid container className = 'bg-red-300'>
+                        
                     </Grid>
 
                 </Stack>
