@@ -10,10 +10,11 @@ import { useTheme } from '@mui/material/styles';
 import CustomizedSteppers from '../../components/Traffic police/Steppers.jsx';
 
 
+
 export default function Home() {
     const theme = useTheme();
     return (
-                <Box>
+                <Box sx = {{height:'100vh',backgroundColor: "#f3f4f6"}}>
                     <Header />
                     <Box>
                         <CustomizedSteppers step = {0} />
