@@ -5,9 +5,7 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import CustomizedSteppers from "../../components/Traffic police/Steppers.jsx";
 import LicenseCard from "../../components/Traffic police/LicenseCard";
-import PersonalDetailsCard from "../../components/Traffic police/PersonalDetailsCard";
-import PreviousOffences from "../../components/Traffic police/PreviousOffences";
-import Button from "@mui/material/Button";
+import FinePrintCard from "../../components/Traffic police/FinePrintCard";
 import "@fontsource/inter";
 
 export default function UserDetails() {
@@ -18,12 +16,9 @@ export default function UserDetails() {
         <CustomizedSteppers step={3} />
       </Box>
       <Box sx={{ marginTop: "20px" }}>
-        <Stack direction="row">
-          <Grid container spacing={2}>
-            <LicenseCard />
-          </Grid>
-          <Grid container>
-            <LicenseCard />
+        <Stack direction="row" justifyContent='center'>
+          <Grid container sx = {{width:'50%'}}>
+            <FinePrintCard/>
           </Grid>
         </Stack>
       </Box>
