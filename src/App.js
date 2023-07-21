@@ -9,6 +9,8 @@ import Notifications from "./pages/Traffic police/Notifications";
 import Profile from "./pages/Traffic police/Profile";
 import Statistics from "./pages/Traffic police/Statistics";
 import Information from "./pages/Traffic police/Information";
+import IssueFine from "./pages/Traffic police/IssueFine";
+import FinePrint from "./pages/Traffic police/FinePrint";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./index.css";
 
@@ -37,6 +39,8 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/information" element={<Information />} />
+            <Route path="/fineform" element = {<IssueFine/>}/>
+            <Route path="/fineprint" element = {<FinePrint/>}/>
           </Routes>
         </Box>
       </Box>

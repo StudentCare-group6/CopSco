@@ -24,7 +24,7 @@ const style1 = {
   transform: 'translate(-50%, -50%)',
   width: '30%',
   height: '60%',
-  bgcolor: '#f3f4f6',
+  bgcolor: '#ffff',
   borderRadius: 5,
   boxShadow: 24,
   p: 4
@@ -41,7 +41,7 @@ const style2 = {
   transform: 'translate(-50%, -50%)',
   width: '80%', // Set width to 100% for full screen
   height: '60%', // Set height to 100% for full screen
-  bgcolor: '#f3f4f6',
+  bgcolor: '#ffff',
   borderRadius: 5,
   boxShadow: 24,
   p: '2%'
