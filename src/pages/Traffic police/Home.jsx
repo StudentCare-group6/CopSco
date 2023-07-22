@@ -5,7 +5,7 @@ import Header from '../../components/Traffic police/Header';
 import Grid from '@mui/material/Grid';
 import qr from '../../images/qr.png'
 import license from '../../images/license.png'
-import OptionCard from '../../components/Traffic police/OptionCard';
+import OptionCard from '../../components/Traffic police/Home/OptionCard';
 import { useTheme } from '@mui/material/styles';
 import CustomizedSteppers from '../../components/Traffic police/Steppers.jsx';
 

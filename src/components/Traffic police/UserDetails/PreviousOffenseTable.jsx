@@ -35,22 +35,22 @@ const rows = [
 export default function StickyHeadTable() {
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden', boxShadow:'none' }}>
+    <Paper sx={{ width: '100%', overflow: 'hidden', boxShadow: 'none' }}>
       <TableContainer sx={{ maxHeight: 570 }}>
-          <TableBody  >
-            {rows.map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <BasicCard/>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+        <TableBody  >
+          {rows.map((row) => {
+            return (
+              <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                {columns.map((column) => {
+                  const value = row[column.id];
+                  return (
+                    <BasicCard />
+                  );
+                })}
+              </TableRow>
+            );
+          })}
+        </TableBody>
       </TableContainer>
     </Paper>
   );

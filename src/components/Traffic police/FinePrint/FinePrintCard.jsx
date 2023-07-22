@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
-import DetailsList from "./DetailsList";
+import DetailsList from "../DetailsList";
 import CircleIcon from "@mui/icons-material/Circle";
 import Button from "@mui/material/Button";
 import "@fontsource/inter";

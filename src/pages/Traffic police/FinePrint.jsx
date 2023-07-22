@@ -4,8 +4,7 @@ import Header from "../../components/Traffic police/Header";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import CustomizedSteppers from "../../components/Traffic police/Steppers.jsx";
-import LicenseCard from "../../components/Traffic police/LicenseCard";
-import FinePrintCard from "../../components/Traffic police/FinePrintCard";
+import FinePrintCard from "../../components/Traffic police/FinePrint/FinePrintCard";
 import "@fontsource/inter";
 
 export default function UserDetails() {

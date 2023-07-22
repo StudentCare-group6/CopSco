@@ -12,7 +12,7 @@ export default function PreviousOffences() {
     const navigate = useNavigate();
     const handleButtonClick = () => {
         navigate('/fineform');
-      };
+    };
     return (
 
         <Grid item lg={12} align='center'>
@@ -23,7 +23,7 @@ export default function PreviousOffences() {
                 <Stack direction='row' justifyContent='center'>
                     <Stack direction='column' sx={{ width: '100%' }} alignItems='center' >
                         <StickyHeadTable />
-                        <Button variant="contained" size="large" className='bg-slate-950 rounded-full mt-10 px-10 py-4' onClick = {handleButtonClick}>
+                        <Button variant="contained" size="large" className='bg-slate-950 rounded-full mt-10 px-10 py-4' onClick={handleButtonClick}>
                             Issue Fine
                         </Button>
                     </Stack>

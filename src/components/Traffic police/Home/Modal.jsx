@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import image from '../../images/license_card.png';
+import image from '../../../images/license_card.png';
 import ColorTextField from './TextField.jsx';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton/IconButton';
