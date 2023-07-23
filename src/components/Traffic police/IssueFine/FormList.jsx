@@ -12,11 +12,11 @@ export default function FormList(props) {
   };
 
   return (
-    <Stack direction="row" spacing={30}>
+    <Stack direction="row" spacing={{ xs: 10, sm: 20, md: 30 }}>
       <Stack direction="column" spacing={4} alignItems="flex-start">
         {props.detailsArr.map((value) => (
           <Typography
-            sx={{ wordWrap: "break-word", height: "30px" }}
+            sx={{ wordWrap: "break-word", height: "40px" }}
             className="font-semibold text-md text-neutral-600"
           >
             {`${value}:`}
@@ -27,7 +27,7 @@ export default function FormList(props) {
         {props.detailsArr.map((value) => (
           <Typography
             className="font-medium text-neutral-500 text-md"
-            sx={{ height: "30px" }}
+            sx={{ height: "40px" }}
           >
             {props.dataArr[props.detailsArr.indexOf(value)]}
           </Typography>

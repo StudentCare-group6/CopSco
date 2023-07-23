@@ -12,13 +12,12 @@ import "@fontsource/inter";
 export default function UserDetails() {
 
     return (
-        <Box>
-            <Header />
+        <>
             <Box>
                 <CustomizedSteppers step={1} />
             </Box>
-            <Box sx={{ marginTop: '20px' }}>
-                <Stack direction="row">
+            <Box sx={{ marginTop: '20px', height:'100%', backgroundColor:'#f3f4f6' }}>
+                <Stack direction={{ xs: 'column', md: 'row' , sm:'column' }} spacing = {2}>
                     <Grid container spacing={2} >
                         <LicenseCard />
                         <PersonalDetailsCard />
@@ -28,7 +27,7 @@ export default function UserDetails() {
                     </Grid>
                 </Stack>
             </Box>
-        </Box>
+       </>
 
     );
 }

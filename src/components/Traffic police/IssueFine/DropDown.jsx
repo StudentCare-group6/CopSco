@@ -14,7 +14,11 @@ export default function DropDown(props) {
 
   return (
     <Box width = '250px'>
-      <TextField label = 'Division' select value = {division} onChange = {handleChange} fullWidth >
+      <TextField label = 'Division' select value = {division} onChange = {handleChange} fullWidth   SelectProps={{
+          sx: {
+            height: '50px',
+          },
+        }}>
         {props.valuesArr.map((value) => (
             <MenuItem key={value} value={value}>{value}</MenuItem>
             ))}

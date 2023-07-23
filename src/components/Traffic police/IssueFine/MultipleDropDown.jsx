@@ -6,15 +6,18 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 export default function MultipleDropDown(props) {
-  const [division, setDivision] = React.useState('');
+  const [violations, setViolations] = React.useState([]);
 
   const handleChange = (event) => {
-    setDivision(event.target.value);
+    const value = event.target.value;
+    setViolations(typeof value === 'string' ? value.split(',') : value);
   };
 
   return (
     <Box width = '250px'>
-      <TextField label = 'Division' select value = {division} onChange = {handleChange} fullWidth >
+      <TextField label = 'Division' select value = {violations} onChange = {handleChange} fullWidth SelectProps={{
+          multiple: true,
+      }}>
         {props.valuesArr.map((value) => (
             <MenuItem key={value} value={value}>{value}</MenuItem>
             ))}

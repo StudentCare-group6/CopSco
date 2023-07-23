@@ -1,36 +1,46 @@
-import React, { useState } from 'react';
-import QrReader from 'react-qr-scanner';
+import React, { useState, useEffect } from 'react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
 
-export default function Test()  {
-  const [delay, setDelay] = useState(100);
-  const [result, setResult] = useState('No result');
+export default function QRScanner({ isModalOpen }) {
+  const [scanResult, setScanResult] = useState(null);
+  let scanner = null; // Declare the scanner variable outside the useEffect
 
-  const handleScan = (data) => {
-    setResult(data);
-  };
+  useEffect(() => {
+    if (isModalOpen) {
+      scanner = new Html5QrcodeScanner('reader', {
+        qrbox: {
+          width: 250,
+          height: 250,
+        },
+        fps: 5
+      });
+      scanner.render(success, error);
+    }
 
-  const handleError = (err) => {
-    console.error(err);
-  };
+    function success(result) {
+      if (scanner) {
+        scanner.clear();
+      }
+      setScanResult(result);
+    }
 
-  // const previewStyle = {
-  //   height: '100%',
-  //   width: '100%',
-  //   borderRadius: '2'
-  // };
+    function error(err) {
+      console.warn(err);
+    }
+
+    // Cleanup function
+    return () => {
+      if (scanner) {
+        scanner.clear();
+      }
+    };
+
+  }, [isModalOpen]);
 
   return (
     <div>
-      <QrReader
-        delay={delay}
-        className = 'h-5 w-5 rounded'
-        onError={handleError}
-        onScan={handleScan}
-      />
-      <p>{JSON.stringify(result)}</p>
+      <h1>QR Code Scanning in React</h1>
+      {scanResult ? <div>Success: {scanResult}</div> : <div id="reader"></div>}
     </div>
   );
-};
-
-
-
+}

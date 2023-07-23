@@ -20,7 +20,7 @@ export default function CancelDialog() {
 
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   return (

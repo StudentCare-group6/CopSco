@@ -9,7 +9,7 @@ import ColorTextField from './TextField.jsx';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Test from './QR_Scanner.jsx';
+import QRScanner from './QR_Scanner.jsx';
 import { useMediaQuery, ThemeProvider, createTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -71,7 +71,7 @@ export default function BasicModal(props) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={isSmBreakpoint ? style2 : style1} spacing={2}>
-            <Test />
+            <QRScanner isModalOpen={open} />
           </Box>
         </Modal>
       </div>

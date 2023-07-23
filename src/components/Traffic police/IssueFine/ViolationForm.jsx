@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import FormList from './FormList';
 import DropDown from './DropDown';
 import MultipleDropDown from './MultipleDropDown';
+import { useTheme } from '@emotion/react';
 import "@fontsource/inter";
 
 const policeDivisions = [
@@ -42,10 +43,18 @@ const LicenseDetails = ['Date', 'Time', 'Police Division', 'Police Station', 'Of
 const LicenseData = ['01/01/2021', '12:00 PM', <DropDown valuesArr={policeDivisions} />, <DropDown valuesArr={policeStations} />, <MultipleDropDown valuesArr={policeStations} />, 'Rs. 5000', '8'];
 
 export default function ViolationForm() {
+    const theme = useTheme();
     return (
 
         <Grid item lg={12} align='center'>
-            <Paper className='shadow-md' sx={{ gap: 3, boxShadow: 'none', display: 'flex', width: '70%', flexDirection: 'column', padding: 5, borderRadius: 4 }}>
+            <Paper className='shadow-md' sx={{
+                gap: 3, boxShadow: 'none', display: 'flex', width: '50%', flexDirection: 'column', padding: 5, borderRadius: 4, [theme.breakpoints.down('md')]: {
+                    width: '100%', // Width for small screens
+                },
+                [theme.breakpoints.between('md','xl')]: {
+                    width: '80%', // Width for small screens
+                }
+            }}>
                 <Typography component="div" className='text-2xl text-center text-slate-950 font-semibold subpixel-antialiased' sx={{ fontFamily: 'inter' }}>
                     Violation Details
                 </Typography>

@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import DetailsList from '../DetailsList';
 import CircleIcon from '@mui/icons-material/Circle';
 import LicenseImg from '../../../images/1.png';
+import { useTheme } from '@emotion/react';
 import "@fontsource/inter";
 
 function Status() {
@@ -32,14 +33,15 @@ const LicenseDetails = ['Status', 'Demerit Points', 'License No.', 'Date of Issu
 const LicenseData = [<Status />, <Demerits />, '123456789', '01/01/2021', '01/01/2025', 'A1, B1, C1', 'None'];
 
 export default function LicenseCard() {
+    const theme = useTheme();
     return (
 
-        <Grid item lg={12} align='center'>
-            <Paper className = 'shadow-md' sx={{ gap: 3, boxShadow: 'none', display: 'flex', width: '75%', flexDirection: 'column', padding: 5, borderRadius: 4 }}>
+        <Grid item lg={12} align='center' sx = {{width:'100%'}} >
+            <Paper className = 'shadow-md' sx={{ gap: 3, paddingLeft: 0 ,boxShadow: 'none', display: 'flex', width: '75%', flexDirection: 'column', padding: 5, borderRadius: 4 , [theme.breakpoints.down('sm')]: {width: '100%' }}}>
                 <Typography component="div" className='text-2xl text-center text-slate-950 font-semibold subpixel-antialiased' sx={{ fontFamily: 'inter' }}>
                     License Details
                 </Typography>
-                <Stack direction='row' alignItems="center" spacing={5} justifyContent='space-evenly'>
+                <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center" spacing={5} justifyContent='space-evenly'>
                     <Stack >
                         <div class="relative max-w-xs overflow-hidden bg-cover bg-no-repeat rounded-full">
                             <img
@@ -49,7 +51,7 @@ export default function LicenseCard() {
                         </div>
                     </Stack>
 
-                    <Stack direction='column' sx={{ width: '50%' }} alignItems='center' >
+                    <Stack direction='column' sx={{ width: '100%' }} alignItems='center' >
                         <DetailsList detailsArr={LicenseDetails} dataArr={LicenseData} />
                     </Stack>
                 </Stack>

@@ -4,16 +4,22 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import DetailsList from '../DetailsList';
+import { useTheme } from '@emotion/react';
 import "@fontsource/inter";
 
 const PersonalDetails = ['Full Name', 'Age', 'Address', 'Phone No.', 'NIC No.'];
 const PersonalData = ['M.A.V Lochana', 25, 'No. 123, Galle Road, Colombo 03', '0712345678', '123456789V'];
 
 export default function PersonalDetailsCard() {
+    const theme = useTheme();
     return (
 
-        <Grid item lg={12} align='center'>
-            <Paper className='shadow-md' sx={{ gap: 3, boxShadow: 'none', display: 'flex', width: '75%', flexDirection: 'column', padding: 5, borderRadius: 4 }}>
+        <Grid item lg={12} align='center' sx={{ width: '100%' }}>
+            <Paper className='shadow-md' sx={{
+                gap: 3, boxShadow: 'none', display: 'flex', width: '75%', flexDirection: 'column', padding: 5, borderRadius: 4, [theme.breakpoints.down('sm')]: {
+                    width: '100%', // Width for small screens
+                }
+            }}>
                 <Typography component="div" className='text-2xl text-center text-slate-950 font-semibold subpixel-antialiased' sx={{ fontFamily: 'inter' }}>
                     Personal Details
                 </Typography>

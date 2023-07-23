@@ -7,23 +7,30 @@ import StickyHeadTable from './PreviousOffenseTable';
 import Button from '@mui/material/Button';
 import "@fontsource/inter";
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
 
 export default function PreviousOffences() {
     const navigate = useNavigate();
     const handleButtonClick = () => {
         navigate('/fineform');
     };
+
+    const theme = useTheme();
     return (
 
-        <Grid item lg={12} align='center'>
-            <Paper className='shadow-md' sx={{ gap: 3, boxShadow: 'none', display: 'flex', width: '75%', flexDirection: 'column', padding: 5, borderRadius: 4 }}>
+        <Grid item lg={12} align='center' sx={{ width: '100%' }}>
+            <Paper className='shadow-md' sx={{
+                gap: 3, boxShadow: 'none', display: 'flex', width: '75%', flexDirection: 'column', padding: 5, borderRadius: 4, [theme.breakpoints.down('sm')]: {
+                    width: '100%', // Width for small screens
+                }
+            }}>
                 <Typography component="div" className='text-2xl text-center text-slate-950 font-semibold subpixel-antialiased' sx={{ fontFamily: 'inter' }}>
                     Previous Offences
                 </Typography>
                 <Stack direction='row' justifyContent='center'>
                     <Stack direction='column' sx={{ width: '100%' }} alignItems='center' >
                         <StickyHeadTable />
-                        <Button variant="contained" size="large" className='bg-slate-950 rounded-full mt-10 px-10 py-4' onClick={handleButtonClick}>
+                        <Button variant="contained" size="large" className=' mt-10' onClick={handleButtonClick}>
                             Issue Fine
                         </Button>
                     </Stack>

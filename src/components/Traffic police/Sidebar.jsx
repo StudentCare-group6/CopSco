@@ -135,7 +135,7 @@ export default function Sidebar() {
 
     ];
 
-    const routes = ['/', '/profile', '/notifications', '/statistics', '/information', '/logout'];
+    const routes = ['/home', '/profile', '/notifications', '/statistics', '/information', '/logout'];
 
     return (
 

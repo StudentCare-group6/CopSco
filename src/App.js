@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route, Routes } from "react-router-dom";
+import { CssBaseline, useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Sidebar from "./components/Traffic police/Sidebar";
 import Home from "./pages/Traffic police/Home";
 import UserDetails from "./pages/Traffic police/UserDetails";
@@ -12,7 +12,39 @@ import Information from "./pages/Traffic police/Information";
 import IssueFine from "./pages/Traffic police/IssueFine";
 import FinePrint from "./pages/Traffic police/FinePrint";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Header from "./components/Traffic police/Header";
+import CustomizedSteppers from "./components/Traffic police/Steppers";
+import DrawerComponent from "./components/Traffic police/Appbar";
+import Login from "./pages/Login";
 import "./index.css";
+
+function AppContent() {
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+  return (
+    <Box sx={{ display: "flex", backgroundColor: "#f3f4f6" }}>
+      <CssBaseline />
+      {isSmallScreen ? null : <Sidebar />}
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box sx={{ height: "100vh" }}>
+        {isSmallScreen ? <DrawerComponent/> : <Header />}
+          
+            <Routes>
+            {/* <Route path="/" element={<Login/>} /> */}
+              <Route path="/home" element={<Home/>} />
+              <Route path="/userdetails" element={<UserDetails/>} />
+              <Route path="/notifications" element={<Notifications/>} />
+              <Route path="/profile" element={<Profile/>} />
+              <Route path="/statistics" element={<Statistics/>} />
+              <Route path="/information" element={<Information/>} />
+              <Route path="/fineform" element={<IssueFine/>} />
+              <Route path="/fineprint" element={<FinePrint/>} />
+            </Routes>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
 
 export default function App() {
   const THEME = createTheme({
@@ -24,26 +56,12 @@ export default function App() {
       fontWeightMedium: 500,
     },
   });
+
+  // Use media query to detect small screen devices
+
   return (
     <ThemeProvider theme={THEME}>
-      <Box
-        sx={{ display: "flex", backgroundColor: "#f3f4f6" }}
-      >
-        <CssBaseline />
-        <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/userdetails" element={<UserDetails />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/statistics" element={<Statistics />} />
-            <Route path="/information" element={<Information />} />
-            <Route path="/fineform" element = {<IssueFine/>}/>
-            <Route path="/fineprint" element = {<FinePrint/>}/>
-          </Routes>
-        </Box>
-      </Box>
+      <AppContent />
     </ThemeProvider>
   );
 }

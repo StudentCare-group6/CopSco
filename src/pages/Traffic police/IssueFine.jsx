@@ -9,17 +9,16 @@ import "@fontsource/inter";
 export default function IssueFine() {
 
     return (
-        <Box>
-            <Header />
+        <>
             <Box>
                 <CustomizedSteppers step={2} />
             </Box>
-            <Box sx={{ marginTop: '20px' }}>
+            <Box sx={{ marginTop: '3%' }} x>
                 <Stack direction="column" justifyContent='center' sx={{ width: '100%' }}>
                     <ViolationForm />
                 </Stack>
             </Box>
-        </Box>
+        </>
 
     );
 }

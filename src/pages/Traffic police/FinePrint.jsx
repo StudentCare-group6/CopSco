@@ -9,18 +9,17 @@ import "@fontsource/inter";
 
 export default function UserDetails() {
   return (
-    <Box>
-      <Header />
+    <>
       <Box>
         <CustomizedSteppers step={3} />
       </Box>
-      <Box sx={{ marginTop: "20px" }}>
-        <Stack direction="row" justifyContent='center'>
+      <Box sx={{ marginTop: "20px"}}>
+        <Stack direction="row" justifyContent='center' >
           <Grid container sx = {{width:'50%'}}>
             <FinePrintCard/>
           </Grid>
         </Stack>
       </Box>
-    </Box>
+    </>
   );
 }
