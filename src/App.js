@@ -15,8 +15,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Header from "./components/Traffic police/Header";
 import CustomizedSteppers from "./components/Traffic police/Steppers";
 import DrawerComponent from "./components/Traffic police/Appbar";
+import FinePrint from "./pages/Traffic police/FinePrint";
 import Login from "./pages/Login";
 import "./index.css";
+import UploadPage from "./components/General user/video_upload/UploadPage";
 
 function AppContent() {
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
@@ -31,7 +33,8 @@ function AppContent() {
           
             <Routes>
             {/* <Route path="/" element={<Login/>} /> */}
-              <Route path="/home" element={<Home/>} />
+              {/* <Route path="/home" element={<Home/>} /> */}
+              <Route path="/home" element={<UploadPage/>} />
               <Route path="/userdetails" element={<UserDetails/>} />
               <Route path="/notifications" element={<Notifications/>} />
               <Route path="/profile" element={<Profile/>} />
@@ -39,6 +42,7 @@ function AppContent() {
               <Route path="/information" element={<Information/>} />
               <Route path="/fineform" element={<IssueFine/>} />
               <Route path="/fineconfirmation" element={<FineConfirmation/>} />
+              <Route path="/fineprint" element={<FinePrint/>} />
             </Routes>
         </Box>
       </Box>
