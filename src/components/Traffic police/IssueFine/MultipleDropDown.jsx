@@ -14,7 +14,7 @@ export default function MultipleDropDown(props) {
   };
 
   return (
-    <Box width = '250px'>
+    <Box width = '230px'>
       <TextField label = 'Division' select value = {violations} onChange = {handleChange} fullWidth SelectProps={{
           multiple: true,
       }}>

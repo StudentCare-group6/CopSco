@@ -10,7 +10,7 @@ import Profile from "./pages/Traffic police/Profile";
 import Statistics from "./pages/Traffic police/Statistics";
 import Information from "./pages/Traffic police/Information";
 import IssueFine from "./pages/Traffic police/IssueFine";
-import FinePrint from "./pages/Traffic police/FinePrint";
+import FineConfirmation from "./pages/Traffic police/FineConfirmation";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Header from "./components/Traffic police/Header";
 import CustomizedSteppers from "./components/Traffic police/Steppers";
@@ -26,7 +26,7 @@ function AppContent() {
       <CssBaseline />
       {isSmallScreen ? null : <Sidebar />}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Box sx={{ height: "100vh" }}>
+        <Box sx={{ height: "100%" }}>
         {isSmallScreen ? <DrawerComponent/> : <Header />}
           
             <Routes>
@@ -38,7 +38,7 @@ function AppContent() {
               <Route path="/statistics" element={<Statistics/>} />
               <Route path="/information" element={<Information/>} />
               <Route path="/fineform" element={<IssueFine/>} />
-              <Route path="/fineprint" element={<FinePrint/>} />
+              <Route path="/fineconfirmation" element={<FineConfirmation/>} />
             </Routes>
         </Box>
       </Box>

@@ -8,7 +8,7 @@ import BasicModal from './Modal.jsx';
 export default function OptionCard(props) {
   const theme = useTheme();
   return (
-    <Grid item xs={12} sm={3} className='drop-shadow-md rounded-3xl overflow-hidden transition duration-300 ease-in-out hover:scale-110 ' sx={{
+    <Grid item xs={12} sm={3} className='drop-shadow-md rounded-3xl overflow-hidden transition duration-300 ease-in-out md:hover:scale-110 ' sx={{
       // width: 400,
       // height: 600,
       backgroundImage: `url(${props.img})`,

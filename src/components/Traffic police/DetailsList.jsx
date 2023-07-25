@@ -19,7 +19,7 @@ export default function DetailsList(props) {
                     }
                 >
 
-                    <Typography sx={{ wordWrap: 'break-word' }} className = 'font-semibold text-neutral-600'>
+                    <Typography sx={{overflowWrap: 'break-word', wordBreak: 'break-word'}} className = 'font-semibold text-neutral-600'>
                         {`${value}:`}
                     </Typography>
                 </ListItem>

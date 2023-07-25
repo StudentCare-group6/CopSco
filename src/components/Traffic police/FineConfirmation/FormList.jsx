@@ -8,22 +8,22 @@ import CancelDialog from "./CancelDialog.jsx";
 export default function FormList(props) {
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate("/fineconfirmation");
+    navigate("/fineprint");
   };
 
   return (
-    <Stack direction="row" spacing={{ xs: 5, sm: 20, md: 30 }}>
-      <Stack direction="column" spacing={4} align='left'>
+    <Stack direction="row" spacing={{ xs: 5, sm: 15, md: 15 }}>
+      <Stack direction="column" spacing={2} align='left'>
         {props.detailsArr.map((value) => (
           <Typography
             sx={{ height: "40px"}}
-            className="font-semibold text-md text-neutral-600"
+            className="font-semibold text-sm text-neutral-600"
           >
             {`${value}:`}
           </Typography>
         ))}
       </Stack>
-      <Stack direction="column" spacing={4} alignItems="flex-end">
+      <Stack direction="column" spacing={2} align='right'>
         {props.detailsArr.map((value) => (
           <Typography
             className="font-medium text-neutral-500 text-md"
@@ -38,7 +38,7 @@ export default function FormList(props) {
             className="text-white"
             onClick={handleButtonClick}
           >
-            Issue Fine
+            Confirm
           </Button>
           <CancelDialog />
         </Stack>

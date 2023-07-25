@@ -16,7 +16,7 @@ export default function UserDetails() {
             <Box>
                 <CustomizedSteppers step={1} />
             </Box>
-            <Box sx={{ marginTop: '20px', height:'100%', backgroundColor:'#f3f4f6' }}>
+            <Box sx={{ marginTop: '20px', backgroundColor:'#f3f4f6' }}>
                 <Stack direction={{ xs: 'column', md: 'row' , sm:'column' }} spacing = {2}>
                     <Grid container spacing={2} >
                         <LicenseCard />

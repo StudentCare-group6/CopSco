@@ -3,9 +3,10 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
-import DetailsList from "../DetailsList";
+import FormList from "./FormList";
 import CircleIcon from "@mui/icons-material/Circle";
 import Button from "@mui/material/Button";
+import { useTheme } from "@emotion/react";
 import "@fontsource/inter";
 
 function Status() {
@@ -33,7 +34,7 @@ const LicenseDetails = [
   "Time of Issue",
   "Vehicle No.",
   "Fine Amount",
-  "Type of Offence",
+  "Type of Offence(s)",
   "Police Division",
   "Demerit Points",
   "Due Date",
@@ -45,7 +46,7 @@ const LicenseData = [
     "01/01/2021",
     "123456789",
     "Rs. 500",
-    "Speeding",
+    "Speeding, Drunk driving, Reckless driving",
     "Colombo",
     "8",
     "01/01/2021",
@@ -53,8 +54,9 @@ const LicenseData = [
 ];
 
 export default function FinePrintCard() {
+  const theme = useTheme();
   return (
-    <Grid item lg={12} align="center">
+    <Grid item lg={12} align="center" sx = {{width: '100%'}}>
       <Paper
         className="shadow-md"
         sx={{
@@ -65,6 +67,7 @@ export default function FinePrintCard() {
           flexDirection: "column",
           padding: 5,
           borderRadius: 4,
+          [theme.breakpoints.down('sm')]: {width: '100%' }
         }}
       >
         <Typography
@@ -75,8 +78,8 @@ export default function FinePrintCard() {
           Fine Details
         </Typography>
         <Stack direction="column" alignItems="center" justifyContent="center">
-          <DetailsList detailsArr={LicenseDetails} dataArr={LicenseData} />
-          <Button variant="outlined">Back</Button>
+          <FormList detailsArr={LicenseDetails} dataArr={LicenseData} />
+
         </Stack>
       </Paper>
     </Grid>

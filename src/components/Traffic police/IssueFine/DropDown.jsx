@@ -13,7 +13,7 @@ export default function DropDown(props) {
   };
 
   return (
-    <Box width = '250px'>
+    <Box width = '230px'>
       <TextField label = 'Division' select value = {division} onChange = {handleChange} fullWidth   SelectProps={{
           sx: {
             height: '50px',
