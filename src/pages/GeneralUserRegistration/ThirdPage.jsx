@@ -37,11 +37,13 @@ export default function ThirdPage() {
                 </Typography>
             </Stack>
             <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 3 }}>
-                <img src={otpImg} alt="" />
-                <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
+                <Stack sx = {{width:'100%'}} alignItems='center'>
+                    <img src={otpImg} className = 'w-52' />
+                </Stack>
+                <Typography component="h1" variant="subtitle1" className='mt-10 font-light text-neutral-500' >
                     Enter your contact number :
                 </Typography>
-                <Grid container spacing={2} sx={{ mt: 1 }}>
+                <Grid container spacing={2} >
                     <Grid item xs={12} sx={{ mt: 1 }}>
                         <TextField
                             required
@@ -67,7 +69,7 @@ export default function ThirdPage() {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                 >
-                    Next
+                    Send OTP
                 </Button>
 
                 <Grid container justifyContent="flex-end">
