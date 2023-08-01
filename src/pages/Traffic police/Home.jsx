@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Header from '../../components/Traffic police/Header';
+import Header from '../../components/General user/Header';
 import Grid from '@mui/material/Grid';
 import qr from '../../images/qr.png'
 import license from '../../images/license.png'
@@ -14,33 +14,33 @@ import CustomizedSteppers from '../../components/Traffic police/Steppers.jsx';
 export default function Home() {
     const theme = useTheme();
     return (
-                <>
-                    <Box>
-                        <CustomizedSteppers step = {0} />
-                    </Box>
-                    <Box sx = {{height:'100vh'}}>
-                        
-                        <Grid container sx={{ justifyContent: 'center', marginTop: 10 }}>
-                            <OptionCard txt={'Scan QR'} img={qr} status = 'qr'/>
-                            <Grid item xs={12} sm={3} sx={{
-                                display: 'flex', justifyContent: 'center', alignItems: 'center', [theme.breakpoints.up('sm')]: {
-                                   height: 500
-                                },
+        <>
+            <Box>
+                <CustomizedSteppers step={0} />
+            </Box>
+            <Box>
 
-                                [theme.breakpoints.up('xs')]: {
-                                    width: 200,
-                                    height: 100,
-                                },
-                            }} >
+                <Grid container sx={{ justifyContent: 'center', marginTop: 10 }}>
+                    <OptionCard txt={'Scan QR'} img={qr} status='qr' />
+                    <Grid item xs={12} sm={3} sx={{
+                        display: 'flex', justifyContent: 'center', alignItems: 'center', [theme.breakpoints.up('sm')]: {
+                            height: 500
+                        },
 
-                                <Typography variant='h3' align='center' className='font-bold text-gray-700'>OR</Typography>
+                        [theme.breakpoints.up('xs')]: {
+                            width: 200,
+                            height: 100,
+                        },
+                    }} >
 
-                            </Grid>
-                            <OptionCard txt={'Enter License No.'} img={license} status = 'license'/>
+                        <Typography variant='h3' align='center' className='font-bold text-gray-700'>OR</Typography>
 
-                        </Grid>
-                    </Box>
-                </>
-            
+                    </Grid>
+                    <OptionCard txt={'Enter License No.'} img={license} status='license' />
+
+                </Grid>
+            </Box>
+        </>
+
     );
 }

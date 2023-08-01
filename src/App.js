@@ -1,8 +1,6 @@
 import * as React from "react";
-import { Route, Routes } from "react-router-dom";
-import { CssBaseline, useMediaQuery } from "@mui/material";
-import Box from "@mui/material/Box";
-import Sidebar from "./components/Traffic police/Sidebar";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import TrafficPoliceRoutes from "./setup/routes/TrafficPolice";
 import Home from "./pages/Traffic police/Home";
 import UserDetails from "./pages/Traffic police/UserDetails";
 import Notifications from "./pages/Traffic police/Notifications";
@@ -11,44 +9,17 @@ import Statistics from "./pages/Traffic police/Statistics";
 import Information from "./pages/Traffic police/Information";
 import IssueFine from "./pages/Traffic police/IssueFine";
 import FineConfirmation from "./pages/Traffic police/FineConfirmation";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Header from "./components/Traffic police/Header";
-import CustomizedSteppers from "./components/Traffic police/Steppers";
-import DrawerComponent from "./components/Traffic police/Appbar";
 import FinePrint from "./pages/Traffic police/FinePrint";
+import { useState,useEffect } from "react";
+import FirstPage from "./pages/GeneralUserRegistration/FirstPage";
+import SecondPage from "./pages/GeneralUserRegistration/SecondPage";
+import FinalPage from "./pages/GeneralUserRegistration/FinalPage";
+import ThirdPage from "./pages/GeneralUserRegistration/ThirdPage";
+import RegistrationPage from "./pages/GeneralUserRegistration/RegistrationPage";
 import Login from "./pages/Login";
 import "./index.css";
-import UploadPage from "./components/General user/video_upload/UploadPage";
+import { Route, Routes, Navigate } from "react-router-dom";
 
-function AppContent() {
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-
-  return (
-    <Box sx={{ display: "flex", backgroundColor: "#f3f4f6" }}>
-      <CssBaseline />
-      {isSmallScreen ? null : <Sidebar />}
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Box sx={{ height: "100%" }}>
-        {isSmallScreen ? <DrawerComponent/> : <Header />}
-          
-            <Routes>
-            {/* <Route path="/" element={<Login/>} /> */}
-              {/* <Route path="/home" element={<Home/>} /> */}
-              <Route path="/home" element={<UploadPage/>} />
-              <Route path="/userdetails" element={<UserDetails/>} />
-              <Route path="/notifications" element={<Notifications/>} />
-              <Route path="/profile" element={<Profile/>} />
-              <Route path="/statistics" element={<Statistics/>} />
-              <Route path="/information" element={<Information/>} />
-              <Route path="/fineform" element={<IssueFine/>} />
-              <Route path="/fineconfirmation" element={<FineConfirmation/>} />
-              <Route path="/fineprint" element={<FinePrint/>} />
-            </Routes>
-        </Box>
-      </Box>
-    </Box>
-  );
-}
 
 export default function App() {
   const THEME = createTheme({
@@ -61,11 +32,53 @@ export default function App() {
     },
   });
 
-  // Use media query to detect small screen devices
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const setAuth = (boolean) => {
+    setIsAuthenticated(boolean);
+  };
+
+  async function isAuth() {
+    try {
+      const response = await fetch("http://localhost:5000/auth/is-verify", {
+        method: "GET",
+        headers: { token: localStorage.token },
+      });
+
+      const parseRes = await response.json();
+
+      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect(() => {
+    isAuth();
+  });
 
   return (
     <ThemeProvider theme={THEME}>
-      <AppContent />
+      <Routes>
+        <Route path="/login" element={!isAuthenticated ? (<Login setAuth={setAuth}/>) : (<Navigate to="/home"/>) } />
+        <Route path="/registration" element={<RegistrationPage  />}>
+            <Route path="" element={<FirstPage />} />
+            <Route path="second" element={<SecondPage />} />
+            <Route path="third" element={<ThirdPage />} />
+            <Route path="final" element={<FinalPage />} />
+        </Route>
+        <Route path="/" element={isAuthenticated?(<TrafficPoliceRoutes setAuth={setAuth}/>):(<Navigate to = "/login"/> )}>
+            <Route path="home" element={<Home />} />
+            <Route path="userdetails" element={<UserDetails />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="statistics" element={<Statistics />} />
+            <Route path="information" element={<Information />} />
+            <Route path="fineform" element={<IssueFine />} />
+            <Route path="fineconfirmation" element={<FineConfirmation />} />
+            <Route path="fineprint" element={<FinePrint />} />
+        </Route>
+      </Routes>
     </ThemeProvider>
   );
 }

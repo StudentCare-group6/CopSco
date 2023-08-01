@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Header from '../../components/Traffic police/Header';
+import Header from '../../components/General user/Header';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import CustomizedSteppers from '../../components/Traffic police/Steppers.jsx';
@@ -16,8 +16,8 @@ export default function UserDetails() {
             <Box>
                 <CustomizedSteppers step={1} />
             </Box>
-            <Box sx={{ marginTop: '20px', backgroundColor:'#f3f4f6' }}>
-                <Stack direction={{ xs: 'column', md: 'row' , sm:'column' }} spacing = {2}>
+            <Box sx={{ marginTop: '20px', backgroundColor: '#f3f4f6' }}>
+                <Stack direction={{ xs: 'column', md: 'row', sm: 'column' }} spacing={2}>
                     <Grid container spacing={2} >
                         <LicenseCard />
                         <PersonalDetailsCard />
@@ -27,7 +27,7 @@ export default function UserDetails() {
                     </Grid>
                 </Stack>
             </Box>
-       </>
+        </>
 
     );
 }

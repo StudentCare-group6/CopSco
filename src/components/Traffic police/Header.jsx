@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ProfileData from '../../data/profileData.js';
-import Profile from './ProfilePic.jsx';
+import Profile from '../Traffic police/ProfilePic.jsx';
 import HelpIcon from '@mui/icons-material/Help';
 import Stack from '@mui/material/Stack';
-import { MuiBreadcrumbs } from './Breadcrumbs';
+import { MuiBreadcrumbs } from '../Traffic police/Breadcrumbs';
 
 
 export default function Header() {

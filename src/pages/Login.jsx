@@ -12,6 +12,12 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ImageSlideShow from '../components/Login/ImageCarousel';
+import { Stack } from '@mui/material';
+import GoogleButton from 'react-google-button';
+import Divider from '@mui/material/Divider';
+import Chip from '@mui/material/Chip';
+import { useMediaQuery } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -26,39 +32,40 @@ function Copyright(props) {
   );
 }
 
+
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function Login() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+export default function Login({setAuth}) {
+
+  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const formWidth = isXsScreen ? '70%' : '50%';
+  const handleSubmit = async(event) => {  
+    // event.preventDefault();
+    // const data = new FormData(event.currentTarget);
+    // try{
+    //   const body = {email: data.get('email'), password: data.get('password')};
+    //   const response = await fetch("http://localhost:3000/auth/login",{
+    //     method: "POST",
+    //     headers: {"Content-Type": "application/json"},
+    //     body: JSON.stringify(body)
+    //   });
+    //   const parseRes = await response.json();
+    //   console.log(parseRes);
+    // }catch(err){
+    //   console.error(err.message);
+    // }
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+
+        <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
+        <Typography sx = {{margin:'20px'}} component="h1" variant="h5" className='font-extrabold text-black' >
+          CopSco
+        </Typography>
           <Box
             sx={{
               my: 8,
@@ -68,13 +75,30 @@ export default function Login() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
+
+            <Stack justifyContent="center" alignItems="center" spacing={3}>
+              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' >
+                Login to your account
+              </Typography>
+              <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
+                Welcome back! Select a method to login
+              </Typography>
+
+              <GoogleButton
+                onClick={() => { console.log('Google button clicked') }}
+              />
+            </Stack>
+
+            <Stack sx={{ width: formWidth, margin: '50px' }}>
+              <Divider>OR</Divider>
+            </Stack>
+
+
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1,width: formWidth }}>
+
               <TextField
                 margin="normal"
                 required
@@ -104,6 +128,7 @@ export default function Login() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={() => setAuth(true)}
               >
                 Sign In
               </Button>
@@ -114,7 +139,7 @@ export default function Login() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/registration" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -122,6 +147,16 @@ export default function Login() {
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
+        </Grid>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={6}
+
+        >
+          <ImageSlideShow />
         </Grid>
       </Grid>
     </ThemeProvider>
