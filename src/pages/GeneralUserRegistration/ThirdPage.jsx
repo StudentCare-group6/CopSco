@@ -13,6 +13,7 @@ import Alert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import otpImg from '../../images/otp.png';
 
 export default function ThirdPage() {
 
@@ -36,6 +37,7 @@ export default function ThirdPage() {
                 </Typography>
             </Stack>
             <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 3 }}>
+                <img src={otpImg} alt="" />
                 <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
                     Enter your contact number :
                 </Typography>
