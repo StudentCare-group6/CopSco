@@ -13,8 +13,10 @@ import FinePrint from "./pages/Traffic police/FinePrint";
 import { useState,useEffect } from "react";
 import FirstPage from "./pages/GeneralUserRegistration/FirstPage";
 import SecondPage from "./pages/GeneralUserRegistration/SecondPage";
-import FinalPage from "./pages/GeneralUserRegistration/FinalPage";
+import FifthPage from "./pages/GeneralUserRegistration/FifthPage";
 import ThirdPage from "./pages/GeneralUserRegistration/ThirdPage";
+import FourthPage from "./pages/GeneralUserRegistration/FourthPage";
+import FinalPage from "./pages/GeneralUserRegistration/FinalPage";
 import RegistrationPage from "./pages/GeneralUserRegistration/RegistrationPage";
 import Login from "./pages/Login";
 import "./index.css";
@@ -65,6 +67,8 @@ export default function App() {
             <Route path="" element={<FirstPage />} />
             <Route path="second" element={<SecondPage />} />
             <Route path="third" element={<ThirdPage />} />
+            <Route path="fourth" element={<FourthPage />} />
+            <Route path="fifth" element={<FifthPage />} />
             <Route path="final" element={<FinalPage />} />
         </Route>
         <Route path="/" element={isAuthenticated?(<TrafficPoliceRoutes setAuth={setAuth}/>):(<Navigate to = "/login"/> )}>

@@ -23,7 +23,7 @@ export default function ThirdPage() {
     const navigate = useNavigate();
     const onSubmit = (data) => {
         alert("Submitted");
-        navigate('/registration/second');
+        navigate('/registration/fourth');
     }
 
     return (
