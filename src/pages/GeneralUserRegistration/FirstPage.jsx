@@ -22,7 +22,7 @@ export default function FirstPage() {
                         label="First Name"
                         defaultValue={data.firstName}
                         autoFocus
-                        {...register("firstName", {
+                        {...register("fname", {
                             required: "field required",
                             pattern: {
                                 value: /^[A-Za-z]+$/i,
@@ -40,7 +40,7 @@ export default function FirstPage() {
                         label="Last Name"
                         defaultValue={data.lastName}
                         autoComplete="family-name"
-                        {...register("lastName", {
+                        {...register("lnamee", {
                             required: "field required",
                             pattern: {
                                 value: /^[A-Za-z]+$/i,
