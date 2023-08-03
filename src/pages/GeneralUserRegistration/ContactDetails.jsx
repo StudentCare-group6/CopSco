@@ -1,6 +1,5 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
@@ -9,7 +8,7 @@ import otpImg from '../../images/otp.png';
 import useFormContext from '../../hooks/useFormContext';
 import Steppers from '../../components/GeneralUserRegistration/Steppers';
 
-export default function ThirdPage() {
+export default function ContactDetails() {
 
     const { data, handleChange, form, register, control, errors } = useFormContext();
 

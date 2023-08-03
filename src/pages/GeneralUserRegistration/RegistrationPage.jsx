@@ -39,13 +39,9 @@ export default function Register() {
     const {
         page,
         setPage,
-        data,
         title,
         subtitle,
-        canSubmit,
         handleSubmit,
-        errors,
-        watch,
         getValues,
     } = useFormContext();
 

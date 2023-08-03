@@ -1,13 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import useFormContext from '../../hooks/useFormContext';
 import TextField from '@mui/material/TextField';
 import Steppers from '../../components/GeneralUserRegistration/Steppers';
 
-export default function SecondPage() {
+export default function UserImage() {
 
     const {data, handleChange, form, register, control, errors,setValue} = useFormContext();
 

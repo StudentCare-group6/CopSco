@@ -6,7 +6,7 @@ import Steppers from '../../components/GeneralUserRegistration/Steppers';
 import Alert from '@mui/material/Alert';
 import useFormContext from '../../hooks/useFormContext';
 
-export default function FirstPage() {
+export default function GeneralDetails() {
 
     const { data, register, errors } = useFormContext();
     return (
@@ -20,7 +20,6 @@ export default function FirstPage() {
                         fullWidth
                         id="firstName"
                         label="First Name"
-                        defaultValue={data.firstName}
                         autoFocus
                         {...register("fname", {
                             required: "field required",
@@ -38,9 +37,8 @@ export default function FirstPage() {
                         fullWidth
                         id="lastName"
                         label="Last Name"
-                        defaultValue={data.lastName}
                         autoComplete="family-name"
-                        {...register("lnamee", {
+                        {...register("lname", {
                             required: "field required",
                             pattern: {
                                 value: /^[A-Za-z]+$/i,
@@ -56,7 +54,6 @@ export default function FirstPage() {
                         fullWidth
                         id="email"
                         label="Email Address"
-                        defaultValue={data.email}
                         autoComplete="email"
                         {...register("email", {
                             required: "field required",
@@ -77,7 +74,6 @@ export default function FirstPage() {
                     />
                     {errors.email?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.email?.message}</Alert> : ""}
                 </Grid>
-
             </Grid>
 
         </div>

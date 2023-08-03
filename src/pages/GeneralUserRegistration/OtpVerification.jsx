@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import otpImg from '../../images/otp.png';
@@ -7,7 +6,7 @@ import Timer from '../../components/GeneralUserRegistration/Timer';
 import useFormContext from '../../hooks/useFormContext';
 import Steppers from '../../components/GeneralUserRegistration/Steppers';
 
-export default function FourthPage() {
+export default function OtpVerification() {
 
     const { data, handleChange, form, register, control, errors } = useFormContext();
 
