@@ -11,16 +11,11 @@ import IssueFine from "./pages/Traffic police/IssueFine";
 import FineConfirmation from "./pages/Traffic police/FineConfirmation";
 import FinePrint from "./pages/Traffic police/FinePrint";
 import { useState,useEffect } from "react";
-import FirstPage from "./pages/GeneralUserRegistration/FirstPage";
-import SecondPage from "./pages/GeneralUserRegistration/SecondPage";
-import FifthPage from "./pages/GeneralUserRegistration/FifthPage";
-import ThirdPage from "./pages/GeneralUserRegistration/ThirdPage";
-import FourthPage from "./pages/GeneralUserRegistration/FourthPage";
-import FinalPage from "./pages/GeneralUserRegistration/FinalPage";
-import RegistrationPage from "./pages/GeneralUserRegistration/RegistrationPage";
+import Registration from "./pages/GeneralUserRegistration/RegistrationPage";
 import Login from "./pages/Login";
 import "./index.css";
 import { Route, Routes, Navigate } from "react-router-dom";
+import { FormProvider } from "./context/FormContext";
 
 
 export default function App() {
@@ -63,14 +58,7 @@ export default function App() {
     <ThemeProvider theme={THEME}>
       <Routes>
         <Route path="/login" element={!isAuthenticated ? (<Login setAuth={setAuth}/>) : (<Navigate to="/home"/>) } />
-        <Route path="/registration" element={<RegistrationPage  />}>
-            <Route path="" element={<FirstPage />} />
-            <Route path="second" element={<SecondPage />} />
-            <Route path="third" element={<ThirdPage />} />
-            <Route path="fourth" element={<FourthPage />} />
-            <Route path="fifth" element={<FifthPage />} />
-            <Route path="final" element={<FinalPage />} />
-        </Route>
+        <Route path="/registration" element={<FormProvider><Registration /></FormProvider>}/>
         <Route path="/" element={isAuthenticated?(<TrafficPoliceRoutes setAuth={setAuth}/>):(<Navigate to = "/login"/> )}>
             <Route path="home" element={<Home />} />
             <Route path="userdetails" element={<UserDetails />} />
