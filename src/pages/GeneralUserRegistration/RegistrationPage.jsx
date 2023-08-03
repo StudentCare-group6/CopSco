@@ -16,6 +16,7 @@ import FormInputs from './FormInputs';
 import Button from '@mui/material/Button';
 import { useEffect } from 'react';
 import Alert from '@mui/material/Alert';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -49,8 +50,8 @@ export default function Register() {
     } = useFormContext();
 
     const onSubmit = e => {
-
-        console.log(JSON.stringify(data))
+        console.log('data', getValues());
+        setPage(page + 1);
     }
 
     const handlePrev = () => setPage(page - 1);
@@ -60,18 +61,19 @@ export default function Register() {
 
         } else if (page === 1 && (getValues('photoUrl') === '')) {
             alert('Please upload a photo');
-
+        } else if (page === 2 && (getValues('contact') === '')) {
+            alert('Please fill all the fields');
+        } else if (page === 4 && (getValues('nic') === '')) {
+            alert('Please enter nic number');
         } else {
             setPage(page + 1);
             console.log('photoUrl', getValues('photoUrl'));
         }
     };
-    // useEffect(() => {
-    //     const subscription = watch((value) => {
-    //         console.log(value)
-    //     });
-    //     return () => subscription.unsubscribe();
-    // }, [watch]);
+
+    const return = () => {
+        
+    }
 
 
     return (
@@ -121,8 +123,15 @@ export default function Register() {
                                             <Button variant='outlined' type="button" onClick={handlePrev} sx={{ width: '30%' }}>
                                                 Back
                                             </Button>
-                                            <Button variant = 'contained' onClick={handleSubmit} sx={{ width: '30%' }}>
+                                            <Button type='submit' variant='contained' sx={{ width: '30%' }}>
                                                 Finish
+                                            </Button>
+                                        </>
+                                    )}
+                                    {page === 5 && (
+                                        <>
+                                            <Button variant='outlined' type="button" onClick={return} sx={{ width: '30%' }}>
+                                                Return
                                             </Button>
                                         </>
                                     )}
@@ -141,7 +150,7 @@ export default function Register() {
                                 </Grid>
                             )}
 
-                            {page !== 3 && page !== 5 && (
+                            {page !== 3 && (
                                 <Grid container justifyContent="flex-end" sx={{ mt: 3 }}>
                                     <Grid item>
                                         <Link href="#" variant="body2">
