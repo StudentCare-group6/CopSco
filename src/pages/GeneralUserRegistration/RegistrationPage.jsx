@@ -49,10 +49,38 @@ export default function Register() {
         getValues,
     } = useFormContext();
 
-    const onSubmit = e => {
+
+    const onSubmit = async e => {
+     
+
         console.log('data', getValues());
         setPage(page + 1);
-    }
+
+        const data = getValues(); 
+        const apiUrl = 'https://jsonplaceholder.typicode.com/posts'; 
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                console.log('API response', responseData);
+            } else {
+                console.error('API request failed');
+            }
+        } catch (error) {
+            console.error('An error occurred', error);
+        }
+    };
+
+
+
 
     const handlePrev = () => setPage(page - 1);
     const handleNext = () => {
@@ -71,9 +99,12 @@ export default function Register() {
         }
     };
 
-    const return = () => {
-        
-    }
+
+    const navigate = useNavigate();
+    const handleButtonClick = () => {
+        navigate('/');
+    };
+
 
 
     return (
@@ -130,7 +161,7 @@ export default function Register() {
                                     )}
                                     {page === 5 && (
                                         <>
-                                            <Button variant='outlined' type="button" onClick={return} sx={{ width: '30%' }}>
+                                            <Button variant='outlined' type="button" onClick={handleButtonClick} sx={{ width: '30%' }}>
                                                 Return
                                             </Button>
                                         </>
