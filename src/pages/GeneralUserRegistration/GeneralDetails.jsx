@@ -13,7 +13,7 @@ export default function GeneralDetails() {
         <div>
             <Grid container spacing={2} sx={{ mt: 3 }}>
                 <Steppers step={0} />
-                <Grid item xs={12} sm={12} sx={{ mt: 3 }}>
+                <Grid item xs={12} sm={12} sx={{ mt: 6 }}>
                     <TextField
                         autoComplete="given-name"
                         required

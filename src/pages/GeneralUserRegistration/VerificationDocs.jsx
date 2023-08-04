@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import Steppers from "../../components/GeneralUserRegistration/Steppers";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import Snackbar from "../../components/GeneralUserRegistration/SnackBar";
 import useFormContext from "../../hooks/useFormContext";
 import docImg from "../../images/verified.png";
 import FormLabel from "@mui/material/FormLabel";
@@ -17,8 +16,6 @@ export default function VerificationDocs() {
   const {register, errors,watch } =
     useFormContext();
   return (
-    <div>
-      <Snackbar />
       <Grid container spacing={2}>
         <Stack sx={{ width: "100%" }} alignItems="center">
           <img src={docImg} className="w-32" />
@@ -31,8 +28,8 @@ export default function VerificationDocs() {
           name = "verifyMode"
           defaultValue={watch("verifyMode")}
         >
-          <FormControlLabel value="0" control={<Radio />} label="Present documents physically"  {...register("verifyMode")}/>
-          <FormControlLabel value="1" control={<Radio />} label="Upload documents"  {...register("verifyMode")}/>
+          <FormControlLabel value="0" control={<Radio />} label="Provide physically"  {...register("verifyMode")}/>
+          <FormControlLabel value="1" control={<Radio />} label="Upload now"  {...register("verifyMode")}/>
           
         
         </RadioGroup>
@@ -104,6 +101,5 @@ export default function VerificationDocs() {
           )}
         </Grid>
       </Grid>
-    </div>
   );
 }

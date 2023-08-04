@@ -5,6 +5,8 @@ import otpImg from '../../images/otp.png';
 import Timer from '../../components/GeneralUserRegistration/Timer';
 import useFormContext from '../../hooks/useFormContext';
 import Steppers from '../../components/GeneralUserRegistration/Steppers';
+import TextField from '@mui/material/TextField';
+import Alert from '@mui/material/Alert';
 
 export default function OtpVerification() {
 
@@ -12,32 +14,31 @@ export default function OtpVerification() {
 
     return (
         <div>
-             <Steppers step={2} />
+            <Steppers step={2} />
             <Grid container spacing={2} sx={{ marginTop: '8%' }}>
-            <Stack sx={{ width: '100%' }} alignItems='center'>
-                <img src={otpImg} className='w-52' />
-            </Stack>
-            <Timer />
-            <Grid container spacing={2} >
-                <Grid item xs={12} sx={{ mt: 1 }}>
-                    <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                        <div class="w-16 h-16 ">
-                            <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700" type="text" name="" id="" maxlength="1" />
-                        </div>
-                        <div class="w-16 h-16 ">
-                            <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700" type="text" name="" id="" maxlength="1" />
-                        </div>
-                        <div class="w-16 h-16 ">
-                            <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700" type="text" name="" id="" maxlength="1" />
-                        </div>
-                        <div class="w-16 h-16 ">
-                            <input class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700" type="text" name="" id="" maxlength="1" />
-                        </div>
-                    </div>
+                <Stack sx={{ width: '100%' }} alignItems='center'>
+                    <img src={otpImg} className='w-52' />
+                </Stack>
 
+                <Grid item xs={12} sx={{ mt: 3 }}>
+
+                    <Timer />
+                    <TextField
+                        fullWidth
+                        id="otp"
+                        label="Enter 6-digit number."
+                        {...register("otp", {
+                            required: "field required",
+                            pattern: {
+                                value: /^\d{6}$/,
+                                message: "OTP should have 6 digits"
+                            }
+                        })}
+                    />
+                    {errors.otp?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.otp?.message}</Alert> : ""}
                 </Grid>
 
-            </Grid>
+
             </Grid>
         </div>
     );
