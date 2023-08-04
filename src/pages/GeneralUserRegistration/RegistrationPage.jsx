@@ -59,6 +59,7 @@ export default function Register() {
                         const frontFile = e.nicFrontFile[0]; // Assuming the file is stored in an array
                         const backFile = e.nicRearFile[0]; // Assuming the file is stored in an array
                         const userImageBlob = localStorage.getItem('takenPhoto');
+                        const nicNum = getValues('nic');
 
                         const FrontName = getValues('nic') + '_front.png';
                         const BackName = getValues('nic') + '_rear.png';
@@ -76,19 +77,20 @@ export default function Register() {
                         });
 
                         const formData = new FormData();
-                        formData.append('file', renamedFrontFile);
-                        formData.append('file', renamedBackFile);
-                        formData.append('file', userImageFile);
+                        formData.append('nic_front', renamedFrontFile);
+                        formData.append('nice_back', renamedBackFile);
+                        formData.append('user_img', userImageFile);
+                        formData.append('nic_num', nicNum);
 
-                        // try{
-                        //     const response = await api.post('/upload', formData);
-                        //     console.log(response.data);
-                        //     setPage(page + 1);
-                        // }catch(err){
-                        //     console.log(err.response.data);
-                        //     console.log(err.response.status);
-                        //     console.log(err.response.headers);
-                        // }
+                        try{
+                            const response = await api.post('/upload', formData);
+                            console.log(response.data);
+                            setPage(page + 1);
+                        }catch(err){
+                            console.log(err.response.data);
+                            console.log(err.response.status);
+                            console.log(err.response.headers);
+                        }
                         setPage(page + 1);
                     }
                 } else {
@@ -99,32 +101,29 @@ export default function Register() {
             if (!getValues('otp')) {
                 alert("Enter OTP");
             } else {
-                const data = getValues("otp");
-                // try{
-                //     const response = await api.post('/verify-otp', data);
-                //     console.log(response.data);
-                //     setPage(page + 1);
-                // }catch(err){
-                //     alert("Invalid OTP");
-                //     console.log(err.response.data);
-                //     console.log(err.response.status);
-                //     console.log(err.response.headers);
-                // }
-
+                const formData = new FormData();
+                try{
+                    const response = await api.post('/verify-otp', formData);
+                    console.log(response.data);
+                    setPage(page + 1);
+                }catch(err){
+                    alert("Invalid OTP");
+                    console.log(err.response.data);
+                    console.log(err.response.status);
+                    console.log(err.response.headers);
+                }
             }
         } else {
-            const userId = getValues('nic');
-            setValue('userId', userId);
             const data = getValues();
-            // try{
-            //     const response = await api.post('/register', data);
-            //     console.log(response.data);
-            //     setPage(page + 1);
-            // }catch(err){
-            //     console.log(err.response.data);
-            //     console.log(err.response.status);
-            //     console.log(err.response.headers);
-            // }
+            try{
+                const response = await api.post('auth/register', data);
+                console.log(response.data);
+                setPage(page + 1);
+            }catch(err){
+                console.log(err.response.data);
+                console.log(err.response.status);
+                console.log(err.response.headers);
+            }
             setPage(page + 1);
         }
 
