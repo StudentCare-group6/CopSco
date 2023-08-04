@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 
 const Timer = () => {
-  const [seconds, setSeconds] = useState(30);
+  const [seconds, setSeconds] = useState(180);
   const [expired, setExpired] = useState(false);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Timer = () => {
 
                     </Grid>
       ) : (
-        <Typography component="h1" variant="subtitle1" className="mt-10 font-light text-neutral-700">
+        <Typography component="h1" variant="subtitle1" className="mb-5 font-light text-neutral-700">
         Enter OTP code : (expires in {formattedTime})
         </Typography>
       )}
