@@ -53,7 +53,7 @@ export default function UserImage() {
             // Store the Blob in local storage
             localStorage.setItem('takenPhoto', blob);
             setPhotoURL(URL.createObjectURL(blob));
-            setValue('photoUrl', URL.createObjectURL(blob));
+            setValue('verificationPIC', URL.createObjectURL(blob));
             setHasPhoto(true);
         });
 
@@ -99,7 +99,7 @@ export default function UserImage() {
                             label="Last Name"
                             className='hidden'
                             autoComplete="family-name"
-                            {...register("photoUrl", {
+                            {...register("verificationPIC", {
                                 required: "Please capture your photo",
                             })}
                         />

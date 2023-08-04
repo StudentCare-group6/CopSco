@@ -7,9 +7,14 @@ import Stack from "@mui/material/Stack";
 import Snackbar from "../../components/GeneralUserRegistration/SnackBar";
 import useFormContext from "../../hooks/useFormContext";
 import docImg from "../../images/verified.png";
+import FormLabel from "@mui/material/FormLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import { useState } from "react";
 
 export default function VerificationDocs() {
-  const { data, handleChange, form, register, control, errors } =
+  const {register, errors,watch } =
     useFormContext();
   return (
     <div>
@@ -19,6 +24,20 @@ export default function VerificationDocs() {
           <img src={docImg} className="w-32" />
         </Stack>
         <Grid item xs={12}>
+        <FormLabel id="demo-row-radio-buttons-group-label" sx = {{fontSize:'large'}}>Verification method : </FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name = "verifyMode"
+          defaultValue={watch("verifyMode")}
+        >
+          <FormControlLabel value="0" control={<Radio />} label="Present documents physically"  {...register("verifyMode")}/>
+          <FormControlLabel value="1" control={<Radio />} label="Upload documents"  {...register("verifyMode")}/>
+          
+        
+        </RadioGroup>
+        </Grid>
+        <Grid item xs={12}>
           <TextField
             required
             fullWidth
@@ -26,10 +45,6 @@ export default function VerificationDocs() {
             label="NIC"
             {...register("nic", {
               required: "field required",
-              pattern: {
-                value: /^(?:\d{12}|(?:\d{9}[vVxX]))$/,
-                message: "Invalid NIC No.",
-              },
             })}
           />
           {errors.nic?.message ? (
@@ -51,9 +66,18 @@ export default function VerificationDocs() {
               type="file"
               accept="image/*" // This line specifies that only image files are accepted
               {...register("nicFrontFile")}
+              disabled={watch("verifyMode") === "0"}
             />
           </div>
+          {errors.nicFrontFile?.message ? (
+            <Alert sx={{ mt: "10px" }} severity="error">
+              {errors.nicFrontFile?.message}
+            </Alert>
+          ) : (
+            ""
+          )}
         </Grid>
+        
         <Grid item xs={12}>
           <div className="border-2 p-3 rounded-lg border-zinc-300">
             <label
@@ -68,8 +92,16 @@ export default function VerificationDocs() {
               type="file"
               accept="image/*" // This line specifies that only image files are accepted
               {...register("nicRearFile")}
+              disabled={watch("verifyMode") === "0"}
             />
           </div>
+          {errors.nicRearFile?.message ? (
+            <Alert sx={{ mt: "10px" }} severity="error">
+              {errors.nicRearFile?.message}
+            </Alert>
+          ) : (
+            ""
+          )}
         </Grid>
       </Grid>
     </div>

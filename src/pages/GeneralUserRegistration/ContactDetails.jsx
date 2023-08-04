@@ -28,7 +28,6 @@ export default function ContactDetails() {
                         <TextField
                             fullWidth
                             id="contact"
-                            defaultValue={data.contact}
                             label="Contact No."
                             {...register("contact", {
                                 required: "field required",

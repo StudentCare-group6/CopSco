@@ -47,32 +47,60 @@ export default function Register() {
 
 
     const onSubmit = async e => {
-     
 
-        console.log('data', getValues());
-        setPage(page + 1);
-
-        const data = getValues(); 
-        const apiUrl = 'https://jsonplaceholder.typicode.com/posts'; 
-
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log('API response', responseData);
+        if (page === 3 && getValues('verifyMode') === '1') {
+            if (!getValues('nicFrontFile') || !getValues('nicRearFile')) {
+                alert('Please upload both front and rear images of your NIC');
             } else {
-                console.error('API request failed');
+                const frontFile = e.nicFrontFile[0]; // Assuming the file is stored in an array
+                const backFile = e.nicRearFile[0]; // Assuming the file is stored in an array
+
+                const FrontName = getValues('nic') + '_front.png';
+                const BackName = getValues('nic') + '_rear.png';
+                // Create a new File object with the preferred name
+                const renamedFrontFile = new File([frontFile], FrontName, {
+                    type: frontFile.type,
+                });
+                const renamedBackFile = new File([backFile], BackName, {
+                    type: backFile.type,
+                });
+
+                const formData = new FormData();
+                formData.append('file', renamedFrontFile);
+                formData.append('file', renamedBackFile);
+                console.log('FormData entries:');
+                for (const pair of formData.entries()) {
+                    console.log(pair[0], pair[1]);
+                }
             }
-        } catch (error) {
-            console.error('An error occurred', error);
+
+        } else {
+            console.log('data', getValues());
+            setPage(page + 1);
+
+            const data = getValues();
+            const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('API response', responseData);
+                } else {
+                    console.error('API request failed');
+                }
+            } catch (error) {
+                console.error('An error occurred', error);
+            }
         }
+
     };
 
 
@@ -81,18 +109,21 @@ export default function Register() {
     const handlePrev = () => setPage(page - 1);
     const handleNext = () => {
         if (page === 0 && (getValues('firstName') === '' || getValues('lastName') === '' || getValues('email') === '')) {
-            alert('Please fill all the fields');
 
-        } else if (page === 1 && (getValues('photoUrl') === '')) {
-            alert('Please upload a photo');
-        } else if (page === 2 && (getValues('contact') === '')) {
-            alert('Please fill all the fields');
-        } else if (page === 4 && (getValues('nic') === '')) {
-            alert('Please enter nic number');
+            setPage(page + 1);
+
+        } else if (page === 1 && (getValues('password') === '')) {
+
+            setPage(page + 1);
+        } else if (page === 2 && (getValues('verificationPIC') === '')) {
+
+            setPage(page + 1);
+        } else if (page === 3) {
+            console.log(getValues('verifyMode'), getValues('nicFrontFile'), getValues('nicRearFile'));
         } else {
             setPage(page + 1);
-            console.log('photoUrl', getValues('photoUrl'));
         }
+
     };
 
 
@@ -114,7 +145,7 @@ export default function Register() {
                         <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' >
                             {title[page]}
                         </Typography>
-                        <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
+                        <Typography component="h1" textAlign='center' variant="h6" sx={{ width: '50%' }} className='font-light text-neutral-500' >
                             {subtitle[page]}
                         </Typography>
                     </Stack>
@@ -135,12 +166,22 @@ export default function Register() {
                                             Next
                                         </Button>
                                     )}
-                                    {page > 0 && page < 4 && (
+                                    {page > 0 && page < 3 && (
                                         <>
                                             <Button variant='outlined' type="button" onClick={handlePrev} sx={{ width: '30%' }}>
                                                 Back
                                             </Button>
                                             <Button variant='contained' type="button" onClick={handleNext} sx={{ width: '30%' }}>
+                                                Next
+                                            </Button>
+                                        </>
+                                    )}
+                                    {page === 3 && (
+                                        <>
+                                            <Button variant='outlined' type="button" onClick={handlePrev} sx={{ width: '30%' }}>
+                                                Back
+                                            </Button>
+                                            <Button variant='contained' type="submit" sx={{ width: '30%' }}>
                                                 Next
                                             </Button>
                                         </>
@@ -162,11 +203,13 @@ export default function Register() {
                                             </Button>
                                         </>
                                     )}
+
+
                                 </Stack>
                             </Box>
                         </Box>
                         <div>
-                            {page === 3 && (
+                            {page === 4 && (
                                 <Grid container justifyContent='center' className='mt-10'>
                                     <Grid item>
                                         Didn't receive OTP ?
@@ -177,7 +220,7 @@ export default function Register() {
                                 </Grid>
                             )}
 
-                            {page !== 3 && (
+                            {page !== 3 && page !== 4 && (
                                 <Grid container justifyContent="flex-end" sx={{ mt: 3 }}>
                                     <Grid item>
                                         <Link href="#" variant="body2">
