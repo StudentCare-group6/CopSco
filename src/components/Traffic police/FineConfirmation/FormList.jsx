@@ -8,7 +8,7 @@ import CancelDialog from "./CancelDialog.jsx";
 export default function FormList(props) {
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate("/fineprint");
+    navigate("/traffic-police/fine-print");
   };
 
   return (

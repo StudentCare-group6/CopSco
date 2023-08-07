@@ -56,7 +56,7 @@ export default function BasicModal(props) {
   const isSmBreakpoint = useMediaQuery(theme.breakpoints.between('xs', 'xl'));
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate('/userdetails');
+    navigate('user-details');
   };
 
   if (props.status === 'qr') {

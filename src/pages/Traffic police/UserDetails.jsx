@@ -8,9 +8,11 @@ import LicenseCard from '../../components/Traffic police/UserDetails/LicenseCard
 import PersonalDetailsCard from '../../components/Traffic police/UserDetails/PersonalDetailsCard';
 import PreviousOffences from '../../components/Traffic police/UserDetails/PreviousOffences';
 import "@fontsource/inter";
+import useAuth from '../../hooks/useAuth';
 
 export default function UserDetails() {
-
+    const {auth} = useAuth();
+    console.log(auth.user);
     return (
         <>
             <Box>

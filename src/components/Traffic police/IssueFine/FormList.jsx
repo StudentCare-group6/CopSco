@@ -8,7 +8,7 @@ import CancelDialog from "./CancelDialog.jsx";
 export default function FormList(props) {
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate("/fineconfirmation");
+    navigate("/traffic-police/fine-confirmation");
   };
 
   return (

@@ -13,7 +13,6 @@ import useFormContext from '../../hooks/useFormContext';
 import FormInputs from './FormInputs';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import api from '../../api/posts';
 
 
 
@@ -42,92 +41,10 @@ export default function Register() {
         subtitle,
         handleSubmit,
         getValues,
-        setValue
+        setValue,
+        onSubmit
     } = useFormContext();
 
-
-    const onSubmit = async e => {
-
-        if (page === 3) {
-            if (!getValues('nic')) {
-                alert("Enter NIC number");
-            } else {
-                if (getValues('verifyMode') === '1') {
-                    if (!getValues('nicFrontFile') || !getValues('nicRearFile')) {
-                        alert("Error: Check whether you've uploaded files ");
-                    } else {
-                        const frontFile = e.nicFrontFile[0]; // Assuming the file is stored in an array
-                        const backFile = e.nicRearFile[0]; // Assuming the file is stored in an array
-                        const userImageBlob = localStorage.getItem('takenPhoto');
-                        const nicNum = getValues('nic');
-
-                        const FrontName = getValues('nic') + '_front.png';
-                        const BackName = getValues('nic') + '_rear.png';
-                        const UserImageName = getValues('nic') + '_img.png';
-
-                        // Create a new File object with the preferred name
-                        const renamedFrontFile = new File([frontFile], FrontName, {
-                            type: frontFile.type,
-                        });
-                        const renamedBackFile = new File([backFile], BackName, {
-                            type: backFile.type,
-                        });
-                        const userImageFile = new File([userImageBlob], UserImageName, {
-                            type: userImageBlob.type,
-                        });
-
-                        const formData = new FormData();
-                        formData.append('nic_front', renamedFrontFile);
-                        formData.append('nice_back', renamedBackFile);
-                        formData.append('user_img', userImageFile);
-                        formData.append('nic_num', nicNum);
-
-                        try{
-                            const response = await api.post('/upload', formData);
-                            console.log(response.data);
-                            setPage(page + 1);
-                        }catch(err){
-                            console.log(err.response.data);
-                            console.log(err.response.status);
-                            console.log(err.response.headers);
-                        }
-                        setPage(page + 1);
-                    }
-                } else {
-                    setPage(page + 1);
-                }
-            }
-        } else if (page === 5) {
-            if (!getValues('otp')) {
-                alert("Enter OTP");
-            } else {
-                const formData = new FormData();
-                try{
-                    const response = await api.post('/verify-otp', formData);
-                    console.log(response.data);
-                    setPage(page + 1);
-                }catch(err){
-                    alert("Invalid OTP");
-                    console.log(err.response.data);
-                    console.log(err.response.status);
-                    console.log(err.response.headers);
-                }
-            }
-        } else {
-            const data = getValues();
-            try{
-                const response = await api.post('auth/register', data);
-                console.log(response.data);
-                setPage(page + 1);
-            }catch(err){
-                console.log(err.response.data);
-                console.log(err.response.status);
-                console.log(err.response.headers);
-            }
-            setPage(page + 1);
-        }
-
-    };
 
     const handlePrev = () => setPage(page - 1);
     const handleNext = () => {

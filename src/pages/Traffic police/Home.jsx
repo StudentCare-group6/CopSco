@@ -8,11 +8,13 @@ import license from '../../images/license.png'
 import OptionCard from '../../components/Traffic police/Home/OptionCard';
 import { useTheme } from '@mui/material/styles';
 import CustomizedSteppers from '../../components/Traffic police/Steppers.jsx';
-
+import useAuth from '../../hooks/useAuth';
 
 
 export default function Home() {
     const theme = useTheme();
+    const { auth} = useAuth();
+    console.log(auth.user);
     return (
         <>
             <Box>

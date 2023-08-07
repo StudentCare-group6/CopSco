@@ -12,7 +12,7 @@ import { useTheme } from '@emotion/react';
 export default function PreviousOffences() {
     const navigate = useNavigate();
     const handleButtonClick = () => {
-        navigate('/fineform');
+        navigate('/traffic-police/issue-fine');
     };
 
     const theme = useTheme();

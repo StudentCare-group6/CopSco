@@ -135,7 +135,7 @@ export default function Sidebar() {
 
     ];
 
-    const routes = ['/home', '/profile', '/notifications', '/statistics', '/information', '/logout'];
+    const routes = ['/traffic-police/', '/traffic-police/profile', '/traffic-police/notifications', '/traffic-police/statistics', '/traffic-police/information', '/traffic-police/logout'];
 
     return (
 

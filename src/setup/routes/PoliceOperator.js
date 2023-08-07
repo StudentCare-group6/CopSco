@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import { CssBaseline, useMediaQuery } from "@mui/material";
 import Header from "../../components/PoliceOperator/Header";
 import DrawerComponent from "../../components/Traffic police/Appbar";
 import Sidebar from "../../components/PoliceOperator/Sidebar";
 import Box from "@mui/material/Box";
-import Home from "../../pages/PoliceOperator/Home";
+import Home from "../../pages/PoliceOperator/VideoList";
 import VideoDetails from "../../pages/PoliceOperator/VideoDetails";
 
 export default function PoliceOperatorRoutes() {
@@ -17,10 +17,7 @@ export default function PoliceOperatorRoutes() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Box>
           {isSmallScreen ? <DrawerComponent /> : <Header />}
-          <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/video" element={<VideoDetails />} />
-          </Routes>
+          <Outlet/>
         </Box>
       </Box>
     </Box>
