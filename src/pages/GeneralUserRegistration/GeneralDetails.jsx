@@ -8,7 +8,7 @@ import useFormContext from '../../hooks/useFormContext';
 
 export default function GeneralDetails() {
 
-    const { data, register, errors } = useFormContext();
+    const { register, errors } = useFormContext();
     return (
         <div>
             <Grid container spacing={2} sx={{ mt: 3 }}>

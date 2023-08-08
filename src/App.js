@@ -38,8 +38,6 @@ export default function App() {
     },
   });
 
-  const { auth } = useAuth();
-  const userRole = auth?.role;
 
   return (
     <ThemeProvider theme={THEME}>
@@ -47,7 +45,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           {/* public routes */}
           <Route path="login" element={<Login />} />
-          <Route path="registration" element={<Registration />} />
+          <Route path="registration" element={<FormProvider><Registration /></FormProvider>} />
           <Route path="unauthorized" element={<Unauthorized />} />
           {/* protected routes */}
 
@@ -61,10 +59,10 @@ export default function App() {
                 <Route path="profile" element={<Profile />} />
                 <Route path="statistics" element={<Statistics />} />
                 <Route path="information" element={<Information />} />
-                <Route path="issue-fine" element={<IssueFine />} />
+                <Route path="issue-fine" element={<FormProvider><IssueFine /></FormProvider>} />
                 <Route
                   path="fine-confirmation"
-                  element={<FineConfirmation />}
+                  element={<FormProvider><FineConfirmation /></FormProvider>}
                 />
                 <Route path="fine-print" element={<FinePrint />} />
               </Route>

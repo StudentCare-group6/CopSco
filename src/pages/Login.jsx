@@ -18,7 +18,9 @@ import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/posts'
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Snackbar, Alert, AlertTitle } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
+import useInput from '../hooks/useInput';
+import useToggle from '../hooks/useToggle';
 
 
 function Copyright(props) {
@@ -41,17 +43,17 @@ const defaultTheme = createTheme();
 
 export default function Login() {
 
-  const { setAuth, auth, persist, setPersist } = useAuth();
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
   const userRef = useRef();
-  const errRef = useRef();
 
-  const [user, setUser] = useState('');
+  const [user, resetUser, userAttributes] = useInput('user','');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const [check, toggleCheck] = useToggle('persist', false);
 
   const handleClose = () => {
     setErrMsg('');
@@ -77,7 +79,8 @@ export default function Login() {
       const accessToken = response.data.accessToken;
       const role = response.data.userrole;
       setAuth({ user, pwd, role, accessToken });
-      setUser('');
+      // setUser('');
+      resetUser();
       setPwd('');
       if (role === 'traffic-police') {
         navigate('/traffic-police');
@@ -102,14 +105,6 @@ export default function Login() {
      
     }
   };
-
-  const togglePersist = () => {
-    setPersist(prev => !prev);
-  }
-
-  useEffect(() => {
-    localStorage.setItem('persist', persist);
-  }, [persist]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -179,8 +174,7 @@ export default function Login() {
                 ref={userRef}
                 label="Username"
                 autoComplete='on'
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
+                {...userAttributes}
               />
               <TextField
                 margin="normal"
@@ -195,11 +189,10 @@ export default function Login() {
               <FormControlLabel
                 control={
                 <Checkbox 
-                   value="remember" 
                    color="primary"
                    id = "remember"
-                    onChange={togglePersist}
-                    checked={persist}
+                   onChange={toggleCheck}
+                   checked={check}
                   />}
                 label="Remember me"
               />
