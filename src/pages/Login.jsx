@@ -17,7 +17,8 @@ import Divider from '@mui/material/Divider';
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/posts'
-import {useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Snackbar, Alert, AlertTitle } from '@mui/material';
 
 
 function Copyright(props) {
@@ -40,11 +41,11 @@ const defaultTheme = createTheme();
 
 export default function Login() {
 
-  const { setAuth,auth} = useAuth();
+  const { setAuth, auth, persist, setPersist } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/'; 
+  const from = location.state?.from?.pathname || '/';
   const userRef = useRef();
   const errRef = useRef();
 
@@ -52,12 +53,17 @@ export default function Login() {
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
 
+  const handleClose = () => {
+    setErrMsg('');
+  };
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const formWidth = isXsScreen ? '70%' : '50%';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -73,16 +79,16 @@ export default function Login() {
       setAuth({ user, pwd, role, accessToken });
       setUser('');
       setPwd('');
-      if(role ==='traffic-police'){
+      if (role === 'traffic-police') {
         navigate('/traffic-police');
-      }else if(role ==='general-user'){
+      } else if (role === 'general-user') {
         navigate('/general-user');
-      }else if(role==='police-operator'){
+      } else if (role === 'police-operator') {
         navigate('/police-operator');
-      }else{
+      } else {
         navigate(from);
       }
-      
+
     } catch (err) {
       if (!err?.response) {
         setErrMsg('Network error');
@@ -93,13 +99,38 @@ export default function Login() {
       } else {
         setErrMsg('Login failed, try again');
       }
-      errRef.current.focus();
+     
     }
   };
 
+  const togglePersist = () => {
+    setPersist(prev => !prev);
+  }
+
+  useEffect(() => {
+    localStorage.setItem('persist', persist);
+  }, [persist]);
+
   return (
     <ThemeProvider theme={defaultTheme}>
-      <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+      <Snackbar
+        open={Boolean(errMsg)}
+        autoHideDuration={6000} // Adjust the duration as needed
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Alert
+          severity="error"
+          onClose={handleClose}
+          role="alert"
+          variant = "filled"
+        >
+          {errMsg}
+        </Alert>
+      </Snackbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
 
         <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
@@ -162,7 +193,14 @@ export default function Login() {
                 value={pwd}
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={
+                <Checkbox 
+                   value="remember" 
+                   color="primary"
+                   id = "remember"
+                    onChange={togglePersist}
+                    checked={persist}
+                  />}
                 label="Remember me"
               />
               <Button

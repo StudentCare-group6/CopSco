@@ -25,6 +25,7 @@ import { FormProvider } from "./context/FormContext";
 import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./pages/Unauthorized";
 import useAuth from "./hooks/useAuth";
+import PersistLogin from "./components/PersistLogin";
 
 export default function App() {
   const THEME = createTheme({
@@ -51,31 +52,36 @@ export default function App() {
           {/* protected routes */}
 
           {/* traffic police routes */}
-          <Route element={<RequireAuth allowedRole="traffic-police" />}>
-            <Route path="traffic-police/" element={<TrafficPoliceRoutes />}>
-              <Route path="" element={<Home />} />
-              <Route path="user-details" element={<UserDetails />} />
-              <Route path="notifications" element={<Notifications />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="statistics" element={<Statistics />} />
-              <Route path="information" element={<Information />} />
-              <Route path="issue-fine" element={<IssueFine />} />
-              <Route path="fine-confirmation" element={<FineConfirmation />} />
-              <Route path="fine-print" element={<FinePrint />} />
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth allowedRole="traffic-police" />}>
+              <Route path="traffic-police/" element={<TrafficPoliceRoutes />}>
+                <Route path="" element={<Home />} />
+                <Route path="user-details" element={<UserDetails />} />
+                <Route path="notifications" element={<Notifications />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="statistics" element={<Statistics />} />
+                <Route path="information" element={<Information />} />
+                <Route path="issue-fine" element={<IssueFine />} />
+                <Route
+                  path="fine-confirmation"
+                  element={<FineConfirmation />}
+                />
+                <Route path="fine-print" element={<FinePrint />} />
+              </Route>
             </Route>
-          </Route>
 
-          {/* general user routes */}
-          <Route element={<RequireAuth allowedRole="general-user" />}>
-            <Route path="general-user/" element={<GeneralUserRoutes />}>
-              <Route path="" element={<UploadPage />} />
+            {/* general user routes */}
+            <Route element={<RequireAuth allowedRole="general-user" />}>
+              <Route path="general-user/" element={<GeneralUserRoutes />}>
+                <Route path="" element={<UploadPage />} />
+              </Route>
             </Route>
-          </Route>
-          {/* police operator routes */}
-          <Route element={<RequireAuth allowedRole="police-operator" />}>
-            <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
-              <Route path="" element={<VideoList />} />
-              <Route path="video-details" element={<VideoDetails />} />
+            {/* police operator routes */}
+            <Route element={<RequireAuth allowedRole="police-operator" />}>
+              <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
+                <Route path="" element={<VideoList />} />
+                <Route path="video-details" element={<VideoDetails />} />
+              </Route>
             </Route>
           </Route>
         </Route>

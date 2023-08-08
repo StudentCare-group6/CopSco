@@ -10,14 +10,17 @@ import Profile from '../Traffic police/ProfilePic.jsx';
 import HelpIcon from '@mui/icons-material/Help';
 import Stack from '@mui/material/Stack';
 import { MuiBreadcrumbs } from '../Traffic police/Breadcrumbs';
+import useAuth from '../../hooks/useAuth';
 
 
 export default function Header() {
-
+    const { auth } = useAuth();
+    const userName = auth.user
     const profileElements = ProfileData.map(profile => {
         return <Profile
             key={profile.id} // to remove a warning
             profile={profile}
+            name = {userName}
         />
     });
 

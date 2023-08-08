@@ -11,9 +11,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { HomeIcon, UserCircleIcon, BellIcon, PresentationChartLineIcon, InformationCircleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
+import useLogout from '../../hooks/useLogout';
 
 const drawerWidth = 240;
 
@@ -88,6 +89,16 @@ export default function Sidebar() {
         }
     });
 
+    const Navigate = useNavigate();
+
+
+    const logout = useLogout();
+
+    const signOut = async () => {
+        await logout();
+        Navigate('/login');
+    }
+
     const location = useLocation();
 
     const isActiveRoute = (route) => {
@@ -135,7 +146,7 @@ export default function Sidebar() {
 
     ];
 
-    const routes = ['/traffic-police/', '/traffic-police/profile', '/traffic-police/notifications', '/traffic-police/statistics', '/traffic-police/information', '/traffic-police/logout'];
+    const routes = ['/traffic-police/', '/traffic-police/profile', '/traffic-police/notifications', '/traffic-police/statistics', '/traffic-police/information'];
 
     return (
 
@@ -155,9 +166,8 @@ export default function Sidebar() {
                     {['Home', 'Profile', 'Notifications', 'Analytics', 'Information', 'Log out'].map((text, index) => {
                         const route = routes[index];
                         const isActive = isActiveRoute(route);
-
-                        return (
-                            <Link to={routes[index]}>
+                        if (index === 5) {
+                            return (
                                 <ListItem key={text} disablePadding sx={{ display: 'block' }} className={isActive ? 'text-slate-950 bg-slate-400 rounded-lg' : ' text-slate-400 hover:bg-slate-600 rounded-lg'}>
                                     <ListItemButton
                                         sx={{
@@ -165,8 +175,9 @@ export default function Sidebar() {
                                             justifyContent: open ? 'initial' : 'center',
                                             px: 2.5,
                                         }}
+                                        onClick={signOut}
                                     >
-                                        <Link to={routes[index]}><ListItemIcon
+                                        <ListItemIcon
                                             sx={{
                                                 minWidth: 0,
                                                 mr: open ? 3 : 'auto',
@@ -176,12 +187,39 @@ export default function Sidebar() {
 
                                             {isActive ? icons[index].active : icons[index].inactive}
 
-                                        </ListItemIcon></Link>
+                                        </ListItemIcon>
                                         <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                                     </ListItemButton>
                                 </ListItem>
-                            </Link>
-                        );
+                            );
+                        } else {
+                            return (
+                                <Link to={routes[index]}>
+                                    <ListItem key={text} disablePadding sx={{ display: 'block' }} className={isActive ? 'text-slate-950 bg-slate-400 rounded-lg' : ' text-slate-400 hover:bg-slate-600 rounded-lg'}>
+                                        <ListItemButton
+                                            sx={{
+                                                minHeight: 48,
+                                                justifyContent: open ? 'initial' : 'center',
+                                                px: 2.5,
+                                            }}
+                                        >
+                                            <Link to={routes[index]}><ListItemIcon
+                                                sx={{
+                                                    minWidth: 0,
+                                                    mr: open ? 3 : 'auto',
+                                                    justifyContent: 'center',
+                                                }}
+                                            >
+
+                                                {isActive ? icons[index].active : icons[index].inactive}
+
+                                            </ListItemIcon></Link>
+                                            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                                        </ListItemButton>
+                                    </ListItem>
+                                </Link>
+                            );
+                        }
                     })}
                 </List>
             </Drawer>

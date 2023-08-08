@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route, Routes, Outlet } from "react-router-dom";
 import { CssBaseline, useMediaQuery } from "@mui/material";
-import Header from "../../components/General user/Header";
+import Header from "../../components/Traffic police/Header";
 import DrawerComponent from "../../components/Traffic police/Appbar";
 import Sidebar from "../../components/Traffic police/Sidebar";
 import Box from "@mui/material/Box";
