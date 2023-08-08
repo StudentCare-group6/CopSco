@@ -11,16 +11,20 @@ const PersistLogin = () => {
   const { auth, persist } = useAuth();
 
   useEffect(() => {
+    let isMounted = true;
+
     const verifyRefresh = async () => {
       try {
         await refresh(); //get response from refresh if token is expired
       } catch (err) {
         console.log(err);
       } finally {
-        setIsLoading(false); //prevent infinite loop
+        isMounted && setIsLoading(false); //prevent infinite loop
       }
     };
     !auth?.accessToken ? verifyRefresh() : setIsLoading(false); //if no access token, verify refresh
+
+    return () => isMounted = false;
   }, []);
 
   useEffect(() => {
