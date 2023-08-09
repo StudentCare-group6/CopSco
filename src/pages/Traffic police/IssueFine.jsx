@@ -64,10 +64,10 @@ export default function IssueFine() {
 
     const navigate = useNavigate();
 
-    const { register, errors, handleSubmit,getValues, setValue } = useFormContext();
+    const { register, errors, handleSubmit, getValues, setValue } = useFormContext();
     const handleOffencesChange = (event) => {
         setSelectedOffences(event.target.value);
-      };
+    };
 
     const LicenseData = [date, time, 'B 1234'];
 
@@ -90,7 +90,8 @@ export default function IssueFine() {
             <Box sx={{ marginTop: '3%' }} x>
                 <Grid item lg={12} align='center'>
                     <Paper className='shadow-md' sx={{
-                        gap: 3, boxShadow: 'none', display: 'flex', width: '50%', flexDirection: 'column', padding: 5, borderRadius: 4, [theme.breakpoints.down('md')]: {
+                        gap: 3, boxShadow: 'none', display: 'flex', width: '50%', flexDirection: 'column', padding: 5, borderRadius: 4,
+                        [theme.breakpoints.down('md')]: {
                             width: '100%', // Width for small screens
                         },
                         [theme.breakpoints.between('md', 'xl')]: {
@@ -122,7 +123,6 @@ export default function IssueFine() {
                                         ))}
 
                                     </TextField>
-                                    {errors.province?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.province?.message}</Alert> : ""}
                                     <TextField
                                         id='vehicleNo'
                                         margin="normal"
@@ -138,7 +138,14 @@ export default function IssueFine() {
                                             }
                                         })}
                                     />
-                                    {errors.vehicleNo?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.vehicleNo?.message}</Alert> : ""}
+                                </Stack>
+                                <Stack direction='row' gap={3}>
+                                    <Box>
+                                        {errors.province?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.province?.message}</Alert> : ""}
+                                    </Box>
+                                    <Box>
+                                        {errors.vehicleNo?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.vehicleNo?.message}</Alert> : ""}
+                                    </Box>
                                 </Stack>
 
 
@@ -192,10 +199,10 @@ export default function IssueFine() {
                                         multiple: true,
                                         value: selectedOffences, // Set the selected values here
                                         onChange: handleOffencesChange, // Handle selection changes
-                                      }}
-                                      {...register("offences", {
+                                    }}
+                                    {...register("offences", {
                                         required: "field required"
-                                      })}
+                                    })}
                                 >
                                     {offences.map((value) => (
                                         <MenuItem key={value} value={value}>{value}</MenuItem>
