@@ -10,39 +10,60 @@ import useFormContext from '../../hooks/useFormContext';
 import FormList from "../../components/Traffic police/FineConfirmation/FormList";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import { useNavigate} from 'react-router-dom';
+
+function Text(props) {
+  return (
+    <Typography component="div" className='text-md font-bold'>
+      {props.text}
+    </Typography>
+  );
+}
 
 export default function FineConfirmation() {
+  const navigate = useNavigate();
   const theme = useTheme();
   const { register, errors, handleSubmit, getValues, setValue } = useFormContext();
-  const data = getValues('date');
-  const LicenseDetails = [
-    "Ref No.",
-    "Driver License No.",
+  const FineDetails = [
+    "Driver License",
     "Date of Issue",
     "Time of Issue",
     "Vehicle No.",
-    "Fine Amount",
-    "Type of Offence(s)",
     "Police Division",
-    "Demerit Points",
-    "Due Date",
+    "Police Station",
   ];
-  const LicenseData = [
-      "123456789",
-      "123456789",
-      getValues('date'),
-      getValues('time'),
-      getValues('vehicleNo'),
-      "Rs. 500",
-      getValues('offences')[0],
-      getValues('offences')[1],
-      getValues('offences')[2],
-      "Colombo",
-      "8",
-      "01/01/2021",
-  
+  const FineData = [
+    "123456789",
+    getValues('date'),
+    getValues('time'),
+    getValues('vehicleNo'),
+    getValues('divisionTitle'),
+    getValues('station'),
   ];
-  console.log(data);
+
+  //implement go back function
+  const handleBack = () => {
+    navigate('/traffic-police/issue-fine');
+  };
+
+  const violations = getValues('offences');
+  const violationPrices = getValues('prices');
+  const demeritPoints = getValues('demeritPoints');
+  //get sum of violation prices
+  const totalPrice = violationPrices.reduce((a, b) => a + b, 0);
+  const totalDemeritPoints = demeritPoints.reduce((a, b) => a + b, 0);
+  const ViolationDetails = [<Text text='Type of Offence(s):' />];
+  const ViolationData = [''];
+  violations.forEach(element => {
+    ViolationDetails.push(element);
+    ViolationData.push('Rs. ' + violationPrices[violations.indexOf(element)]);
+  });
+  ViolationDetails.push(<Text text='Total Fine Amount:' />);
+  ViolationData.push('Rs. ' + totalPrice);
+  ViolationDetails.push(<Text text='Total Demerit Points:' />);
+  ViolationData.push(totalDemeritPoints);
+
   return (
     <>
       <Box>
@@ -50,8 +71,8 @@ export default function FineConfirmation() {
       </Box>
       <Box sx={{ marginTop: "20px" }}>
         <Stack direction="row" justifyContent='center' >
-          <Grid container sx={{ width: '50%', [theme.breakpoints.down('sm')]: { width: '100%' } }}>
-            <Grid item lg={12} align="center" sx={{ width: '100%' }}>
+          <Grid container gap={2} sx={{ width: '50%', [theme.breakpoints.down('sm')]: { width: '100%' } }}>
+            <Grid item lg={12} align="center">
               <Paper
                 className="shadow-md"
                 sx={{
@@ -61,7 +82,6 @@ export default function FineConfirmation() {
                   width: "75%",
                   flexDirection: "column",
                   padding: 5,
-                  borderRadius: 4,
                   [theme.breakpoints.down('sm')]: { width: '100%' }
                 }}
               >
@@ -73,8 +93,52 @@ export default function FineConfirmation() {
                   Fine Details
                 </Typography>
                 <Stack direction="column" alignItems="center" justifyContent="center">
-                  <FormList detailsArr={LicenseDetails} dataArr={LicenseData} />
+                  <FormList detailsArr={FineDetails} dataArr={FineData} />
+                </Stack>
+              </Paper>
+            </Grid>
+            <Grid item lg={12} align="center">
+              <Paper
+                className="shadow-md"
+                sx={{
+                  gap: 3,
+                  boxShadow: "none",
+                  display: "flex",
+                  width: "75%",
+                  flexDirection: "column",
+                  padding: 5,
+                  [theme.breakpoints.down('sm')]: { width: '100%' }
+                }}
+              >
+                <Typography
+                  component="div"
+                  className="text-2xl text-center text-slate-950 font-semibold subpixel-antialiased"
+                  sx={{ fontFamily: "inter" }}
+                >
+                  Violation Details
+                </Typography>
+                <Stack direction="column" alignItems="center" justifyContent="center">
+                  <FormList detailsArr={ViolationDetails} dataArr={ViolationData} />
+                </Stack>
+                <Stack direction='row' gap={2} className = 'mx-10' justifyContent='space-evenly'>
+                  <Button
+                    onClick={handleBack}
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2, width: '150px' }}
 
+                  >
+                    Back
+                  </Button>
+
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2, width: '150px' }}
+
+                  >
+                    Issue fine
+                  </Button>
                 </Stack>
               </Paper>
             </Grid>

@@ -14,11 +14,12 @@ import MenuItem from '@mui/material/MenuItem';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FormList from '../../components/Traffic police/IssueFine/FormList';
 import { CalendarDaysIcon, ClockIcon, CreditCardIcon } from '@heroicons/react/24/outline'
-import { policeDivisions, policeStations, offences, provinces } from '../../components/Traffic police/Constants';
+import { policeDivisions, policeStations, offences, provinces, demeritPoints } from '../../components/Traffic police/Constants';
 import useFormContext from '../../hooks/useFormContext';
 import { Alert } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Watch } from '@mui/icons-material';
 
 
 function DateText() {
@@ -59,14 +60,34 @@ const LicenseDetails = [<DateText />, <TimeText />, <LicenseText />];
 export default function IssueFine() {
     const currentDate = new Date();
     const [selectedOffences, setSelectedOffences] = useState([]); // State to hold selected offences
+    const [selectedPrices, setSelectedPrices] = useState([]);
+    const [selectedDemerit, setSelectedDemerit] = useState([]); // State to hold selected offences
+    const [selectedDivision, setSelectedDivision] = useState([]); // State to hold selected offences
+    const [selectedDivisionCode, setSelectedDivisionCode] = useState(''); // State to hold selected offences
+
     const date = currentDate.toLocaleDateString('en-GB'); // Formats as "dd/mm/yyyy"
     const time = currentDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
     const navigate = useNavigate();
 
-    const { register, errors, handleSubmit, getValues, setValue } = useFormContext();
+    const { register, errors, handleSubmit, getValues, setValue, watch } = useFormContext();
     const handleOffencesChange = (event) => {
-        setSelectedOffences(event.target.value);
+        const selectedValues = event.target.value;
+        setSelectedOffences(selectedValues);
+
+        const selectedPrices = selectedValues.map(offence => offences.get(offence));
+        setSelectedPrices(selectedPrices);
+
+        const selectedDemerit = selectedValues.map(offence => demeritPoints.get(offence));
+        setSelectedDemerit(selectedDemerit);
+    };
+
+    const handleDivisionChange = (event) => {
+        const selectedValue = event.target.value;
+        setSelectedDivision(selectedValue);
+
+        const selectedDivisionCode = policeDivisions.get(selectedValue);
+        setSelectedDivisionCode(selectedDivisionCode);
     };
 
     const LicenseData = [date, time, 'B 1234'];
@@ -74,6 +95,9 @@ export default function IssueFine() {
     const theme = useTheme();
 
     const onSubmit = async e => {
+        setValue("prices", selectedPrices);
+        setValue("demeritPoints", selectedDemerit);
+        setValue("division", selectedDivisionCode);
         setValue("date", date);
         setValue("time", time);
         const data = getValues();
@@ -87,10 +111,10 @@ export default function IssueFine() {
             <Box>
                 <CustomizedSteppers step={2} />
             </Box>
-            <Box sx={{ marginTop: '3%' }} x>
+            <Box sx={{ marginTop: '3%' }} >
                 <Grid item lg={12} align='center'>
                     <Paper className='shadow-md' sx={{
-                        gap: 3, boxShadow: 'none', display: 'flex', width: '50%', flexDirection: 'column', padding: 5, borderRadius: 4,
+                        gap: 3, boxShadow: 'none', display: 'flex', width: '50%', flexDirection: 'column', padding: 5,
                         [theme.breakpoints.down('md')]: {
                             width: '100%', // Width for small screens
                         },
@@ -112,7 +136,6 @@ export default function IssueFine() {
                                         margin="normal"
                                         fullWidth
                                         select
-
                                         {...register("province", {
                                             required: "field required"
                                         })}
@@ -159,13 +182,17 @@ export default function IssueFine() {
                                         sx: {
                                             height: '50px',
                                         },
+                                        value: selectedDivision,
+                                        onChange: handleDivisionChange,
                                     }}
-                                    {...register("division", {
+                                    {...register("divisionTitle", {
                                         required: "field required"
                                     })}
                                 >
-                                    {policeDivisions.map((value) => (
-                                        <MenuItem key={value} value={value}>{value}</MenuItem>
+                                    {Array.from(policeDivisions.keys()).map((division) => (
+                                        <MenuItem key={division} value={division}>
+                                            {division}
+                                        </MenuItem>
                                     ))}
                                 </TextField>
                                 {errors.division?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.division?.message}</Alert> : ""}
@@ -193,49 +220,64 @@ export default function IssueFine() {
                                     id='offences'
                                     margin="normal"
                                     label='Violation(s)'
-                                    select
                                     fullWidth
+                                    select
                                     SelectProps={{
                                         multiple: true,
-                                        value: selectedOffences, // Set the selected values here
-                                        onChange: handleOffencesChange, // Handle selection changes
+                                        value: selectedOffences,
+                                        onChange: handleOffencesChange,
                                     }}
                                     {...register("offences", {
                                         required: "field required"
                                     })}
                                 >
-                                    {offences.map((value) => (
-                                        <MenuItem key={value} value={value}>{value}</MenuItem>
+                                    {Array.from(offences.keys()).map((offence) => (
+                                        <MenuItem key={offence} value={offence}>
+                                            {offence}
+                                        </MenuItem>
                                     ))}
                                 </TextField>
-                                {errors.offences?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.offences?.message}</Alert> : ""}
-                                <Stack direction='row' gap={2}>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="contained"
-                                        sx={{ mt: 3, mb: 2 }}
+                                {/* Display selected offences and their corresponding prices */}
+                                {selectedOffences.length > 0 && (
+                                    <Stack alignItems='flex-start' margin>
+                                        <Typography variant="body1" color="initial" className='font-bold'>Selected offences and fine amounts: </Typography>
+                                        <ul>
+                                            {selectedOffences.map((offence, index) => (
+                                                <li key={offence} align = 'left' className='mt-5 text-sm'>
+                                                    {offence}: {selectedPrices[index]}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </Stack>
+                                )}
+                        {errors.offences?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.offences?.message}</Alert> : ""}
+                        <Stack direction='row' gap={2}>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
 
-                                    >
-                                        Back
-                                    </Button>
+                            >
+                                Back
+                            </Button>
 
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="contained"
-                                        sx={{ mt: 3, mb: 2 }}
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
 
-                                    >
-                                        Issue fine
-                                    </Button>
-                                </Stack>
-
-                            </Box>
+                            >
+                                Issue fine
+                            </Button>
                         </Stack>
-                    </Paper>
-                </Grid>
-            </Box>
+
+                    </Box>
+                </Stack>
+            </Paper>
+        </Grid>
+            </Box >
         </>
 
     );
