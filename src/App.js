@@ -16,6 +16,7 @@ import FinePrint from "./pages/Traffic police/FinePrint";
 import UploadPage from "./pages/GeneralUser/UploadPage";
 import VideoList from "./pages/PoliceOperator/VideoList";
 import VideoDetails from "./pages/PoliceOperator/VideoDetails";
+import Login2 from "./pages/Login2";
 import { useState, useEffect } from "react";
 import Registration from "./pages/GeneralUserRegistration/RegistrationPage";
 import Login from "./pages/Login";
@@ -26,6 +27,7 @@ import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./pages/Unauthorized";
 import useAuth from "./hooks/useAuth";
 import PersistLogin from "./components/PersistLogin";
+import {DetailsProvider} from "./context/userDetailsContext";
 
 export default function App() {
   const THEME = createTheme({
@@ -47,22 +49,23 @@ export default function App() {
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<FormProvider><Registration /></FormProvider>} />
           <Route path="unauthorized" element={<Unauthorized />} />
+          <Route path="/copsco/login" element={<Login2/>} />
           {/* protected routes */}
 
           {/* traffic police routes */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRole="traffic-police" />}>
               <Route path="traffic-police/" element={<TrafficPoliceRoutes />}>
-                <Route path="" element={<Home />} />
-                <Route path="user-details" element={<UserDetails />} />
+                <Route path="" element={<DetailsProvider><Home /></DetailsProvider>} />
+                <Route path="user-details" element={<DetailsProvider><UserDetails /></DetailsProvider>} />
                 <Route path="notifications" element={<Notifications />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="statistics" element={<Statistics />} />
                 <Route path="information" element={<Information />} />
-                <Route path="issue-fine" element={<FormProvider><IssueFine /></FormProvider>} />
+                <Route path="issue-fine" element={<DetailsProvider><FormProvider><IssueFine /></FormProvider></DetailsProvider>} />
                 <Route
                   path="fine-confirmation"
-                  element={<FormProvider><FineConfirmation /></FormProvider>}
+                  element={<DetailsProvider><FormProvider><FineConfirmation /></FormProvider></DetailsProvider>}
                 />
                 <Route path="fine-print" element={<FinePrint />} />
               </Route>

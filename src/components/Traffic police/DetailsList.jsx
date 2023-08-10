@@ -7,7 +7,7 @@ export default function DetailsList(props) {
 
 
     return (
-        <List sx={{ width: '100%', maxWidth: 360 }}>
+        <List sx={{ width: '100%' }}>
             {props.detailsArr.map((value) => (
                 <ListItem
                     key={value}

@@ -20,6 +20,7 @@ import { Alert } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Watch } from '@mui/icons-material';
+import useDetailsContext from '../../hooks/useDetailsContext';
 
 
 function DateText() {
@@ -55,9 +56,12 @@ function LicenseText() {
     )
 }
 
-const LicenseDetails = [<DateText />, <TimeText />, <LicenseText />];
+const LicenseKeys = [<DateText />, <TimeText />, <LicenseText />];
 
 export default function IssueFine() {
+
+    const {LicenseDetails} = useDetailsContext();
+    const licenseNo = LicenseDetails.licenseNumber
     const currentDate = new Date();
     const [selectedOffences, setSelectedOffences] = useState([]); // State to hold selected offences
     const [selectedPrices, setSelectedPrices] = useState([]);
@@ -90,7 +94,7 @@ export default function IssueFine() {
         setSelectedDivisionCode(selectedDivisionCode);
     };
 
-    const LicenseData = [date, time, 'B 1234'];
+    const LicenseData = [date, time, licenseNo];
 
     const theme = useTheme();
 
@@ -100,6 +104,7 @@ export default function IssueFine() {
         setValue("division", selectedDivisionCode);
         setValue("date", date);
         setValue("time", time);
+        // setValue("licenseNo", 'hutta');
         const data = getValues();
         console.log(data);
         navigate('/traffic-police/fine-confirmation');
@@ -128,7 +133,7 @@ export default function IssueFine() {
                         <Stack direction='column' alignItems="center" spacing={5} justifyContent='space-evenly'>
                             <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1, width: formWidth }}>
 
-                                <FormList detailsArr={LicenseDetails} dataArr={LicenseData} />
+                                <FormList detailsArr={LicenseKeys} dataArr={LicenseData} />
                                 <Stack direction='row' gap={3}>
                                     <TextField
                                         id='province'

@@ -34,7 +34,7 @@ export default function FineConfirmation() {
     "Police Station",
   ];
   const FineData = [
-    "123456789",
+
     getValues('date'),
     getValues('time'),
     getValues('vehicleNo'),
@@ -53,6 +53,8 @@ export default function FineConfirmation() {
   //get sum of violation prices
   const totalPrice = violationPrices.reduce((a, b) => a + b, 0);
   const totalDemeritPoints = demeritPoints.reduce((a, b) => a + b, 0);
+  setValue('totalPrice', totalPrice);
+  setValue('totalDemeritPoints', totalDemeritPoints);
   const ViolationDetails = [<Text text='Type of Offence(s):' />];
   const ViolationData = [''];
   violations.forEach(element => {
@@ -64,14 +66,19 @@ export default function FineConfirmation() {
   ViolationDetails.push(<Text text='Total Demerit Points:' />);
   ViolationData.push(totalDemeritPoints);
 
+  const onSubmit = async e => {
+    const data = getValues();
+    console.log(data);
+};
+
   return (
     <>
       <Box>
         <CustomizedSteppers step={3} />
       </Box>
       <Box sx={{ marginTop: "20px" }}>
-        <Stack direction="row" justifyContent='center' >
-          <Grid container gap={2} sx={{ width: '50%', [theme.breakpoints.down('sm')]: { width: '100%' } }}>
+        <Stack direction="row" justifyContent='center' alignItems='center' >
+          <Grid container component='form' justifyContent = 'center' onSubmit={handleSubmit(onSubmit)} gap={2} sx={{ width: '50%', [theme.breakpoints.down('sm')]: { width: '100%' } }}>
             <Grid item lg={12} align="center">
               <Paper
                 className="shadow-md"
@@ -131,7 +138,7 @@ export default function FineConfirmation() {
                   </Button>
 
                   <Button
-                    type="submit"
+                    type = 'submit'
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2, width: '150px' }}
