@@ -28,6 +28,7 @@ import Unauthorized from "./pages/Unauthorized";
 import useAuth from "./hooks/useAuth";
 import PersistLogin from "./components/PersistLogin";
 import {DetailsProvider} from "./context/userDetailsContext";
+import LandingPage from "./pages/LandingPage";
 
 export default function App() {
   const THEME = createTheme({
@@ -46,6 +47,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* public routes */}
+          <Route path="" element={<LandingPage />} />
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<FormProvider><Registration /></FormProvider>} />
           <Route path="unauthorized" element={<Unauthorized />} />

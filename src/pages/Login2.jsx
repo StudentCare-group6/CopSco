@@ -203,11 +203,6 @@ export default function Login2() {
                     Forgot password?
                   </Link2>
                 </Grid>
-                <Grid item>
-                  <Link2 href="/registration" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link2>
-                </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
