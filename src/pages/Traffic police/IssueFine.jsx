@@ -100,11 +100,12 @@ export default function IssueFine() {
 
     const onSubmit = async e => {
         setValue("prices", selectedPrices);
-        setValue("demeritPoints", selectedDemerit);
-        setValue("division", selectedDivisionCode);
+        setValue("demeritPoint", selectedDemerit);
+        setValue("policeDivisonID",112);
         setValue("date", date);
         setValue("time", time);
-        // setValue("licenseNo", 'hutta');
+        setValue("licenseNumber",licenseNo);
+        setValue("typeOfOffence",0);
         const data = getValues();
         console.log(data);
         navigate('/traffic-police/fine-confirmation');
@@ -141,7 +142,7 @@ export default function IssueFine() {
                                         margin="normal"
                                         fullWidth
                                         select
-                                        {...register("province", {
+                                        {...register("vehicleProvince", {
                                             required: "field required"
                                         })}
                                     >
@@ -158,7 +159,7 @@ export default function IssueFine() {
                                         fullWidth
                                         type="text"
                                         label="Vehicle No."
-                                        {...register("vehicleNo", {
+                                        {...register("vehicleNumber", {
                                             required: "field required",
                                             pattern: {
                                                 value: /^[A-Za-z]+-\d+$/i,
@@ -232,7 +233,7 @@ export default function IssueFine() {
                                         value: selectedOffences,
                                         onChange: handleOffencesChange,
                                     }}
-                                    {...register("offences", {
+                                    {...register("description", {
                                         required: "field required"
                                     })}
                                 >

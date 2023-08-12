@@ -1,17 +1,63 @@
 import * as React from "react";
-import TextField from "@mui/material/TextField";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import InputAdornment from "@mui/material/InputAdornment";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import VideoCard from "../../components/General user/video_upload/VideoCard";
 import ComplaintDialog from "../../components/General user/video_upload/ComplaintForm";
+import EditorDialog from "../../components/General user/video_upload/EditorDialog";
 
 const VideoCardRenderer = ({ vidName, vidPreview }) => {
   return <VideoCard vidName={vidName} vidPreview={vidPreview} />;
 };
 
 const data = [
+  {
+    vidPreview: "violation.jpg",
+    vidName:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    status: "Pending Review",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    vidName:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    status: "Pending Review",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    vidName:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    status: "Pending Review",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    vidName:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    status: "Pending Review",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    vidName:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    status: "Pending Review",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    vidName:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    status: "Pending Review",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
   {
     vidPreview: "violation.jpg",
     vidName:
@@ -65,38 +111,18 @@ export default function UploadPage() {
 
   return (
     <div>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 3, height: '100vh' }}>
           <Box>
-            <div className="flex justify-center my-6 mx-8">
-              <div className="flex items-center">
-                <TextField
-                  id="input-with-icon-textfield"
-                  placeholder="Search across your profile"
-                  variant="outlined"
-                  autoFocus={false}
-                  size="small"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchOutlinedIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </div>
-
-            </div>
-
-            <div className="flex flex-row justify-between mx-10 mt-14 font-sans">
+            <div className="flex flex-row justify-between mx-10 mt-14">
               <h1 className="text-3xl font-bold">Your Uploads</h1>
               {/* <UploadDialog /> */}
-              {/* <EditorDialog /> */}
-              <ComplaintDialog />
+              <EditorDialog />
+              {/* <ComplaintDialog /> */}
             </div>
 
             <div
               style={{
-                height: 400,
+                height: "70vh",
                 width: "95%",
                 margin: "auto",
                 marginTop: "4rem",

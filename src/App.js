@@ -29,6 +29,7 @@ import useAuth from "./hooks/useAuth";
 import PersistLogin from "./components/PersistLogin";
 import {DetailsProvider} from "./context/userDetailsContext";
 import LandingPage from "./pages/LandingPage";
+import UserFines from "./pages/GeneralUser/UserFines";
 
 export default function App() {
   const THEME = createTheme({
@@ -77,6 +78,7 @@ export default function App() {
             <Route element={<RequireAuth allowedRole="general-user" />}>
               <Route path="general-user/" element={<GeneralUserRoutes />}>
                 <Route path="" element={<UploadPage />} />
+                <Route path="fines" element={<UserFines />} />
               </Route>
             </Route>
             {/* police operator routes */}

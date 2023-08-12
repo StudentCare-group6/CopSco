@@ -69,7 +69,7 @@ export default function Login2() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('auth/login',
+      const response = await axios.post('copsco/login',
         JSON.stringify({ username: user, pass: pwd }),
         {
           headers: { 'Content-Type': 'application/json' },
