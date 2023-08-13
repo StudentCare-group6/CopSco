@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Editor from './Editor';
 import ModalButton from './ModalButton';
-
+import useFormContext from '../../../hooks/useFormContext';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -57,12 +57,16 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
     const theme = useTheme();
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
+    const { page, setPage } = useFormContext();
+    const handleNext = () => setPage(page + 1);
+    const handleBack = () => setPage(page - 1);
   
     const handleClickOpen = () => {
       setOpen(true);
     };
     const handleClose = () => {
+      handleBack();
       setOpen(false);
     };
   
@@ -75,7 +79,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
           open={open}
-          sx={{height: '80vh' }}
+          sx={{height: '100vh' }}
         >
           <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
             <center><b>Upload Evidence</b></center>
@@ -84,7 +88,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
             <Editor/>
           </DialogContent>
           <DialogActions>
-            <ModalButton buttonText={"NEXT"} type={"primary"} />
+            <ModalButton buttonText={"NEXT"} type={"primary"} onClick ={handleNext} />
         </DialogActions>
         </BootstrapDialog>
       </div>

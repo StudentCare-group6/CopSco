@@ -81,7 +81,7 @@ export default function App() {
             {/* general user routes */}
             <Route element={<RequireAuth allowedRole="general-user" />}>
               <Route path="general-user/" element={<GeneralUserRoutes />}>
-                <Route path="" element={<FineProvider><UploadPage /></FineProvider>} />
+                <Route path="" element={<FineProvider><FormProvider><UploadPage /></FormProvider></FineProvider>} />
                 <Route path="fines" element={<FineProvider><UserFines /></FineProvider>} />
               </Route>
             </Route>
