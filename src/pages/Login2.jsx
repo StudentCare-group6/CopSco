@@ -28,7 +28,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link2 color="inherit" href="https://mui.com/">
-        Your Website
+        CopSco
       </Link2>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -64,7 +64,7 @@ export default function Login2() {
   }, []);
 
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-  const formWidth = isXsScreen ? '70%' : '50%';
+  const formWidth = isXsScreen ? '70%' : '20%';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -128,7 +128,7 @@ export default function Login2() {
       </Snackbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
 
-        <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
           <Typography sx={{ margin: '20px' }} component="h1" variant="h5" className='font-extrabold text-black' >
             CopSco
           </Typography>
@@ -139,6 +139,7 @@ export default function Login2() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
 
@@ -209,9 +210,6 @@ export default function Login2() {
           </Box>
         </Grid>
         <CssBaseline />
-        <Grid item xs={false} sm={4} md={6}>
-          <ImageSlideShow />
-        </Grid>
       </Grid>
     </ThemeProvider>
   );
