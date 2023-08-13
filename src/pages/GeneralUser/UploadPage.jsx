@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import CircleIcon from "@mui/icons-material/Circle";
+import UploadDialog from "../../components/General user/video_upload/UploadDialog";
 
 
 const VideoCardRenderer = ({ vidName, vidPreview }) => {
@@ -159,8 +160,8 @@ export default function UploadPage() {
         <Box>
           <div className="flex flex-row justify-between mx-10 mt-14">
             <h1 className="text-3xl font-bold">Your Uploads</h1>
-            {/* <UploadDialog /> */}
-            <EditorDialog />
+            <UploadDialog />
+            {/* <EditorDialog /> */}
             {/* <ComplaintDialog /> */}
           </div>
 
