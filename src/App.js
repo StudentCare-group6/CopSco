@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import TrafficPoliceRoutes from "./setup/routes/TrafficPolice";
 import GeneralUserRoutes from "./setup/routes/GeneralUser";
 import PoliceOperatorRoutes from "./setup/routes/PoliceOperator";
+import PoliceDivisionRoutes from "./setup/routes/PoliceDivision";
 import Home from "./pages/Traffic police/Home";
 import UserDetails from "./pages/Traffic police/UserDetails";
 import Notifications from "./pages/Traffic police/Notifications";
@@ -14,8 +15,6 @@ import IssueFine from "./pages/Traffic police/IssueFine";
 import FineConfirmation from "./pages/Traffic police/FineConfirmation";
 import FinePrint from "./pages/Traffic police/FinePrint";
 import UploadPage from "./pages/GeneralUser/UploadPage";
-import VideoList from "./pages/PoliceOperator/VideoList";
-import VideoDetails from "./pages/PoliceOperator/VideoDetails";
 import Login2 from "./pages/Login2";
 import { useState, useEffect } from "react";
 import Registration from "./pages/GeneralUserRegistration/RegistrationPage";
@@ -28,8 +27,13 @@ import Unauthorized from "./pages/Unauthorized";
 import useAuth from "./hooks/useAuth";
 import PersistLogin from "./components/PersistLogin";
 import {DetailsProvider} from "./context/userDetailsContext";
+import {FineProvider} from "./context/userFinesContext";
 import LandingPage from "./pages/LandingPage";
 import UserFines from "./pages/GeneralUser/UserFines";
+import PoliceHome from "./pages/PoliceOperator/Home";
+import VideoDetails from "./pages/PoliceOperator/VideoDetails";
+import AddingOfficers from "./pages/Police Division/AddingPoliceOfficers";
+
 
 export default function App() {
   const THEME = createTheme({
@@ -52,7 +56,7 @@ export default function App() {
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<FormProvider><Registration /></FormProvider>} />
           <Route path="unauthorized" element={<Unauthorized />} />
-          <Route path="/copsco/login" element={<Login2/>} />
+          <Route path="copsco/login" element={<Login2/>} />
           {/* protected routes */}
 
           {/* traffic police routes */}
@@ -77,15 +81,20 @@ export default function App() {
             {/* general user routes */}
             <Route element={<RequireAuth allowedRole="general-user" />}>
               <Route path="general-user/" element={<GeneralUserRoutes />}>
-                <Route path="" element={<UploadPage />} />
-                <Route path="fines" element={<UserFines />} />
+                <Route path="" element={<FineProvider><UploadPage /></FineProvider>} />
+                <Route path="fines" element={<FineProvider><UserFines /></FineProvider>} />
               </Route>
             </Route>
             {/* police operator routes */}
             <Route element={<RequireAuth allowedRole="police-operator" />}>
               <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
-                <Route path="" element={<VideoList />} />
+                <Route path="" element={<PoliceHome />} />
                 <Route path="video-details" element={<VideoDetails />} />
+              </Route>
+            </Route>
+            <Route element={<RequireAuth allowedRole="police-division" />}>
+              <Route path="police-division/" element={<PoliceDivisionRoutes />}>
+                <Route path="" element={<AddingOfficers />} />
               </Route>
             </Route>
           </Route>

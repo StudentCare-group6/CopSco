@@ -167,7 +167,7 @@ export default function Sidebar() {
         <List sx={{ height: "50%" }} className="flex flex-col justify-between">
           {[
             "Home",
-            "Profile",
+            "Fine Managment",
             "Notifications",
             "Analytics",
             "Information",

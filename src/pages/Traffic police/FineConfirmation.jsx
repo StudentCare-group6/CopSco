@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import CustomizedSteppers from "../../components/Traffic police/Steppers.jsx";
-import FinePrintCard from "../../components/Traffic police/FineConfirmation/FinePrintCard";
 import "@fontsource/inter";
 import { useTheme } from "@emotion/react";
 import useFormContext from "../../hooks/useFormContext";
@@ -13,7 +12,10 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/posts";
-import { get } from "react-hook-form";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { useState } from "react";
+
 
 function Text(props) {
   return (
@@ -49,6 +51,13 @@ export default function FineConfirmation() {
     navigate("/traffic-police/issue-fine");
   };
 
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const violations = getValues("description");
   const count = violations.length;
   const violationPrices = getValues("prices");
@@ -68,41 +77,11 @@ export default function FineConfirmation() {
   ViolationDetails.push(<Text text="Total Demerit Points:" />);
   ViolationData.push(totalDemeritPoints);
 
-  // const onSubmit = async (e) => {
-  //   let i = 0;
-  //   for (i; i < count; i++) {
-  //     const formData = new FormData();
-  //     //constant data
-  //     formData.append("date", getValues("date"));
-  //     formData.append("time", getValues("time"));
-  //     formData.append("vehicleNumber", getValues("vehicleNumber"));
-  //     formData.append("policeDivisionID", 101);
-  //     formData.append("vehicleProvince", getValues("vehicleProvince"));
-  //     formData.append("licenseNumber", getValues("licenseNumber"));
-  //     formData.append("typeOfOffence", getValues("typeOfOffence"));
-  //     //variable data
-  //     formData.append("description", violations[i]);
-  //     formData.append("fineAmount", violationPrices[i]);
-  //     formData.append("demeritPoints", demeritPoints[i]);
-  //     for (let pair of formData.entries()) {
-  //       console.log(pair[0] + ": " + pair[1]);
-  //     }
-  //     try {
-  //       const response = await axios.post("fines/issueFines", formData);
-  //       console.log(response.data);
-  //       alert("success");
-  //     } catch (err) {
-  //       console.log(err.response.data);
-  //       console.log(err.response.status);
-  //     }
-  //   }
-  // };
-
 
   const onSubmit = async (e) => {
     let i = 0;
     const violationsData = []; // Array to store violation data
-  
+
     for (i; i < count; i++) {
       const violationData = {
         date: getValues("date"),
@@ -116,33 +95,41 @@ export default function FineConfirmation() {
         fineAmount: violationPrices[i],
         demeritPoints: demeritPoints[i],
       };
-  
+
       violationsData.push(violationData);
-  
+
       try {
         const response = await axios.post("fines/issueFines", violationData); // Send individual violation data
         console.log(response.data);
-        alert("success");
+        setSnackbarMessage('Fine issued successfully');
+        setSnackbarOpen(true);
+        setIsSubmitted(true); // Set isSubmitted to true
+        setTimeout(() => {
+          setSnackbarOpen(false); // Close the Snackbar
+          navigate("/traffic-police/");
+         
+        }, 2000);
       } catch (err) {
         console.log(err.response.data);
         console.log(err.response.status);
       }
     }
-  
-    // After the loop, send all violation data as JSON array
-    try {
-      const response = await axios.post("fines/issueFinesBatch", violationsData); // Send all violations data at once
-      console.log(response.data);
-      alert("success");
-    } catch (err) {
-      console.log(err.response.data);
-      console.log(err.response.status);
-    }
+
   };
-  
+
 
   return (
     <>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success">
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Box>
         <CustomizedSteppers step={3} />
       </Box>
@@ -237,6 +224,7 @@ export default function FineConfirmation() {
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2, width: "150px" }}
+                    disable = {isSubmitted}
                   >
                     Issue fine
                   </Button>

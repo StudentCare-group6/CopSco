@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/posts";
 
+
 function Copyright(props) {
   return (
     <Typography
@@ -38,197 +39,102 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Register() {
-  const { page, setPage, title, subtitle, handleSubmit, getValues, setValue } =
+  const { page, setPage, title, subtitle, handleSubmit, getValues, setValue, errors } =
     useFormContext();
 
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (page === 3) {
-  //     // if (!getValues('nic')) {
-  //     //     alert("Enter NIC number");
-  //     // } else {
-  //     //     if (getValues('verifyMode') === '1') {
-  //     //         if (!getValues('nicFrontFile') || !getValues('nicRearFile')) {
-  //     //             alert("Error: Check whether you've uploaded files ");
-  //     //         } else {
-  //     //             const frontFile = e.nicFrontFile[0]; // Assuming the file is stored in an array
-  //     //             const backFile = e.nicRearFile[0]; // Assuming the file is stored in an array
-  //     //             const userImageBlob = localStorage.getItem('takenPhoto');
-  //     //             const nicNum = getValues('nic');
-
-  //     //             const FrontName = getValues('nic') + '_front.png';
-  //     //             const BackName = getValues('nic') + '_rear.png';
-  //     //             const UserImageName = getValues('nic') + '_img.png';
-
-  //     //             // Create a new File object with the preferred name
-  //     //             const renamedFrontFile = new File([frontFile], FrontName, {
-  //     //                 type: frontFile.type,
-  //     //             });
-  //     //             const renamedBackFile = new File([backFile], BackName, {
-  //     //                 type: backFile.type,
-  //     //             });
-  //     //             const userImageFile = new File([userImageBlob], UserImageName, {
-  //     //                 type: userImageBlob.type,
-  //     //             });
-
-  //     //             const formData = new FormData();
-  //     //             formData.append('nic_front', renamedFrontFile);
-  //     //             formData.append('nice_back', renamedBackFile);
-  //     //             formData.append('user_img', userImageFile);
-  //     //             formData.append('nic_num', nicNum);
-
-  //     //             try{
-  //     //                 const response = await api.post('/upload', formData);
-  //     //                 console.log(response.data);
-  //     //                 setPage(page + 1);
-  //     //             }catch(err){
-  //     //                 console.log(err.response.data);
-  //     //                 console.log(err.response.status);
-  //     //                 console.log(err.response.headers);
-  //     //             }
-  //     //             setPage(page + 1);
-  //     //         }
-  //     //     } else {
-  //     //         setPage(page + 1);
-  //     //     }
-  //     // }
-
-  //     setPage(page + 1);
-  //   } else if (page === 5) {
-  //     if (!getValues("otp")) {
-  //       alert("Enter OTP");
-  //     } else {
-  //       try {
-  //         const response = await axios.post(
-  //           "auth/verify-otp",
-  //           JSON.stringify({ otp: getValues("otp") }),
-  //           {
-  //             headers: { "Content-Type": "application/json" },
-  //             withCredentials: true,
-  //           }
-  //         );
-  //         if (response.data.message === "OTP verification successful") {
-  //           console.log(response.data);
-  //           setPage(page + 1);
-  //         } else {
-  //           alert("Error: " + response.data.message);
-  //         }
-  //       } catch (err) {
-  //         alert("Error occurred");
-  //         console.log(err.response.data);
-  //         console.log(err.response.status);
-  //         console.log(err.response.headers);
-  //       }
-  //     }
-  //   } else {
-  //     setValue("username", getValues("nic"));
-  //     const data = getValues();
-  //     try {
-  //       const response = await axios.post("auth/register", data);
-  //       alert(response.data.message);
-  //       // const frontFile = e.nicFrontFile[0]; // Assuming the file is stored in an array
-  //       // const backFile = e.nicRearFile[0]; // Assuming the file is stored in an array
-  //       // const userImageBlob = localStorage.getItem("takenPhoto");
-  //       // const nicNum = getValues("nic");
-
-  //       // const FrontName = getValues("nic") + "_front.png";
-  //       // const BackName = getValues("nic") + "_rear.png";
-  //       // const UserImageName = getValues("nic") + "_img.png";
-
-  //       // // Create a new File object with the preferred name
-  //       // const renamedFrontFile = new File([frontFile], FrontName, {
-  //       //   type: frontFile.type,
-  //       // });
-  //       // const renamedBackFile = new File([backFile], BackName, {
-  //       //   type: backFile.type,
-  //       // });
-  //       // const userImageFile = new File([userImageBlob], UserImageName, {
-  //       //   type: userImageBlob.type,
-  //       // });
-
-  //       // const formData = new FormData();
-  //       // formData.append("nic_front", renamedFrontFile);
-  //       // formData.append("nice_back", renamedBackFile);
-  //       // formData.append("user_img", userImageFile);
-  //       // formData.append("nic_num", nicNum);
-
-  //       // try {
-  //       //   const response = await api.post("/upload/verify-doc", formData);
-  //       //   console.log(response.data);
-  //       //   setPage(page + 1);
-  //       // } catch (err) {
-  //       //   console.log(err.response.data);
-  //       //   console.log(err.response.status);
-  //       //   console.log(err.response.headers);
-  //       // }
-  //       setPage(page + 1);
-  //     } catch (err) {
-  //       console.log(err.response.data);
-  //       console.log(err.response.status);
-  //       console.log(err.response.headers);
-  //     }
-  //     setPage(page + 1);
-  //   }
-  // };
-
-  const sendData = async () => {
-    const username = getValues('nic');
-    setValue('username', username);
-    const data = getValues();
-    axios
-      .post("auth/register", data)
-      .then((response) => {
-        // Handle successful response
-        console.log("Response:", response.data);
-        alert("success");
+  const onSubmit = async (e) => {
+    if (page === 3) {
+      if (getValues('verifyMode') === '1') {
+        if (!getValues('nicFrontFile') || !getValues('nicRearFile')) {
+          alert("Error: Check whether you've uploaded files ");
+        } else {
+          setPage(page + 1);
+        }
+      } else {
         setPage(page + 1);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error:", error);
-      });
-  };
+      }
+      setPage(page + 1);
+    } else if (page === 4) {
+      setValue("username", getValues("nic"));
+      const data = getValues();
+      try {
+        //send basic data to the backend
+        const response = await axios.post("auth/register", data);
+        alert(response.data.message);
 
-  const verifyOTP = async () => {
-    const otp = getValues('otp');
-    axios
-      .post("auth/verify-otp", {otp: otp})
-      .then((response) => {
-        // Handle successful response
-        console.log("Response:", response.data);
-        alert("success");
-        setPage(page + 1);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error:", error);
-      });
+      } catch (err) {
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      }
+      
+      //send the uploaded files to the backend
+      try {
+        //send the uploaded files to the backend
+        const frontFile = e.nicFrontFile[0];
+        const backFile = e.nicRearFile[0];
+        const userImageBlob = localStorage.getItem("takenPhoto");
+        const nicNum = getValues("nic");
+        const FrontName = getValues("nic") + "_front.png";
+        const BackName = getValues("nic") + "_rear.png";
+        const UserImageName = getValues("nic") + "_img.png";
+
+        // Create a new File object with the preferred name
+        const renamedFrontFile = new File([frontFile], FrontName, {
+          type: frontFile.type,
+        });
+        const renamedBackFile = new File([backFile], BackName, {
+          type: backFile.type,
+        });
+        const userImageFile = new File([userImageBlob], UserImageName, {
+          type: userImageBlob.type,
+        });
+
+        let formData2 = new FormData();
+        formData2.append("nic_front", renamedFrontFile);
+        formData2.append("nice_back", renamedBackFile);
+        formData2.append("user_img", userImageFile);
+        formData2.append("nic_num", nicNum);
+        const response = await axios.post("/upload/verify-doc", formData2);
+        console.log(response.data);
+        handleNext();
+
+      } catch (err) {
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      }
+    } else if (page === 5) {
+
+      try {
+        const response = await axios.post("auth/verify-otp",
+          JSON.stringify({ otp: getValues("otp") }),
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
+        if (response.data.message === "OTP verification successful") {
+          console.log(response.data);
+          setPage(page + 1);
+        } else {
+          alert("Error: " + response.data.message);
+        }
+      } catch (err) {
+        alert("Error occurred");
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      }
+
+    } else {
+      handleNext();
+    }
   };
 
   const handlePrev = () => setPage(page - 1);
-  const handleNext = () => {
-    if (
-      page === 0 &&
-      (getValues("firstName") === "" ||
-        getValues("lastName") === "" ||
-        getValues("email") === "")
-    ) {
-      setPage(page + 1);
-    } else if (page === 1 && getValues("password") === "") {
-      setPage(page + 1);
-    } else if (page === 2 && getValues("verificationPIC") === "") {
-      setPage(page + 1);
-    } else if (page === 3) {
-      console.log(
-        getValues("verifyMode"),
-        getValues("nicFrontFile"),
-        getValues("nicRearFile")
-      );
-      setPage(page + 1);
-    } else {
-      setPage(page + 1);
-    }
-  };
+  const handleNext = () => setPage(page + 1);
+
 
   const navigate = useNavigate();
   const handleButtonClick = () => {
@@ -281,7 +187,7 @@ export default function Register() {
             >
               <Box
                 component="form"
-                // onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
                 noValidate
                 sx={{ mt: 3 }}
               >
@@ -294,8 +200,7 @@ export default function Register() {
                   {page === 0 && (
                     <Button
                       variant="contained"
-                      type="button"
-                      onClick={handleNext}
+                      type="submit"
                       sx={{ width: "30%" }}
                     >
                       Next
@@ -313,8 +218,7 @@ export default function Register() {
                       </Button>
                       <Button
                         variant="contained"
-                        type="button"
-                        onClick={handleNext}
+                        type="submit"
                         sx={{ width: "30%" }}
                       >
                         Next
@@ -333,7 +237,7 @@ export default function Register() {
                       </Button>
                       <Button
                         variant="contained"
-                        onClick = {handleNext}
+                        type="submit"
                         sx={{ width: "30%" }}
                       >
                         Next
@@ -351,7 +255,7 @@ export default function Register() {
                         Back
                       </Button>
                       <Button
-                        onClick={sendData}
+                        type="submit"
                         variant="contained"
                         sx={{ width: "30%" }}
                       >
@@ -362,7 +266,7 @@ export default function Register() {
                   {page === 5 && (
                     <>
                       <Button
-                        onClick = {verifyOTP}
+                        type="submit"
                         variant="contained"
                         sx={{ width: "30%" }}
                       >

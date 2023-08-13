@@ -12,7 +12,7 @@ export default function FinalPage() {
     return (
         <div>      <Snackbar />
                 <Stack sx={{ width: '100%' }} alignItems='center'>
-                    <img src={checkedImg} className='w-52' />
+                    <img src={checkedImg} className='w-48' />
                 </Stack>
                 <Grid container spacing={2} >
                     <Grid item xs={12} sx={{ mt: 1 }}>

@@ -1,30 +1,26 @@
 import React from 'react';
+import EcoSystem from '../assets/ecosystem.png';
+import '../fonts/fonts.css';
 
 const Newsletter = () => {
   return (
-    <div className='w-full py-16 text-white px-4'>
-      <div className='max-w-[1240px] mx-auto grid lg:grid-cols-3'>
-        <div className='lg:col-span-2 my-4'>
-          <h1 className='md:text-4xl sm:text-3xl text-2xl font-bold py-2'>
-            Want tips & tricks to optimize your flow?
-          </h1>
-          <p>Sign up to our newsletter and stay up to date.</p>
+    <div className='w-full py-20 text-white px-4'>
+      <div className='flex flex-row w-full justify-evenly'>
+        <div className='flex flex-col my-4 justify-center items-center'>
+          <div style = {{fontFamily: 'K2DBold'}} className = 'text-sm'>
+          •  PEOPLE   •  DEVICES   •  APPS
+          </div>
+          <div style = {{fontFamily: 'K2DBold'}} className = 'text-4xl'>
+            COPSCO ECOSYSTEM
+          </div>
+          <div>
+            <p className = 'w-64 text-center text-md mt-10'>
+            Everyone works together as a single network. Seamlessly connected and designed to give police forces the tools they need to focus on what matters, Get to the truth faster and make the world a safer place.
+            </p>
+          </div>
         </div>
         <div className='my-4'>
-          <div className='flex flex-col sm:flex-row items-center justify-between w-full'>
-            <input
-              className='p-3 flex w-full rounded-md text-black'
-              type='email'
-              placeholder='Enter Email'
-            />
-            <button className='bg-[#00df9a] text-black rounded-md font-medium w-[200px] ml-4 my-6 px-6 py-3'>
-              Notify Me
-            </button>
-          </div>
-          <p>
-            We care bout the protection of your data. Read our{' '}
-            <span className='text-[#00df9a]'>Privacy Policy.</span>
-          </p>
+          <img src={EcoSystem} className = 'h-80 w-auto'/>
         </div>
       </div>
     </div>

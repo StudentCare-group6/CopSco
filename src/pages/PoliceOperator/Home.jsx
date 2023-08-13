@@ -8,11 +8,11 @@ export default function Home() {
   
   return (
     <>
-      <div className="flex-auto overflow-hidden">
+      <div className="flex-auto overflow-hidden w-[99%]">
         <div className="flex flex-col h-full">
           <Filters />
           <div className="overflow-y-auto">
-            <div className="max-h-[calc(100vh-100px)]">
+            <div className="max-h-[calc(100vh-100px)] w-[99%]">
               <VideoSamples />
             </div>
           </div>

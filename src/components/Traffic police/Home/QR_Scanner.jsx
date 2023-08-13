@@ -6,14 +6,9 @@ import useDetailsContext from "../../../hooks/useDetailsContext";
 
 export default function QRScanner({ isModalOpen }) {
   const {
-    LicenseDetails,
-    personalDetails,
-    previousOffences,
     setPreviousOffences,
     setPersonalDetails,
     setLicenseDetails,
-    setLicenseNumber,
-    setNic,
   } = useDetailsContext();
 
   const [scanResult, setScanResult] = useState(null);
@@ -117,7 +112,7 @@ export default function QRScanner({ isModalOpen }) {
   return (
     <div>
       <h1>QR Code Scanning in React</h1>
-      {scanResult ? <div>Success: {scanResult}</div> : <div id="reader"></div>}
+      {scanResult ? <div></div> : <div id="reader"></div>}
     </div>
   );
 }

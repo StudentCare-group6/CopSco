@@ -50,7 +50,7 @@ export default function Login() {
   const from = location.state?.from?.pathname || '/';
   const userRef = useRef();
 
-  const [user, resetUser, userAttributes] = useInput('user','');
+  const [user, resetUser, userAttributes] = useInput('user', '');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [check, toggleCheck] = useToggle('persist', false);
@@ -82,16 +82,11 @@ export default function Login() {
       // setUser('');
       resetUser();
       setPwd('');
-      if (role === 'traffic-police') {
-        navigate('/traffic-police');
-      } else if (role === 'general-user') {
+      if (role === 'general-user') {
         navigate('/general-user');
       } else if (role === 'police-operator') {
-        navigate('/police-operator');
-      } else {
-        navigate(from);
+        alert('invalid role');
       }
-
     } catch (err) {
       if (!err?.response) {
         setErrMsg('Network error');
@@ -102,7 +97,7 @@ export default function Login() {
       } else {
         setErrMsg('Login failed, try again');
       }
-     
+
     }
   };
 
@@ -121,7 +116,7 @@ export default function Login() {
           severity="error"
           onClose={handleClose}
           role="alert"
-          variant = "filled"
+          variant="filled"
         >
           {errMsg}
         </Alert>
@@ -188,11 +183,11 @@ export default function Login() {
               />
               <FormControlLabel
                 control={
-                <Checkbox 
-                   color="primary"
-                   id = "remember"
-                   onChange={toggleCheck}
-                   checked={check}
+                  <Checkbox
+                    color="primary"
+                    id="remember"
+                    onChange={toggleCheck}
+                    checked={check}
                   />}
                 label="Remember me"
               />

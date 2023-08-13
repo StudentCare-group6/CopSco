@@ -1,23 +1,38 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Tab,
-  Tabs,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  Grid,
-} from "@mui/material"; // Import from @mui/material
-
-// import finesList2 from "../../data/finesList2";
-// import VideoPlayer from "../../components/General user/UserFines";
+import { Box, Tab, Tabs } from "@mui/material";
+import VideoViolationsTable from "../../components/General user/UserFines/VideoViolationsTable";
+import SpotFinesTable from "../../components/General user/UserFines/SpotFinesTable";
+import Badge from '@mui/material/Badge';
+import useFineContext from "../../hooks/useFineContext";
+import useAuth from "../../hooks/useAuth";
+import axios from "../../api/posts";
+import { useEffect } from "react";
 
 export default function UserFines() {
+
+  const { spotFines, setSpotFines } = useFineContext();
+  const violationData = {
+    nic: '200012702905'
+  };
+  const getSpotFines = async () => {
+    try {
+      const response = await axios.get("fines/getFines", {
+        params: violationData
+      });
+      setSpotFines(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getSpotFines(); // Fetch data when the component mounts
+  }, []);
+
+  useEffect(() => {
+    console.log(spotFines); // Log the updated state whenever spotFines changes
+  }, [spotFines]);
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -26,6 +41,7 @@ export default function UserFines() {
 
   return (
     <Box className="py-6">
+      <h2 className="text-3xl font-bold">Manage your fines</h2>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -33,14 +49,29 @@ export default function UserFines() {
         sx={{ borderBottom: 1, borderColor: "divider" }}
         centered
       >
-        <Tab label="Video violations" sx={{ fontWeight: "bold" }} />
-        <Tab label="On-spot violations" sx={{ fontWeight: "bold" }} />
+        <Tab
+          label={
+            <Badge badgeContent={0} color="primary" >
+              Video violations
+            </Badge>
+          }
+          sx={{ fontWeight: "bold" }} />
+
+        <Tab
+          label={
+            <Badge badgeContent={1} color="primary">
+              On-spot violations
+            </Badge>
+          }
+          sx={{ fontWeight: "bold" }} />
+
       </Tabs>
       <TabPanel value={value} index={0} className="py-10">
-        {/* Your content for the first tab */}
+        <VideoViolationsTable />
       </TabPanel>
+
       <TabPanel value={value} index={1} className="py-10">
-        {/* Your content for the second tab */}
+        <SpotFinesTable />
       </TabPanel>
     </Box>
   );

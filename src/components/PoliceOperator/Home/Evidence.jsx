@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import { Typography } from '@mui/material';
@@ -15,11 +16,17 @@ const VideoPlayer = ({ videoUrl }) => {
 };
 
 const Evidence = ({ videoData }) => {
+  const navigate = useNavigate(); 
+
+  const directVideoDetails = () => {
+    navigate('/police-operator/video-details'); 
+  };
+
   return (
     <div className="overflow-y-hidden">
       {videoData.map((item, index) => (
-        <div key={index}>
-          <VideoPlayer videoUrl="video1.mp4" />
+        <div key={index} onClick={directVideoDetails}>
+          <VideoPlayer videoUrl={item.video} />
           <ImageListItem key={item.video}>
             <ImageListItemBar
               title={
@@ -35,13 +42,10 @@ const Evidence = ({ videoData }) => {
                       style={{ marginTop: '-25px' }}
                     />
                     <div className="w-100">
-                      {/* <span className="text-sm ml-2">
-                        {item.date}, {item.time}, {item.location}
-                      </span> */}
                       <Typography variant="caption">
                         {item.date}, {item.time}, {item.location}
                       </Typography>
-                      <span className="text-sm custom-margin-left text-[#1A932E] bg-[#1A932E] inline-flex items-center justify-center px-2 py-1 rounded-full md:bg-[#1A932E38] lg:bg-[#1A932E38]">
+                      <span className="text-sm ml-[150px] text-[#1A932E] bg-[#1A932E] inline-flex items-center justify-center px-2 py-1 rounded-full md:bg-[#1A932E38] lg:bg-[#1A932E38]">
                         {item.status}
                       </span>
                     </div>

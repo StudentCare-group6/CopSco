@@ -84,8 +84,8 @@ export default function Login2() {
       setPwd('');
       if (role === 'traffic-police') {
         navigate('/traffic-police');
-      } else if (role === 'general-user') {
-        navigate('/general-user');
+      } else if (role === 'police-division') {
+        navigate('/police-division');
       } else if (role === 'police-operator') {
         navigate('/police-operator');
       } else {
