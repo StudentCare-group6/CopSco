@@ -45,6 +45,12 @@ export default function App() {
     <ThemeProvider theme={THEME}>
       <Routes>
         <Route path="/" element={<Layout />}>
+          {/* For my use */}
+              <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
+                <Route path="video-details" element={<VideoDetails />} />
+                <Route path="video-list" element={<VideoList />} />
+              </Route>
+
           {/* public routes */}
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />
@@ -77,12 +83,12 @@ export default function App() {
               </Route>
             </Route>
             {/* police operator routes */}
-            <Route element={<RequireAuth allowedRole="police-operator" />}>
+            {/* <Route element={<RequireAuth allowedRole="police-operator" />}>
               <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
                 <Route path="" element={<VideoList />} />
                 <Route path="video-details" element={<VideoDetails />} />
               </Route>
-            </Route>
+            </Route> */}
           </Route>
         </Route>
       </Routes>
