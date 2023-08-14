@@ -6,8 +6,8 @@ import MultipleSelectPlaceholder from './Select';
 const Actions = () => {
   return (
     <div>
-      <div className='flex'>
-        <div className='ml-32'>
+      <div className='flex mt-[80px]'>
+        <div className='ml-2'>
           <img
             src={'propic1.png'}
             alt="User Profile"
@@ -30,11 +30,6 @@ const Actions = () => {
         <div className='w-5 h-5 mt-[-35px] ml-3'>
           <ChevronRightIcon />
         </div>
-      </div>
-
-      {/* Status of the evidence */}
-      <div>
-        <MultipleSelectPlaceholder />
       </div>
     </div>
   )
