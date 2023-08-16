@@ -1,224 +1,189 @@
 import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import VideoCard from "../../components/General user/video_upload/VideoCard";
-import ComplaintDialog from "../../components/General user/video_upload/ComplaintForm";
-import EditorDialog from "../../components/General user/video_upload/EditorDialog";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import CircleIcon from "@mui/icons-material/Circle";
-import UploadDialog from "../../components/General user/video_upload/UploadDialog";
+import { Tab, Tabs } from "@mui/material";
+import Badge from "@mui/material/Badge";
+import { useState } from "react";
+import VideoCard2 from "../../components/General user/video_upload/VideoCard2";
 import Popup from "../../components/General user/video_upload/Popup";
+import Stack from "@mui/material/Stack";
+import video1 from "../../components/General user/video_upload/video1.mp4";
+import video2 from "../../components/General user/video_upload/video 2.mp4";
+import video3 from "../../components/General user/video_upload/video 3.mp4";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-const VideoCardRenderer = ({ vidName, vidPreview }) => {
-  return <VideoCard vidName={vidName} vidPreview={vidPreview} />;
-};
-
-const StatusRenderer = ({ status }) => {
-  if (status == '1') {
-    return (
-      <Stack direction='row' alignItems='center' spacing={1} className='px-3 p-2 border border-green-600 rounded-full'>
-        <CircleIcon sx={{ fontSize: 8 }} className='text-green-700' />
-        <Typography component="div" className='text-sm text-green-700'>
-          Verified
-        </Typography>
-      </Stack>
-
-    );
-  } else if (status == '3') {
-    return (
-      <Stack direction='row' alignItems='center' spacing={1} className='px-3 p-2 border border-orange-400 rounded-full'>
-        <CircleIcon sx={{ fontSize: 8 }} className='text-orange-400' />
-        <Typography component="div" className='text-sm text-orange-400'>
-          Rejected
-        </Typography>
-      </Stack>
-    );
-  } else {
-    return (
-      <Stack direction='row' alignItems='center' spacing={1} className='px-3 p-2 border border-blue-400 rounded-full'>
-        <CircleIcon sx={{ fontSize: 8 }} className='text-blue-500' />
-        <Typography component="div" className='text-sm text-blue-500'>
-          Pending 
-        </Typography>
-      </Stack>
-    );
-  }
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
 }
 
-const data = [
-  {
-    vidPreview: "violation.jpg",
-    vidName:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-    status: "1",
-    location: "Colombo",
-    date: "Jun 24, 2023",
-  },
-  {
-    vidPreview: "violation.jpg",
-    vidName:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-    status: "1",
-    location: "Colombo",
-    date: "Jun 24, 2023",
-  },
-  {
-    vidPreview: "violation.jpg",
-    vidName:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-    status: "2",
-    location: "Colombo",
-    date: "Jun 24, 2023",
-  },
-  {
-    vidPreview: "violation.jpg",
-    vidName:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-    status: "2",
-    location: "Colombo",
-    date: "Jun 24, 2023",
-  },
-  {
-    vidPreview: "violation.jpg",
-    vidName:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-    status: "3",
-    location: "Colombo",
-    date: "Jun 24, 2023",
-  },
-  {
-    vidPreview: "violation.jpg",
-    vidName:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-    status: "1",
-    location: "Colombo",
-    date: "Jun 24, 2023",
-  },
-  {
-    vidPreview: "violation.jpg",
-    vidName:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-    status: "2",
-    location: "Colombo",
-    date: "Jun 24, 2023",
-  },
-  {
-    vidPreview: "violation.jpg",
-    vidName:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-    status: "1",
-    location: "Colombo",
-    date: "Jun 24, 2023",
-  },
-];
-
-const columns = [
-  {
-    field: "vidName",
-    headerName: "Video Name",
-    flex: 1,
-    headerAlign: "center",
-    renderCell: (params) => (
-      <VideoCardRenderer
-        vidName={params.row.vidName}
-        vidPreview={params.row.vidPreview}
-      />
-    ),
-  },
-  {
-    field: "status", headerName: "Review Status", width: 200, headerAlign: "center",
-    renderCell: (params) => (
-      <StatusRenderer
-        status={params.row.status}
-      />
-    )
-  },
-  {
-    field: "location",
-    headerName: "Location",
-    width: 150,
-    headerAlign: "center",
-  },
-  { field: "date", headerName: "Date", width: 200, headerAlign: "center" },
-];
-
 export default function UploadPage() {
-  const rows = data.map((item, index) => ({
-    id: index + 1,
-    vidPreview: item.vidPreview,
-    vidName: item.vidName,
-    status: item.status,
-    location: item.location,
-    date: item.date,
-  }));
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <div>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, height: '100vh' }}>
-        <Box>
-          <div className="flex flex-row justify-between mx-10 mt-14">
-            <h1 className="text-3xl font-bold">Your Uploads</h1>
-            <Popup/>
-            {/* <UploadDialog /> */}
-            {/* <EditorDialog /> */}
-            {/* <ComplaintDialog /> */}
-          </div>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, height: "100vh" }}>
+        <Box className="py-6">
+          <Stack direction="row" justifyContent="space-between">
+            <h2 className="text-3xl font-bold">Manage your Uploads</h2>
+            <Popup />
+          </Stack>
 
-          <div
-            style={{
-              height: "70vh",
-              width: "95%",
-              margin: "auto",
-              marginTop: "2rem",
-            }}
-            className='shadow-md rounded-2xl'
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="lab API tabs example"
+            sx={{ borderBottom: 1, borderColor: "divider" }}
+            centered
           >
-            <DataGrid className='shadow-md rounded-2xl border-none'
-              {...data}
-              sx={{
-                "& .MuiDataGrid-columnHeader": {
-                  backgroundColor: "white",
-                  color: "#020617",
-                  fontWeight: "bold",
-                },
-
-                "& .MuiDataGrid-columnHeaderTitle": {
-                  fontWeight: "bold",
-                  color: "#020617",
-                },
-                "& .MuiDataGrid-root": {
-                  backgroundColor: "white",
-                },
-                "& .MuiDataGrid-footerContainer": {
-                  backgroundColor: "white",
-                },
-                "& .MuiDataGrid-cell": {
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "white",
-                },
-              }}
-              rowHeight={100}
-              rows={rows}
-              columns={columns}
-              initialState={{
-                ...data.initialState,
-                sorting: {
-                  ...data.initialState?.sorting,
-                  sortModel: [
-                    {
-                      field: "rating",
-                      sort: "desc",
-                    },
-                  ],
-                },
-              }}
+            <Tab
+              label={
+                <Badge badgeContent={0} color="primary">
+                  Accepted
+                </Badge>
+              }
+              sx={{ fontWeight: "bold" }}
             />
-          </div>
+
+            <Tab
+              label={
+                <Badge badgeContent={1} color="primary">
+                  Pending Review
+                </Badge>
+              }
+              sx={{ fontWeight: "bold" }}
+            />
+
+            <Tab
+              label={
+                <Badge badgeContent={1} color="primary">
+                  Rejected
+                </Badge>
+              }
+              sx={{ fontWeight: "bold" }}
+            />
+          </Tabs>
+          <TabPanel
+            value={value}
+            index={0}
+            style={{ overflowY: "auto", height: "80vh" }}
+          >
+            <Stack direction = 'row' justifyContent='flex-end' className = 'mb-5'>
+              <Button variant = 'contained' sx = {{width:'100px'}}>Sort By</Button>
+            </Stack>
+            <VideoCard2
+              title="Driver trying to run a traffic light in Bambalapitiya"
+              reward="300"
+              rating="3"
+              url={video1}
+            />
+            <VideoCard2
+              title="Driver ignoring pedestrian crosswalk in Colombo"
+              reward="200"
+              rating="2"
+              url={video2}
+            />
+            <VideoCard2
+              title="Reckless driving on Galle Road"
+              reward="600"
+              rating="5"
+              url={video3}
+            />
+            <VideoCard2
+              title="Red light violation at Liberty Roundabout"
+              reward="1000"
+              rating="3"
+              url={video1}
+            />
+            <VideoCard2
+              title="Near miss incident on Duplication Road"
+              reward="300"
+              rating="4"
+              url={video2}
+            />
+          </TabPanel>
+
+          <TabPanel value={value} index={1} className="py-10">
+            <VideoCard2
+              title="Driver trying to run a traffic light in Bambalapitiya"
+              reward="300"
+              rating="3"
+              url={video1}
+            />
+            <VideoCard2
+              title="Driver ignoring pedestrian crosswalk in Colombo"
+              reward="200"
+              rating="2"
+              url={video2}
+            />
+            <VideoCard2
+              title="Reckless driving on Galle Road"
+              reward="600"
+              rating="5"
+              url={video3}
+            />
+            <VideoCard2
+              title="Red light violation at Liberty Roundabout"
+              reward="1000"
+              rating="3"
+              url={video1}
+            />
+            <VideoCard2
+              title="Near miss incident on Duplication Road"
+              reward="300"
+              rating="4"
+              url={video2}
+            />
+          </TabPanel>
+
+          <TabPanel value={value} index={2} className="py-10">
+            <VideoCard2
+              title="Driver trying to run a traffic light in Bambalapitiya"
+              reward="300"
+              rating="3"
+              url={video1}
+            />
+            <VideoCard2
+              title="Driver ignoring pedestrian crosswalk in Colombo"
+              reward="200"
+              rating="2"
+              url={video2}
+            />
+            <VideoCard2
+              title="Reckless driving on Galle Road"
+              reward="600"
+              rating="5"
+              url={video3}
+            />
+            <VideoCard2
+              title="Red light violation at Liberty Roundabout"
+              reward="1000"
+              rating="3"
+              url={video1}
+            />
+            <VideoCard2
+              title="Near miss incident on Duplication Road"
+              reward="300"
+              rating="4"
+              url={video2}
+            />
+          </TabPanel>
         </Box>
       </Box>
     </div>

@@ -129,7 +129,7 @@ export default function Login2() {
       <Grid container component="main" sx={{ height: '100vh' }}>
 
         <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
-          <Typography sx={{ margin: '20px' }} component="h1" variant="h5" className='font-extrabold text-black' >
+          <Typography sx={{ margin: '20px' , fontFamily:'inter'}} component="h1" variant="h5" className='font-extrabold text-black' >
             CopSco
           </Typography>
           <Box
@@ -144,7 +144,7 @@ export default function Login2() {
           >
 
             <Stack justifyContent="center" alignItems="center" spacing={5}>
-              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' >
+              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{fontFamily:'inter'}}  >
                 Login to your account
               </Typography>
               <Typography component="h1" variant="h6" className='font-light text-neutral-500' >

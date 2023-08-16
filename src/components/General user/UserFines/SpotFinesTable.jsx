@@ -12,8 +12,8 @@ function formatDate(inputDate) {
     const parts = inputDate.split(/[-T:Z]/);
   
     const year = parts[0];
-    const day = parts[1];
-    const month = parseInt(parts[2]) + 1; // Adding 1 to adjust for zero-indexed months
+    const day = parts[2];
+    const month = parts[1]; // Adding 1 to adjust for zero-indexed months
   
     return `${year}/${month}/${day}`;
   }

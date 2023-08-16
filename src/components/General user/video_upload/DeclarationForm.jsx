@@ -84,7 +84,7 @@ export default function DeclarationForm() {
                     <center><b>Declaration</b></center>
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                    <p style={{ width: '500px', textAlign: 'justify', textIndent: '20px', whiteSpace: 'pre-wrap' }}>
+                    <p style={{ width: '500px', textAlign: 'justify', textIndent: '20px', whiteSpace: 'pre-wrap', padding:'20px' }}>
                         To Whom It May Concern,
 
                         I, Oshada Rupesinghe, hereby affirm the veracity of the evidence I am presenting regarding the traffic violation incident involving describe the incident, e.g., "on Aug 12 2023 at Bambalapitiya", as an accurate account of the events that transpired.
@@ -92,7 +92,7 @@ export default function DeclarationForm() {
                         I recognize the significance of providing accurate and honest information in this matter. I am fully aware of the potential legal and ethical consequences of providing false or misleading evidence. The details, statements, photographs, and any other materials submitted herewith are genuine and portray an exact representation of the incident.
 
                     </p>
-                    <p style={{ width: '500px', textAlign: 'justify', textIndent: '20px', whiteSpace: 'pre-wrap' }}>
+                    <p style={{ width: '500px', textAlign: 'justify', textIndent: '20px', whiteSpace: 'pre-wrap', padding:'20px'  }}>
                         I acknowledge that any inconsistencies or inaccuracies discovered in the evidence provided could lead to appropriate actions being taken, which may include penalties, fines, or legal proceedings.
 
                         By signing this declaration, I affirm that I have not omitted any pertinent information that may influence the accuracy or integrity of the evidence presented. I am committed to offering full cooperation and, if necessary, furnishing supplementary documentation or clarification to support the accuracy of my submission.

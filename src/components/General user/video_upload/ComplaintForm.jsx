@@ -12,10 +12,8 @@ import { useTheme } from '@mui/material/styles';
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ModalButton from './ModalButton';
 import SmallText from './SmallText';
-import { Grid } from '@mui/material';
-import violationImage from './violation.jpg'
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
+import { Grid, TextField, MenuItem } from '@mui/material';
+import violationImage from './violation.jpg';
 import useFormContext from '../../../hooks/useFormContext';
 import Stack from '@mui/material/Stack';
 
@@ -32,6 +30,15 @@ const vehicalTypes = [
     value: 'lorry',
     label: 'Lorry',
   },
+  {
+    value: 'motorcycle',
+    label: 'Motorcycle',
+  },
+  {
+    value: 'van',
+    label: 'Van',
+  },
+  // Add more vehicle types here
 ];
 
 const violationTypes = [
@@ -47,6 +54,15 @@ const violationTypes = [
     value: '003',
     label: 'Reckless Driving',
   },
+  {
+    value: '004',
+    label: 'Running Red Light',
+  },
+  {
+    value: '005',
+    label: 'Seatbelt Violation',
+  },
+  // Add more violation types here
 ];
 
 const District = [
@@ -62,12 +78,21 @@ const District = [
     value: 'kalutara',
     label: 'Kalutara',
   },
+  {
+    value: 'kandy',
+    label: 'Kandy',
+  },
+  {
+    value: 'matara',
+    label: 'Matara',
+  },
+  // Add more districts here
 ];
 
 const City = [
   {
-    value: 'bambalapiyita',
-    label: 'Bambalapiyiya',
+    value: 'bambalapitiya',
+    label: 'Bambalapitiya',
   },
   {
     value: 'wellawatta',
@@ -77,6 +102,15 @@ const City = [
     value: 'horana',
     label: 'Horana',
   },
+  {
+    value: 'kollupitiya',
+    label: 'Kollupitiya',
+  },
+  {
+    value: 'negombo',
+    label: 'Negombo',
+  },
+  // Add more cities here
 ];
 
 
@@ -119,9 +153,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ComplaintDialog() {
-
   const theme = useTheme();
-
   const [open, setOpen] = React.useState(true);
 
   const handleClickOpen = () => {
@@ -131,14 +163,18 @@ export default function ComplaintDialog() {
     setOpen(false);
   };
 
-  const { page, setPage } =
-    useFormContext();
+  const { page, setPage } = useFormContext();
   const handlePrev = () => setPage(page - 1);
   const handleNext = () => setPage(page + 1);
 
   return (
     <div>
-      <Button variant="outlined" sx={{ color: theme.palette.primary[200] }} onClick={handleClickOpen} startIcon={<AddOutlinedIcon />}>
+      <Button
+        variant="outlined"
+        sx={{ color: theme.palette.primary[200] }}
+        onClick={handleClickOpen}
+        startIcon={<AddOutlinedIcon />}
+      >
         Upload Evidence
       </Button>
       <BootstrapDialog
@@ -151,114 +187,99 @@ export default function ComplaintDialog() {
           <center><b>Edit Details</b></center>
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Grid container spacing={10} >
+          <Grid container spacing={5}>
             <Grid item xs={6}>
               {/* Form */}
               <form action="" method="post">
-                <Grid container spacing={5}>
-                  <Grid item xs={6}>
-                    <TextField
-                      name="vehical_number"
-                      label="Vehical Number:"
-                      variant="outlined"
-                      fullWidth
-                      size='small'
-                      type='text'
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-select-currency"
-                      select
-                      label="Select"
-                      fullWidth
-                      size='small'
-                      helperText="Select vehical type"
-                    >
-                      {vehicalTypes.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      id="outlined-select-currency"
-                      select
-                      label="Select"
-                      fullWidth
-                      size='small'
-                      helperText="Violation Occured"
-                    >
-                      {violationTypes.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-select-currency"
-                      select
-                      label="Select"
-                      fullWidth
-                      size='small'
-                      helperText="Select the district"
-                    >
-                      {District.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-select-currency"
-                      select
-                      label="Select"
-                      fullWidth
-                      size='small'
-                      helperText="Select the city"
-                    >
-                      {City.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      id="outlined-multiline-static"
-                      label="Description"
-                      multiline
-                      rows={5}
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
+                <Stack spacing={3}>
+                  <TextField
+                    name="vehical_number"
+                    label="Vehicle Number:"
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    type="text"
+                  />
+                  <TextField
+                    id="outlined-select-vehical-type"
+                    select
+                    label="Vehicle Type"
+                    fullWidth
+                    size="small"
+                    helperText="Select vehicle type"
+                  >
+                    {vehicalTypes.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    id="outlined-select-violation-type"
+                    select
+                    label="Violation Type"
+                    fullWidth
+                    size="small"
+                    helperText="Violation Occurred"
+                  >
+                    {violationTypes.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    id="outlined-select-district"
+                    select
+                    label="District"
+                    fullWidth
+                    size="small"
+                    helperText="Select the district"
+                  >
+                    {District.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    id="outlined-select-city"
+                    select
+                    label="City"
+                    fullWidth
+                    size="small"
+                    helperText="Select the city"
+                  >
+                    {City.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <TextField
+                    id="outlined-multiline-description"
+                    label="Description"
+                    multiline
+                    rows={5}
+                    fullWidth
+                  />
+                </Stack>
               </form>
             </Grid>
             <Grid item xs={6}>
               {/* Preview and note */}
-              <Grid item xs={12}>
-                <img className='w-90 h-auto' alt='preview_image' src={violationImage} />
-              </Grid>
-              <Grid item xs={12}>
-                <p className='font-semibold mt-4'>Why we collect these information?</p><br />
-                <SmallText text="By obtaining supplementary information related to the video evidence, law enforcement can strengthen the evidentiary value of the footage, establish a more accurate account of events, and conduct a thorough and fair investigation."></SmallText>
-              </Grid>
+              <Stack spacing={3}>
+                <img className="preview-image" alt="preview_image" src={violationImage} />
+                <p className="font-bold mt-4">Why do we collect this information?</p>
+                <SmallText text="By obtaining supplementary information related to the video evidence, law enforcement can strengthen the evidentiary value of the footage, establish a more accurate account of events, and conduct a thorough and fair investigation." />
+              </Stack>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <ModalButton buttonText={"NEXT"} type={"primary"} />
+          <ModalButton buttonText={"NEXT"} type={"primary"} onClick={handleNext} />
         </DialogActions>
       </BootstrapDialog>
-
     </div>
   );
 }

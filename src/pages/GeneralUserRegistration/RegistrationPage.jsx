@@ -14,7 +14,8 @@ import FormInputs from "./FormInputs";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/posts";
-
+import {useState} from "react";
+import { Snackbar, Alert } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -39,13 +40,24 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Register() {
-  const { page, setPage, title, subtitle, handleSubmit, getValues, setValue, errors } =
-    useFormContext();
-
+  const {
+    page,
+    setPage,
+    title,
+    subtitle,
+    handleSubmit,
+    getValues,
+    setValue,
+    errors,
+  } = useFormContext();
+  const [errMsg, setErrMsg] = useState('');
+  const handleClose = () => {
+    setErrMsg('');
+  };
   const onSubmit = async (e) => {
     if (page === 3) {
-      if (getValues('verifyMode') === '1') {
-        if (!getValues('nicFrontFile') || !getValues('nicRearFile')) {
+      if (getValues("verifyMode") === "1") {
+        if (!getValues("nicFrontFile") || !getValues("nicRearFile")) {
           alert("Error: Check whether you've uploaded files ");
         } else {
           setPage(page + 1);
@@ -61,53 +73,52 @@ export default function Register() {
         //send basic data to the backend
         const response = await axios.post("auth/register", data);
         alert(response.data.message);
-
-      } catch (err) {
-        console.log(err.response.data);
-        console.log(err.response.status);
-        console.log(err.response.headers);
-      }
-      
-      //send the uploaded files to the backend
-      try {
         //send the uploaded files to the backend
-        const frontFile = e.nicFrontFile[0];
-        const backFile = e.nicRearFile[0];
-        const userImageBlob = localStorage.getItem("takenPhoto");
-        const nicNum = getValues("nic");
-        const FrontName = getValues("nic") + "_front.png";
-        const BackName = getValues("nic") + "_rear.png";
-        const UserImageName = getValues("nic") + "_img.png";
+        try {
+          //send the uploaded files to the backend
+          const frontFile = e.nicFrontFile[0];
+          const backFile = e.nicRearFile[0];
+          const userImageBlob = localStorage.getItem("takenPhoto");
+          const nicNum = getValues("nic");
+          const FrontName = getValues("nic") + "_front.png";
+          const BackName = getValues("nic") + "_rear.png";
+          const UserImageName = getValues("nic") + "_img.png";
 
-        // Create a new File object with the preferred name
-        const renamedFrontFile = new File([frontFile], FrontName, {
-          type: frontFile.type,
-        });
-        const renamedBackFile = new File([backFile], BackName, {
-          type: backFile.type,
-        });
-        const userImageFile = new File([userImageBlob], UserImageName, {
-          type: userImageBlob.type,
-        });
+          // Create a new File object with the preferred name
+          const renamedFrontFile = new File([frontFile], FrontName, {
+            type: frontFile.type,
+          });
+          const renamedBackFile = new File([backFile], BackName, {
+            type: backFile.type,
+          });
+          const userImageFile = new File([userImageBlob], UserImageName, {
+            type: userImageBlob.type,
+          });
 
-        let formData2 = new FormData();
-        formData2.append("nic_front", renamedFrontFile);
-        formData2.append("nice_back", renamedBackFile);
-        formData2.append("user_img", userImageFile);
-        formData2.append("nic_num", nicNum);
-        const response = await axios.post("/upload/verify-doc", formData2);
-        console.log(response.data);
-        handleNext();
-
+          let formData2 = new FormData();
+          formData2.append("nic_front", renamedFrontFile);
+          formData2.append("nice_back", renamedBackFile);
+          formData2.append("user_img", userImageFile);
+          formData2.append("nic_num", nicNum);
+          const response = await axios.post("/upload/verify-doc", formData2);
+          console.log(response.data);
+          handleNext();
+        } catch (err) {
+          console.log(err.response.data);
+          console.log(err.response.status);
+          console.log(err.response.headers);
+        }
       } catch (err) {
-        console.log(err.response.data);
-        console.log(err.response.status);
-        console.log(err.response.headers);
+        if(err.response?.status===400){
+          setErrMsg("A user with the same nic already exists");
+        }else{
+          setErrMsg("Registration failed");
+        }
       }
     } else if (page === 5) {
-
       try {
-        const response = await axios.post("auth/verify-otp",
+        const response = await axios.post(
+          "auth/verify-otp",
           JSON.stringify({ otp: getValues("otp") }),
           {
             headers: { "Content-Type": "application/json" },
@@ -126,7 +137,6 @@ export default function Register() {
         console.log(err.response.status);
         console.log(err.response.headers);
       }
-
     } else {
       handleNext();
     }
@@ -135,7 +145,6 @@ export default function Register() {
   const handlePrev = () => setPage(page - 1);
   const handleNext = () => setPage(page + 1);
 
-
   const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate("/");
@@ -143,10 +152,28 @@ export default function Register() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+            <Snackbar
+        open={Boolean(errMsg)}
+        autoHideDuration={6000} // Adjust the duration as needed
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Alert
+          severity="error"
+          onClose={handleClose}
+          role="alert"
+          variant="filled"
+        >
+          {errMsg}
+        </Alert>
+      </Snackbar>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
           <Typography
-            sx={{ margin: "20px" }}
+            sx={{ margin: '20px' , fontFamily:'inter'}}
             component="h1"
             variant="h5"
             className="font-extrabold text-black"
@@ -157,12 +184,13 @@ export default function Register() {
             justifyContent="center"
             alignItems="center"
             spacing={3}
-            sx={{ marginTop: "3%" }}
+            sx={{ marginTop: "3%"}}
           >
             <Typography
               component="h1"
               variant="h4"
               className="font-extrabold text-neutral-500"
+              sx = {{fontFamily:'inter' }}
             >
               {title[page]}
             </Typography>
@@ -268,7 +296,7 @@ export default function Register() {
                       <Button
                         type="submit"
                         variant="contained"
-                        sx={{ width: "30%" }}
+                        sx={{ width: "40%" }}
                       >
                         Verify OTP
                       </Button>

@@ -23,7 +23,7 @@ const Editor = ({ open, onClose }) => {
   };
 
   return (
-    <div className='px-10 py-3 gap-10' style={{ height: '50vh' }}>
+    <div className='px-10 py-3 gap-10' style={{ height: '55vh' }}>
       <Stack direction='column' gap={5}>
         <video ref={videoRef} controls width="100%" height="auto">
           <source src={videoUrl} type="video/mp4" />

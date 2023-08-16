@@ -4,6 +4,8 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SmallText from './SmallText';
 import useFormContext from '../../../hooks/useFormContext';
 
+import Box from '@mui/system/Box';
+
 export default function Dropzone(props) {
   const { page, setPage, videoUrl, setVideoUrl } = useFormContext();
   const handleNext = () => setPage(page + 1);
@@ -45,14 +47,33 @@ export default function Dropzone(props) {
   ));
 
   return (
-    <section className="container px-5 py-10">
-      <div {...getRootProps({ className: 'dropzone border border-dashed rounded-lg border-3 border-gray-300 p-10 flex flex-col items-center text-center' })}>
+    <section sx={{ padding: '10px', margin: '0 auto' }}>
+      <Box
+        {...getRootProps({
+          sx: {
+            border: '3px dashed #ccc',
+            borderRadius: '10px',
+            padding: '10px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center'
+          }
+        })}
+      >
         <input {...getInputProps()} />
-        <CloudUploadIcon className='w-1/5 h-1/5 text-gray-200' />
-        <p><u><b>Click to Upload</b></u> or drag and drop</p>
-        <p className='text-[12px] font-medium mb-16 text-gray-400'>(Maximum File Size: 5MB)</p>
+        <CloudUploadIcon sx={{ width: '20%', height: '20%', color: '#888' }} />
+        <p>
+          <u>
+            <b>Click to Upload</b>
+          </u>{' '}
+          or drag and drop
+        </p>
+        <p sx={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '16px', color: '#888' }}>
+          (Maximum File Size: 5MB)
+        </p>
         <SmallText text={"Your videos will be private to you till you submit them"} />
-      </div>
+      </Box>
       <aside>
         <h4>Accepted files</h4>
         <ul>{acceptedFileItems}</ul>

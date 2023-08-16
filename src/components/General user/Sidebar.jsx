@@ -145,7 +145,7 @@ export default function Sidebar() {
     "/general-user/",
     "/general-user/fines",
     "/notifications",
-    "/statistics",
+    "/general-user/profile",
     "/information",
     "/logout",
   ];

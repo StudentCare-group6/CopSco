@@ -39,6 +39,7 @@ export default function FineConfirmation() {
     "Police Station",
   ];
   const FineData = [
+    getValues("licenseNumber"),
     getValues("date"),
     getValues("time"),
     getValues("vehicleNumber"),
