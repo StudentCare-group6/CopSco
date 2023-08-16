@@ -12,7 +12,8 @@ import { useTheme } from '@mui/material/styles';
 import SmallText from './SmallText';
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Dropzone from './Dropzone';
-
+import theme from '../theme';
+import { ThemeProvider } from '@mui/material/styles';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -28,6 +29,7 @@ function BootstrapDialogTitle(props) {
   const { children, onClose, ...other } = props;
 
   return (
+   <ThemeProvider theme={theme}>
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
       {children}
       {onClose ? (
@@ -38,13 +40,14 @@ function BootstrapDialogTitle(props) {
             position: 'absolute',
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.primary[200],
+            color:'#999999',
           }}
         >
           <CloseIcon />
         </IconButton>
       ) : null}
     </DialogTitle>
+    </ThemeProvider>
   );
 }
 
@@ -67,15 +70,16 @@ export default function UploadDialog() {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <div>
-      <Button variant="outlined" sx={{ color: theme.palette.primary[200] }} onClick={handleClickOpen} startIcon={<AddOutlinedIcon />}>
+      <Button variant="outlined" sx={{ color: '#999999' }} onClick={handleClickOpen} startIcon={<AddOutlinedIcon />}>
         Upload Evidence
       </Button>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
-        maxWidth="md"
+        sx = {{width: '100%'}}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           <center><b>Upload Evidence</b></center>
@@ -89,8 +93,8 @@ export default function UploadDialog() {
           </center>
         </DialogActions>
       </BootstrapDialog>
-
     </div>
+    </ThemeProvider>
   );
 }
 
