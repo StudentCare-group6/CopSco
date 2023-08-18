@@ -88,6 +88,8 @@ export default function Login2() {
         navigate('/police-division');
       } else if (role === 'police-operator') {
         navigate('/police-operator');
+      } else if (role === 'admin') {
+        navigate('/admin');
       } else {
         navigate(from);
       }

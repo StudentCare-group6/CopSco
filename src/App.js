@@ -16,7 +16,6 @@ import FineConfirmation from "./pages/Traffic police/FineConfirmation";
 import FinePrint from "./pages/Traffic police/FinePrint";
 import UploadPage from "./pages/GeneralUser/UploadPage";
 import Login2 from "./pages/Login2";
-import { useState, useEffect } from "react";
 import Registration from "./pages/GeneralUserRegistration/RegistrationPage";
 import Login from "./pages/Login";
 import "./index.css";
@@ -24,7 +23,6 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { FormProvider } from "./context/FormContext";
 import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./pages/Unauthorized";
-import useAuth from "./hooks/useAuth";
 import PersistLogin from "./components/PersistLogin";
 import { DetailsProvider } from "./context/userDetailsContext";
 import { FineProvider } from "./context/userFinesContext";
@@ -36,6 +34,10 @@ import AddingOfficers from "./pages/Police Division/AddingPoliceOfficers";
 import ProfilePage from "./pages/GeneralUser/ProfilePage";
 import theme from "./components/General user/theme";
 import CssBaseline from "@mui/material/CssBaseline";
+import Dashboard from "./pages/Admin/Dashboard";
+import AdminRoutes from "./setup/routes/AdminRoutes";
+import Team from "./pages/Admin/Team";
+import UserManagment from "./pages/Admin/UserManagment";
 
 export default function App() {
   const THEME = createTheme({
@@ -158,6 +160,13 @@ export default function App() {
             <Route element={<RequireAuth allowedRole="police-division" />}>
               <Route path="police-division/" element={<PoliceDivisionRoutes />}>
                 <Route path="" element={<AddingOfficers />} />
+              </Route>
+            </Route>
+            <Route element={<RequireAuth allowedRole="admin" />}>
+              <Route path="admin/" element={<AdminRoutes />}>
+                <Route path="" element={<Dashboard />} />
+                <Route path="team" element={<Team />} />
+                <Route path="user-managment" element={<FormProvider><UserManagment /></FormProvider>} />
               </Route>
             </Route>
           </Route>

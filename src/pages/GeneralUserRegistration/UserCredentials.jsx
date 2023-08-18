@@ -18,7 +18,7 @@ export default function ContactDetails() {
       <Steppers step={1} />
       <Grid container spacing={2} sx={{ marginTop: "8%" }}>
         <Stack sx={{ width: "100%" }} alignItems="center">
-          <img src={passImg} className="w-32" />
+          <img alt ='passwordImage'src={passImg} className="w-32" />
         </Stack>
         <Grid item xs={12} sm={12} sx={{ mt: 3 }}>
           <TextField
