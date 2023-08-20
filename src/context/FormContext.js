@@ -36,9 +36,11 @@ export const FormProvider = ({children}) => {
     const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
     const { errors } = formState;
     const [videoUrl, setVideoUrl] = useState('');
+    const [videoDuration , setVideoDuration] = useState(0);
+    const [videoDimensions, setVideoDimensions] = useState({width: 0, height: 0});
 
     return (
-        <FormContext.Provider value={{videoUrl, setVideoUrl, title, subtitle, page, setPage, form, register, control, handleSubmit,errors, watch, getValues, setValue}}>
+        <FormContext.Provider value={{videoUrl, setVideoUrl, title, subtitle, page, setPage, form, register, control, handleSubmit,errors, watch, getValues, setValue, videoDuration , setVideoDuration,videoDimensions, setVideoDimensions }}>
             {children}
         </FormContext.Provider>
     )

@@ -5,22 +5,40 @@ import { Grid } from '@mui/material';
 import useFormContext from '../../../hooks/useFormContext';
 import Stack from '@mui/material/Stack';
 import { useRef } from 'react';
+import { useEffect } from 'react';
 
 
 const Editor = ({ open, onClose }) => {
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
-  const { page, setPage, videoUrl } = useFormContext();
+  const { videoUrl, videoDuration } = useFormContext();
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    const handleTimeUpdate = () => {
+      if (videoRef.current && videoRef.current.currentTime >= endTime) {
+        videoRef.current.currentTime = startTime;
+      }
+    };
+
+    if (videoRef.current) {
+      videoRef.current.currentTime = startTime;
+      videoRef.current.addEventListener('timeupdate', handleTimeUpdate);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+        videoRef.current.pause();
+      }
+    };
+  }, [startTime, endTime]);
 
   const handleSliderChange = (event, newValue) => {
     setStartTime(newValue[0]);
     setEndTime(newValue[1]);
-    if (videoRef.current) {
-      videoRef.current.currentTime = newValue[0];
-      videoRef.current.endTime = newValue[1];
-    }
   };
+
 
   return (
     <div className='px-10 py-3 gap-10' style={{ height: '55vh' }}>
@@ -58,7 +76,7 @@ const Editor = ({ open, onClose }) => {
             value={[startTime, endTime]}
             onChange={handleSliderChange}
             min={0}
-            max={100} // Set this based on the duration of your video
+            max={videoDuration} // Set this based on the duration of your video
             valueLabelDisplay="auto"
             valueLabelFormat={(value) => `${value} sec`}
             className='my-3'

@@ -11,6 +11,7 @@ import StarIcon from "@mui/icons-material/Star";
 import Button from "@mui/material/Button";
 import VideoThumbnail from 'react-video-thumbnail';
 
+
 function Reward(props) {
   return (
     <Stack direction="row" alignItems="center" spacing={1}>
@@ -24,7 +25,6 @@ function Reward(props) {
 
 
 export default function MediaControlCard(props) {
-  const theme = useTheme();
 
   return (
     <Card
@@ -41,7 +41,6 @@ export default function MediaControlCard(props) {
         {/* <source src={props.url} type="video/mp4" /> */}
         <VideoThumbnail
           videoUrl={props.url}
-          thumbnailHandler={(thumbnail) => console.log(thumbnail)}
           width= {480}
           height= {320}
         />

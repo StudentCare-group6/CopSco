@@ -16,6 +16,7 @@ import { Grid, TextField, MenuItem } from '@mui/material';
 import violationImage from './violation.jpg';
 import useFormContext from '../../../hooks/useFormContext';
 import Stack from '@mui/material/Stack';
+import VideoThumbnail from 'react-video-thumbnail';
 
 const vehicalTypes = [
   {
@@ -163,8 +164,7 @@ export default function ComplaintDialog() {
     setOpen(false);
   };
 
-  const { page, setPage } = useFormContext();
-  const handlePrev = () => setPage(page - 1);
+  const { page, setPage, videoUrl, videoDimensions } = useFormContext();
   const handleNext = () => setPage(page + 1);
 
   return (
@@ -269,7 +269,11 @@ export default function ComplaintDialog() {
             <Grid item xs={6}>
               {/* Preview and note */}
               <Stack spacing={3}>
-                <img className="preview-image" alt="preview_image" src={violationImage} />
+                <VideoThumbnail
+                  videoUrl={videoUrl}
+                  width={videoDimensions.width}
+                  height={videoDimensions.height}
+                />
                 <p className="font-bold mt-4">Why do we collect this information?</p>
                 <SmallText text="By obtaining supplementary information related to the video evidence, law enforcement can strengthen the evidentiary value of the footage, establish a more accurate account of events, and conduct a thorough and fair investigation." />
               </Stack>
