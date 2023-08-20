@@ -16,12 +16,13 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import {
   HomeIcon,
   UserCircleIcon,
-  BellIcon,
-  ClipboardDocumentListIcon,
-  InformationCircleIcon,
+  UserPlusIcon,
+  QuestionMarkCircleIcon,
   ArrowLeftOnRectangleIcon,
+  UserGroupIcon
 } from "@heroicons/react/24/outline";
 import useLogout from "../../hooks/useLogout";
+
 
 const drawerWidth = 240;
 
@@ -118,20 +119,20 @@ export default function Sidebar() {
       inactive: <HomeIcon className="h-6 w-6 text-slate-400" />,
     },
     {
-      active: <ClipboardDocumentListIcon className="h-6 w-6 text-slate-950" />,
-      inactive: <ClipboardDocumentListIcon className="h-6 w-6 text-slate-400" />
+      active: <UserGroupIcon className="h-6 w-6 text-slate-950" />,
+      inactive: <UserGroupIcon className="h-6 w-6 text-slate-400" />
     },
     {
-      active: <BellIcon className="h-6 w-6 text-slate-950" />,
-      inactive: <BellIcon className="h-6 w-6 text-slate-400" />,
+      active: <UserPlusIcon className="h-6 w-6 text-slate-950" />,
+      inactive: <UserPlusIcon className="h-6 w-6 text-slate-400" />,
     },
     {
       active: <UserCircleIcon className="h-6 w-6 text-slate-950" />,
       inactive: <UserCircleIcon className="h-6 w-6 text-slate-400" />,
     },
     {
-      active: <InformationCircleIcon className="h-6 w-6 text-slate-950" />,
-      inactive: <InformationCircleIcon className="h-6 w-6 text-slate-400" />,
+      active: <QuestionMarkCircleIcon className="h-6 w-6 text-slate-950" />,
+      inactive: <QuestionMarkCircleIcon className="h-6 w-6 text-slate-400" />,
     },
     {
       active: <ArrowLeftOnRectangleIcon className="h-6 w-6 text-slate-950" />,
@@ -141,10 +142,10 @@ export default function Sidebar() {
 
   const routes = [
     "/admin/",
-    "/general-user/fines",
     "/admin/team",
-    "/general-user/profile",
     "/admin/user-managment",
+    "/general-user/profile",
+    "/admin/faq",
     "/logout",
   ];
 
@@ -165,10 +166,10 @@ export default function Sidebar() {
         <List sx={{ height: "50%" }} className="flex flex-col justify-between">
           {[
             "Home",
-            "Fine Managment",
-            "Notifications",
-            "Analytics",
-            "Information",
+            "Manage Roles",
+            "Manage Users",
+            "Profile",
+            "FAQ",
             "Log out",
           ].map((text, index) => {
             const route = routes[index];

@@ -208,7 +208,6 @@ export default function RegisterModal() {
                                 label="Division"
                                 select
                                 fullWidth
-                                sx={{ mt: 3 }}
                                 SelectProps={{
                                     sx: {
                                         height: "50px",

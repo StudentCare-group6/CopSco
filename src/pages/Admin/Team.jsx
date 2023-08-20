@@ -52,9 +52,9 @@ export default function Team() {
                         backgroundColor = { role === 'admin' ? 'primary.main' : 'success.main'}
                         borderRadius = '4px'
                         >
-                            {role === 'admin' && <AdminPanelSettingsOutlinedIcon fontSize="xs" className="text-slate-100"/>}
-                            {role === 'general-user' && <LockOpenOutlinedIcon  fontSize="xs"  className="text-slate-100"/>}
-                            {role === 'traffic-police' && <SecurityOutlinedIcon fontSize="xs"  className="text-slate-100"/>}
+                            {role === 'admin' && <AdminPanelSettingsOutlinedIcon fontSize="sm" className="text-slate-100"/>}
+                            {role === 'general-user' && <LockOpenOutlinedIcon  fontSize="sm"  className="text-slate-100"/>}
+                            {role === 'traffic-police' && <SecurityOutlinedIcon fontSize="sm"  className="text-slate-100"/>}
                             <Typography variant="subtitle1" className="text-slate-100">
                                 {role}
                             </Typography>

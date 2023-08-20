@@ -4,15 +4,12 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
 import { Stack } from "@mui/material";
 import PaidIcon from "@mui/icons-material/Paid";
 import StarIcon from "@mui/icons-material/Star";
 import Button from "@mui/material/Button";
+import VideoThumbnail from 'react-video-thumbnail';
 
 function Reward(props) {
   return (
@@ -25,16 +22,6 @@ function Reward(props) {
   );
 }
 
-function Rating(props) {
-  return (
-    <Stack direction="row" alignItems="center" spacing={1}>
-      <StarIcon sx={{ fontSize: 30 }} className="text-yellow-500" />
-      <Typography component="div" className="text-2xl text-yellow-500">
-        {props.text}
-      </Typography>
-    </Stack>
-  );
-}
 
 export default function MediaControlCard(props) {
   const theme = useTheme();
@@ -45,14 +32,20 @@ export default function MediaControlCard(props) {
       className="shadow-sm rounded-lg mb-5 "
     >
       <CardMedia
-        component="video"
+        component="image"
         controls // This adds play/pause controls to the video
         loop // This makes the video loop
         muted // This mutes the video (remove if not needed)
         sx={{ width: 400, height: "auto" }}
       >
-        <source src={props.url} type="video/mp4" />
-        Your browser does not support the video tag.
+        {/* <source src={props.url} type="video/mp4" /> */}
+        <VideoThumbnail
+          videoUrl={props.url}
+          thumbnailHandler={(thumbnail) => console.log(thumbnail)}
+          width= {480}
+          height= {320}
+        />
+        {/* Your browser does not support the video tag. */}
       </CardMedia>
       <Box sx={{ display: "flex", flexDirection: "column", width: "70%" }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
@@ -64,7 +57,7 @@ export default function MediaControlCard(props) {
             justifyContent="space-between"
             sx={{ width: "100%" }}
           >
-            <Stack gap = {1}>
+            <Stack gap={1}>
               <Typography
                 variant="subtitle1"
                 color="text.secondary"

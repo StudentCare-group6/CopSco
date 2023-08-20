@@ -38,6 +38,7 @@ import Dashboard from "./pages/Admin/Dashboard";
 import AdminRoutes from "./setup/routes/AdminRoutes";
 import Team from "./pages/Admin/Team";
 import UserManagment from "./pages/Admin/UserManagment";
+import FAQ from "./pages/Admin/FAQ";
 
 export default function App() {
   const THEME = createTheme({
@@ -167,6 +168,7 @@ export default function App() {
                 <Route path="" element={<Dashboard />} />
                 <Route path="team" element={<Team />} />
                 <Route path="user-managment" element={<FormProvider><UserManagment /></FormProvider>} />
+                <Route path="faq" element={<FAQ />} />
               </Route>
             </Route>
           </Route>
