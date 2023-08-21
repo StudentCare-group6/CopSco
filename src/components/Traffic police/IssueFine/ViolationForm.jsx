@@ -38,9 +38,52 @@ const policeStations = [
     "Maligawatta"
 ];
 
+const offences = [
+    "Driving without a valid license",
+    "Driving under the influence of alcohol",
+    "Driving without a valid insurance",
+    "Driving without a valid registration",
+    "Driving without a valid emission test",
+    "Driving without a valid revenue license",
+    "Driving without a valid route permit",
+    "Driving without a valid fitness certificate",
+    "Driving without a valid number plate",
+    "Driving without a valid speed limiter",
+    "Driving without a valid speedometer",
+    "Driving without a valid side mirror",
+    "Driving without a valid rear mirror",
+    "Driving without a valid headlight",
+    "Driving without a valid tail light",
+    "Driving without a valid indicator",
+    "Driving without a valid horn",
+    "Driving without a valid wiper",
+    "Driving without a valid seat belt",
+    "Driving without a valid helmet",
+    "Driving without a valid reflector",
+    "Driving without a valid mudguard",
+    "Driving without a valid silencer",
+    "Driving without a valid foot rest",
+    "Driving without a valid handle bar",
+    "Driving without a valid stand",
+    "Driving without a valid chain cover",
+    "Driving without a valid number plate light",
+    "Driving without a valid number plate sticker",
+    "Driving without a valid number plate reflector",
+    "Driving without a valid number plate screw",
+    "Driving without a valid number plate lock",
+    "Driving without a valid number plate frame",
+    "Driving without a valid number plate cover",
+    "Driving without a valid number plate holder",
+    "Driving without a valid number plate bolt",
+    "Driving without a valid number plate nut",
+    "Driving without a valid number plate washer",
+    "Driving without a valid number plate clamp",
+    "Driving without a valid number plate bracket",
+]
+
 
 const LicenseDetails = ['Date', 'Time', 'Police Division', 'Police Station', 'Offence', 'Fine Amount', 'Demerit Points'];
-const LicenseData = ['01/01/2021', '12:00 PM', <DropDown valuesArr={policeDivisions} />, <DropDown valuesArr={policeStations} />, <MultipleDropDown valuesArr={policeStations} />, 'Rs. 5000', '8'];
+const LicenseData = ['01/01/2021', '12:00 PM', <DropDown valuesArr={policeDivisions} />, <DropDown valuesArr={policeStations} />, <MultipleDropDown valuesArr={offences} />, 'Rs. 5000', '8'];
 
 export default function ViolationForm() {
     const theme = useTheme();

@@ -1,7 +1,12 @@
 import { Button } from '@mui/material'
 import React from 'react'
+import useFormContext from '../../../hooks/useFormContext';
 
 function ModalButton({buttonText,type}) {
+  
+  const { page, setPage } = useFormContext();
+  const handleNext = () => setPage(page + 1);
+  const handleBack = () => setPage(page - 1);
 
   let buttonClass = 'rounded px-12 py-3 font-bold';
 
@@ -14,7 +19,7 @@ function ModalButton({buttonText,type}) {
   } // Add more conditions for other types if needed type ==="success" ? 'bg-emerald-300 text-black' : 'bg-rose-400 text-white'} px-12 py-3  font-bold`
 
   return (
-    <Button className={buttonClass} disableElevation>
+    <Button className={buttonClass} disableElevation onClick ={handleNext} >
         {buttonText}
     </Button>
   )

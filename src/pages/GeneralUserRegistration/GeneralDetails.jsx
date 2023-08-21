@@ -8,7 +8,7 @@ import useFormContext from '../../hooks/useFormContext';
 
 export default function GeneralDetails() {
 
-    const { data, register, errors } = useFormContext();
+    const { register, errors } = useFormContext();
     return (
         <div>
             <Grid container spacing={2} sx={{ mt: 3 }}>
@@ -60,15 +60,15 @@ export default function GeneralDetails() {
                             pattern: {
                                 value: /\S+@\S+\.\S+/,
                                 message: "Invalid email address"
-                            },
-                            validate: {
-                                checkEmail: async (value) => {
-                                    // const res = await fetch(`http://localhost:3001/user/checkEmail/${value}`);
-                                    const res = await fetch(`https://jsonplaceholder.typicode.com/users?email=${value}`)
-                                    const data = await res.json();
-                                    return data.length === 0 || "Email already exists";
-                                }
                             }
+                            // validate: {
+                            //     checkEmail: async (value) => {
+                            //         // const res = await fetch(`http://localhost:3001/user/checkEmail/${value}`);
+                            //         const res = await fetch(`https://jsonplaceholder.typicode.com/users?email=${value}`)
+                            //         const data = await res.json();
+                            //         return data.length === 0 || "Email already exists";
+                            //     }
+                            // }
                         }
                         )}
                     />

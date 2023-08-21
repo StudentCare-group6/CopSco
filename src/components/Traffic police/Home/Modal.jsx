@@ -78,8 +78,6 @@ export default function BasicModal(props) {
     );
   } else {
 
-
-
     return (
       <div>
         <Button onClick={handleOpen}><Typography variant='h6' align='center' className='font-bold text-black'>{props.txt} <ChevronRightIcon fontSize='large' className='font-bold text-gray-700' /> </Typography>

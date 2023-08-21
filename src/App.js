@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import TrafficPoliceRoutes from "./setup/routes/TrafficPolice";
 import GeneralUserRoutes from "./setup/routes/GeneralUser";
 import PoliceOperatorRoutes from "./setup/routes/PoliceOperator";
+import PoliceDivisionRoutes from "./setup/routes/PoliceDivision";
 import Home from "./pages/Traffic police/Home";
 import UserDetails from "./pages/Traffic police/UserDetails";
 import Notifications from "./pages/Traffic police/Notifications";
@@ -14,9 +15,7 @@ import IssueFine from "./pages/Traffic police/IssueFine";
 import FineConfirmation from "./pages/Traffic police/FineConfirmation";
 import FinePrint from "./pages/Traffic police/FinePrint";
 import UploadPage from "./pages/GeneralUser/UploadPage";
-import VideoList from "./pages/PoliceOperator/VideoList";
-import VideoDetails from "./pages/PoliceOperator/VideoDetails";
-import { useState, useEffect } from "react";
+import Login2 from "./pages/Login2";
 import Registration from "./pages/GeneralUserRegistration/RegistrationPage";
 import Login from "./pages/Login";
 import "./index.css";
@@ -24,8 +23,23 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { FormProvider } from "./context/FormContext";
 import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./pages/Unauthorized";
-import useAuth from "./hooks/useAuth";
 import PersistLogin from "./components/PersistLogin";
+import PolicePersistLogin from "./components/PolicePersistLogin";
+import { DetailsProvider } from "./context/userDetailsContext";
+import { FineProvider } from "./context/userFinesContext";
+import LandingPage from "./pages/LandingPage";
+import UserFines from "./pages/GeneralUser/UserFines";
+import PoliceHome from "./pages/PoliceOperator/Home";
+import VideoDetails from "./pages/PoliceOperator/VideoDetails";
+import AddingOfficers from "./pages/Police Division/AddingPoliceOfficers";
+import ProfilePage from "./pages/GeneralUser/ProfilePage";
+import theme from "./components/General user/theme";
+import CssBaseline from "@mui/material/CssBaseline";
+import Dashboard from "./pages/Admin/Dashboard";
+import AdminRoutes from "./setup/routes/AdminRoutes";
+import Team from "./pages/Admin/Team";
+import UserManagment from "./pages/Admin/UserManagment";
+import FAQ from "./pages/Admin/FAQ";
 
 export default function App() {
   const THEME = createTheme({
@@ -38,57 +52,135 @@ export default function App() {
     },
   });
 
-  const { auth } = useAuth();
-  const userRole = auth?.role;
-
   return (
     <ThemeProvider theme={THEME}>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* For my use */}
-              <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
-                <Route path="video-details" element={<VideoDetails />} />
-                <Route path="video-list" element={<VideoList />} />
-              </Route>
-
           {/* public routes */}
+          <Route path="" element={<LandingPage />} />
           <Route path="login" element={<Login />} />
-          <Route path="registration" element={<Registration />} />
+          <Route
+            path="registration"
+            element={
+              <FormProvider>
+                <Registration />
+              </FormProvider>
+            }
+          />
           <Route path="unauthorized" element={<Unauthorized />} />
+          <Route path="copsco/login" element={<Login2 />} />
           {/* protected routes */}
 
-          {/* traffic police routes */}
           <Route element={<PersistLogin />}>
+            {/* general user routes */}
+            <Route element={<RequireAuth allowedRole="general-user" />}>
+              <Route path="general-user/" element={<GeneralUserRoutes />}>
+                <Route
+                  path=""
+                  element={
+                    <FineProvider>
+                      <FormProvider>
+                        <UploadPage />
+                      </FormProvider>
+                    </FineProvider>
+                  }
+                />
+                <Route
+                  path="fines"
+                  element={
+                    <FineProvider>
+                      <UserFines />
+                    </FineProvider>
+                  }
+                />
+                <Route
+                  path="profile"
+                  element={
+                    <ThemeProvider theme={theme}>
+                      <CssBaseline>
+                        <ProfilePage />
+                      </CssBaseline>
+                    </ThemeProvider>
+                  }
+                />
+              </Route>
+            </Route>
+          </Route>
+          <Route element={<PolicePersistLogin />}>
+             {/* traffic police routes */}
             <Route element={<RequireAuth allowedRole="traffic-police" />}>
               <Route path="traffic-police/" element={<TrafficPoliceRoutes />}>
-                <Route path="" element={<Home />} />
-                <Route path="user-details" element={<UserDetails />} />
+                <Route
+                  path=""
+                  element={
+                    <DetailsProvider>
+                      <Home />
+                    </DetailsProvider>
+                  }
+                />
+                <Route
+                  path="user-details"
+                  element={
+                    <DetailsProvider>
+                      <UserDetails />
+                    </DetailsProvider>
+                  }
+                />
                 <Route path="notifications" element={<Notifications />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="statistics" element={<Statistics />} />
                 <Route path="information" element={<Information />} />
-                <Route path="issue-fine" element={<IssueFine />} />
+                <Route
+                  path="issue-fine"
+                  element={
+                    <DetailsProvider>
+                      <FormProvider>
+                        <IssueFine />
+                      </FormProvider>
+                    </DetailsProvider>
+                  }
+                />
                 <Route
                   path="fine-confirmation"
-                  element={<FineConfirmation />}
+                  element={
+                    <DetailsProvider>
+                      <FormProvider>
+                        <FineConfirmation />
+                      </FormProvider>
+                    </DetailsProvider>
+                  }
                 />
                 <Route path="fine-print" element={<FinePrint />} />
               </Route>
             </Route>
 
-            {/* general user routes */}
-            <Route element={<RequireAuth allowedRole="general-user" />}>
-              <Route path="general-user/" element={<GeneralUserRoutes />}>
-                <Route path="" element={<UploadPage />} />
-              </Route>
-            </Route>
             {/* police operator routes */}
-            {/* <Route element={<RequireAuth allowedRole="police-operator" />}>
+            <Route element={<RequireAuth allowedRole="police-operator" />}>
               <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
-                <Route path="" element={<VideoList />} />
+                <Route path="" element={<PoliceHome />} />
                 <Route path="video-details" element={<VideoDetails />} />
               </Route>
-            </Route> */}
+            </Route>
+            <Route element={<RequireAuth allowedRole="police-division" />}>
+              <Route path="police-division/" element={<PoliceDivisionRoutes />}>
+                <Route path="" element={<AddingOfficers />} />
+              </Route>
+            </Route>
+            <Route element={<RequireAuth allowedRole="admin" />}>
+              <Route path="admin/" element={<AdminRoutes />}>
+                <Route path="" element={<Dashboard />} />
+                <Route path="team" element={<Team />} />
+                <Route
+                  path="user-managment"
+                  element={
+                    <FormProvider>
+                      <UserManagment />
+                    </FormProvider>
+                  }
+                />
+                <Route path="faq" element={<FAQ />} />
+              </Route>
+            </Route>
           </Route>
         </Route>
       </Routes>

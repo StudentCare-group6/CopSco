@@ -16,7 +16,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: 12,
   },
-  
   '&.status-inactive': {
     color: 'red',
     fontWeight: 'bold',

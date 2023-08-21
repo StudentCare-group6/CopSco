@@ -20,6 +20,7 @@ const Evidence = ({ videoData }) => {
 
   const directVideoDetails = () => {
     navigate('/video'); 
+
   };
 
   return (

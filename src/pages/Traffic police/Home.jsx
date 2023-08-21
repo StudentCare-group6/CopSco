@@ -20,7 +20,7 @@ export default function Home() {
             <Box>
                 <CustomizedSteppers step={0} />
             </Box>
-            <Box>
+            <Box sx = {{height: '70vh'}} > 
 
                 <Grid container sx={{ justifyContent: 'center', marginTop: 10 }}>
                     <OptionCard txt={'Scan QR'} img={qr} status='qr' />
