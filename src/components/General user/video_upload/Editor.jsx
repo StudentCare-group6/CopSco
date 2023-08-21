@@ -9,9 +9,8 @@ import { useEffect } from 'react';
 
 
 const Editor = ({ open, onClose }) => {
-  const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(0);
-  const { videoUrl, videoDuration } = useFormContext();
+
+  const { videoUrl, videoDuration, startTime, setStartTime, endTime, setEndTime } = useFormContext();
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -33,6 +32,8 @@ const Editor = ({ open, onClose }) => {
       }
     };
   }, [startTime, endTime]);
+
+
 
   const handleSliderChange = (event, newValue) => {
     setStartTime(newValue[0]);

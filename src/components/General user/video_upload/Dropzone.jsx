@@ -7,7 +7,7 @@ import useFormContext from '../../../hooks/useFormContext';
 import Box from '@mui/system/Box';
 
 export default function Dropzone(props) {
-  const { page, setPage, setVideoUrl, setVideoDuration, setVideoDimensions } = useFormContext();
+  const { page, setPage, setVideoUrl, setVideoDuration, setVideoDimensions, setVideoFile } = useFormContext();
   const handleNext = () => setPage(page + 1);
 
   const {
@@ -25,7 +25,7 @@ export default function Dropzone(props) {
         // Create a temporary URL for the uploaded video
         const temporaryUrl = URL.createObjectURL(acceptedFiles[0]);
         setVideoUrl(temporaryUrl);
-
+        setVideoFile(acceptedFiles[0]);
         const videoElement = document.createElement('video');
         videoElement.preload = 'metadata';
         videoElement.src = temporaryUrl;
