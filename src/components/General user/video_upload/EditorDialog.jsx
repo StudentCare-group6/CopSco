@@ -13,9 +13,9 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Editor from './Editor';
 import ModalButton from './ModalButton';
 import useFormContext from '../../../hooks/useFormContext';
-import {createFFmpegCore} from '@ffmpeg/ffmpeg/dist';
+// import {createFFmpegCore} from '@ffmpeg/ffmpeg/dist';
 
-const FFmpeg = createFFmpegCore({ log: true });
+// const FFmpeg = createFFmpegCore({ log: true });
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -65,23 +65,23 @@ export default function EditorDialog() {
 
   const handleBack = () => setPage(page - 1);
   const handleTrim = async () => {
-    // Convert start and end times to seconds or milliseconds
-    const startSeconds = startTime; // Convert as needed
-    const endSeconds = endTime;     // Convert as needed
+    // // Convert start and end times to seconds or milliseconds
+    // const startSeconds = startTime; // Convert as needed
+    // const endSeconds = endTime;     // Convert as needed
    
-    // Perform trimming using ffmpeg.js
-    FFmpeg.FS('writeFile', 'input.mp4', videoFile);
-    await FFmpeg.run('-i', 'input.mp4', '-ss', startSeconds, '-t', endSeconds - startSeconds, 'output.mp4');
-    const trimmedVideoData =FFmpeg.FS('readFile', 'output.mp4');
+    // // Perform trimming using ffmpeg.js
+    // FFmpeg.FS('writeFile', 'input.mp4', videoFile);
+    // await FFmpeg.run('-i', 'input.mp4', '-ss', startSeconds, '-t', endSeconds - startSeconds, 'output.mp4');
+    // const trimmedVideoData =FFmpeg.FS('readFile', 'output.mp4');
 
-    // Send the trimmed video to the backend
-    const formData = new FormData();
-    formData.append('trimmedVideo', new Blob([trimmedVideoData.buffer], { type: 'video/mp4' }));
-    // Make a fetch or axios request to send the formData to the backend
+    // // Send the trimmed video to the backend
+    // const formData = new FormData();
+    // formData.append('trimmedVideo', new Blob([trimmedVideoData.buffer], { type: 'video/mp4' }));
+    // // Make a fetch or axios request to send the formData to the backend
 
-    // Clean up
-    FFmpeg.FS('unlink', 'input.mp4');
-    FFmpeg.FS('unlink', 'output.mp4');
+    // // Clean up
+    // FFmpeg.FS('unlink', 'input.mp4');
+    // FFmpeg.FS('unlink', 'output.mp4');
 
     handleClose();
   };

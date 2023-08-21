@@ -24,6 +24,7 @@ import { FormProvider } from "./context/FormContext";
 import RequireAuth from "./components/RequireAuth";
 import Unauthorized from "./pages/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
+import PolicePersistLogin from "./components/PolicePersistLogin";
 import { DetailsProvider } from "./context/userDetailsContext";
 import { FineProvider } from "./context/userFinesContext";
 import LandingPage from "./pages/LandingPage";
@@ -70,8 +71,43 @@ export default function App() {
           <Route path="copsco/login" element={<Login2 />} />
           {/* protected routes */}
 
-          {/* traffic police routes */}
           <Route element={<PersistLogin />}>
+            {/* general user routes */}
+            <Route element={<RequireAuth allowedRole="general-user" />}>
+              <Route path="general-user/" element={<GeneralUserRoutes />}>
+                <Route
+                  path=""
+                  element={
+                    <FineProvider>
+                      <FormProvider>
+                        <UploadPage />
+                      </FormProvider>
+                    </FineProvider>
+                  }
+                />
+                <Route
+                  path="fines"
+                  element={
+                    <FineProvider>
+                      <UserFines />
+                    </FineProvider>
+                  }
+                />
+                <Route
+                  path="profile"
+                  element={
+                    <ThemeProvider theme={theme}>
+                      <CssBaseline>
+                        <ProfilePage />
+                      </CssBaseline>
+                    </ThemeProvider>
+                  }
+                />
+              </Route>
+            </Route>
+          </Route>
+          <Route element={<PolicePersistLogin />}>
+             {/* traffic police routes */}
             <Route element={<RequireAuth allowedRole="traffic-police" />}>
               <Route path="traffic-police/" element={<TrafficPoliceRoutes />}>
                 <Route
@@ -118,39 +154,6 @@ export default function App() {
               </Route>
             </Route>
 
-            {/* general user routes */}
-            <Route element={<RequireAuth allowedRole="general-user" />}>
-              <Route path="general-user/" element={<GeneralUserRoutes />}>
-                <Route
-                  path=""
-                  element={
-                    <FineProvider>
-                      <FormProvider>
-                        <UploadPage />
-                      </FormProvider>
-                    </FineProvider>
-                  }
-                />
-                <Route
-                  path="fines"
-                  element={
-                    <FineProvider>
-                      <UserFines />
-                    </FineProvider>
-                  }
-                />
-                <Route
-                  path="profile"
-                  element={
-                    <ThemeProvider theme={theme}>
-                      <CssBaseline>
-                        <ProfilePage />
-                      </CssBaseline>
-                    </ThemeProvider>
-                  }
-                />
-              </Route>
-            </Route>
             {/* police operator routes */}
             <Route element={<RequireAuth allowedRole="police-operator" />}>
               <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
@@ -167,7 +170,14 @@ export default function App() {
               <Route path="admin/" element={<AdminRoutes />}>
                 <Route path="" element={<Dashboard />} />
                 <Route path="team" element={<Team />} />
-                <Route path="user-managment" element={<FormProvider><UserManagment /></FormProvider>} />
+                <Route
+                  path="user-managment"
+                  element={
+                    <FormProvider>
+                      <UserManagment />
+                    </FormProvider>
+                  }
+                />
                 <Route path="faq" element={<FAQ />} />
               </Route>
             </Route>

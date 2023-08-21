@@ -6,8 +6,7 @@ const RequireAuth = ({ allowedRole }) => {
   const location = useLocation();
 
   const userRole = auth.role;
-  console.log(userRole);
-  console.log(allowedRole);
+
   if (userRole === allowedRole) {
     return <Outlet />;
   } else if (auth?.user) {

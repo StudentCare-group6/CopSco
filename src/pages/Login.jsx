@@ -79,7 +79,6 @@ export default function Login() {
       const accessToken = response.data.accessToken;
       const role = response.data.userrole;
       setAuth({ user, pwd, role, accessToken });
-      // setUser('');
       resetUser();
       setPwd('');
       if (role === 'general-user') {
