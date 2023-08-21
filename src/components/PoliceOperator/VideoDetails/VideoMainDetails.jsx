@@ -43,7 +43,7 @@ const rows = [
 export default function CustomizedTables() {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="customized table">
+      <Table  className='mt-8' sx={{ minWidth: 500 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Reference Number #458958</StyledTableCell>

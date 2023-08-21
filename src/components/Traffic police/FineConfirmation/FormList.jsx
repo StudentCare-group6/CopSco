@@ -6,42 +6,27 @@ import { useNavigate } from "react-router-dom";
 import CancelDialog from "./CancelDialog.jsx";
 
 export default function FormList(props) {
-  const navigate = useNavigate();
-  const handleButtonClick = () => {
-    navigate("/traffic-police/fine-print");
-  };
-
   return (
     <Stack direction="row" spacing={{ xs: 5, sm: 15, md: 15 }}>
       <Stack direction="column" spacing={2} align='left'>
         {props.detailsArr.map((value) => (
           <Typography
             sx={{ height: "40px"}}
-            className="font-semibold text-sm text-neutral-600"
+            variant="subtitle1"
           >
-            {`${value}:`}
+           {value}
           </Typography>
         ))}
       </Stack>
       <Stack direction="column" spacing={2} align='right'>
         {props.detailsArr.map((value) => (
           <Typography
-            className="font-medium text-neutral-500 text-md"
+            variant="subtitle1"
             sx={{ height: "40px",  }}
           >
             {props.dataArr[props.detailsArr.indexOf(value)]}
           </Typography>
         ))}
-        <Stack direction="row" spacing={3}>
-          <Button
-            variant="contained"
-            className="text-white"
-            onClick={handleButtonClick}
-          >
-            Confirm
-          </Button>
-          <CancelDialog />
-        </Stack>
       </Stack>
     </Stack>
   );

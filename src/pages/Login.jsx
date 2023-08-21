@@ -18,7 +18,9 @@ import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/posts'
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Snackbar, Alert, AlertTitle } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
+import useInput from '../hooks/useInput';
+import useToggle from '../hooks/useToggle';
 
 
 function Copyright(props) {
@@ -26,7 +28,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link2 color="inherit" href="https://mui.com/">
-        Your Website
+        CopSco
       </Link2>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -41,17 +43,17 @@ const defaultTheme = createTheme();
 
 export default function Login() {
 
-  const { setAuth, auth, persist, setPersist } = useAuth();
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
   const userRef = useRef();
-  const errRef = useRef();
 
-  const [user, setUser] = useState('');
+  const [user, resetUser, userAttributes] = useInput('user', '');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const [check, toggleCheck] = useToggle('persist', false);
 
   const handleClose = () => {
     setErrMsg('');
@@ -77,18 +79,13 @@ export default function Login() {
       const accessToken = response.data.accessToken;
       const role = response.data.userrole;
       setAuth({ user, pwd, role, accessToken });
-      setUser('');
+      resetUser();
       setPwd('');
-      if (role === 'traffic-police') {
-        navigate('/traffic-police');
-      } else if (role === 'general-user') {
+      if (role === 'general-user') {
         navigate('/general-user');
       } else if (role === 'police-operator') {
-        navigate('/police-operator');
-      } else {
-        navigate(from);
+        alert('invalid role');
       }
-
     } catch (err) {
       if (!err?.response) {
         setErrMsg('Network error');
@@ -99,17 +96,9 @@ export default function Login() {
       } else {
         setErrMsg('Login failed, try again');
       }
-     
+
     }
   };
-
-  const togglePersist = () => {
-    setPersist(prev => !prev);
-  }
-
-  useEffect(() => {
-    localStorage.setItem('persist', persist);
-  }, [persist]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -126,7 +115,7 @@ export default function Login() {
           severity="error"
           onClose={handleClose}
           role="alert"
-          variant = "filled"
+          variant="filled"
         >
           {errMsg}
         </Alert>
@@ -134,7 +123,7 @@ export default function Login() {
       <Grid container component="main" sx={{ height: '100vh' }}>
 
         <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
-          <Typography sx={{ margin: '20px' }} component="h1" variant="h5" className='font-extrabold text-black' >
+          <Typography sx={{ margin: '20px' , fontFamily:'inter'}} component="h1" variant="h5" className='font-extrabold text-black' >
             CopSco
           </Typography>
           <Box
@@ -148,7 +137,7 @@ export default function Login() {
           >
 
             <Stack justifyContent="center" alignItems="center" spacing={3}>
-              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' >
+              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{fontFamily:'inter'}} >
                 Login to your account
               </Typography>
               <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
@@ -179,8 +168,7 @@ export default function Login() {
                 ref={userRef}
                 label="Username"
                 autoComplete='on'
-                onChange={(e) => setUser(e.target.value)}
-                value={user}
+                {...userAttributes}
               />
               <TextField
                 margin="normal"
@@ -194,12 +182,11 @@ export default function Login() {
               />
               <FormControlLabel
                 control={
-                <Checkbox 
-                   value="remember" 
-                   color="primary"
-                   id = "remember"
-                    onChange={togglePersist}
-                    checked={persist}
+                  <Checkbox
+                    color="primary"
+                    id="remember"
+                    onChange={toggleCheck}
+                    checked={check}
                   />}
                 label="Remember me"
               />

@@ -4,11 +4,13 @@ import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
-  const { auth, persist } = useAuth();
+  const { auth } = useAuth();
+  const [ persist ] = useLocalStorage('persist', false);
 
   useEffect(() => {
     let isMounted = true;

@@ -20,7 +20,7 @@ export default function PreviousOffences() {
 
         <Grid item lg={12} align='center' sx={{ width: '100%' }}>
             <Paper className='shadow-md' sx={{
-                gap: 3, boxShadow: 'none', display: 'flex', width: '75%', flexDirection: 'column', padding: 5, borderRadius: 4, [theme.breakpoints.down('sm')]: {
+                gap: 3, boxShadow: 'none', display: 'flex', width: '75%', flexDirection: 'column', padding: 5, [theme.breakpoints.down('sm')]: {
                     width: '100%', // Width for small screens
                 }
             }}>

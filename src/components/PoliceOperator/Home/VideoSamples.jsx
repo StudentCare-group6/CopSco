@@ -22,12 +22,12 @@ export default function VideoSamples() {
       title: 'Improper Turn',
       date: '01.07.2023',
       time: '14:56 PM',
-      location: 'Thummulla',
+      location: 'Galle',
       status: 'Pending',
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video1.mp4',
+      video: 'video2.mp4',
       title: 'Drunk Driving',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -36,7 +36,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video1.mp4',
+      video: 'video3.mp4',
       title: 'Over Speeding',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -45,7 +45,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video1.mp4',
+      video: 'video4.mp4',
       title: 'Drunk Driving',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -54,7 +54,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video1.mp4',
+      video: 'video5.mp4',
       title: 'Parking Violation',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -63,7 +63,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video1.mp4',
+      video: 'video6.mp4',
       title: 'Drunk Driving',
       date: '01.07.2023',
       time: '14:56 PM',

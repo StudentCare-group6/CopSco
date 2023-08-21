@@ -10,7 +10,9 @@ import PreviousOffences from '../../components/Traffic police/UserDetails/Previo
 import "@fontsource/inter";
 import useAuth from '../../hooks/useAuth';
 
+
 export default function UserDetails() {
+   
     const {auth} = useAuth();
     console.log(auth.user);
     return (
