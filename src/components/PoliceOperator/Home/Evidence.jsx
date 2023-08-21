@@ -19,7 +19,8 @@ const Evidence = ({ videoData }) => {
   const navigate = useNavigate(); 
 
   const directVideoDetails = () => {
-    navigate('/police-operator/video-details'); 
+    navigate('/video'); 
+
   };
 
   return (

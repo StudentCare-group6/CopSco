@@ -36,20 +36,33 @@ function stringAvatar(name) {
 
 const Actions = () => {
   return (
-
-    <Stack direction = 'row' gap = {2} sx = {{marginLeft:'15%'}}>
-      <Avatar {...stringAvatar('Oshada Rupesinghe')} />
-      <Stack direction = 'column'>
-        <Typography variant="body2">
-          Uploaded by :
-        </Typography>
-        <Typography variant="subtitle">
-          Oshada Rupesinghe
-        </Typography>
-      </Stack>
-      <ChevronRightOutlined sx={{ fontSize: 40 }}/>
-    </Stack>
-
+    <div>
+      <div className='flex mt-[80px]'>
+        <div className='ml-2'>
+          <img
+            src={'propic1.png'}
+            alt="User Profile"
+            className="w-14 h-14 rounded-full mr-2 ml-20"
+            style={{ marginTop: '-50px'}}
+          /> 
+        </div>
+        <div className='mt-[-45px] ml-3'>
+          <div>
+            <Typography variant="body2">
+              Uploaded by : 
+            </Typography>
+          </div>
+          <div>
+            <Typography variant="subtitle">
+              Oshada Rupesinghe 
+            </Typography>
+          </div>
+        </div>
+        <div className='w-5 h-5 mt-[-35px] ml-3'>
+          <ChevronRightIcon />
+        </div>
+      </div>
+    </div>
   )
 }
 
