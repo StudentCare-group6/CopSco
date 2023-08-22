@@ -66,7 +66,7 @@ export default function Dropzone(props) {
           sx: {
             border: '3px dashed #ccc',
             borderRadius: '10px',
-            padding: '10px',
+            padding: '50px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -83,16 +83,16 @@ export default function Dropzone(props) {
           or drag and drop
         </p>
         <p sx={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '16px', color: '#888' }}>
-          (Maximum File Size: 5MB)
+          (Maximum File Size: 500MB)
         </p>
         <SmallText text={"Your videos will be private to you till you submit them"} />
       </Box>
-      <aside>
+      {/* <aside>
         <h4>Accepted files</h4>
         <ul>{acceptedFileItems}</ul>
         <h4>Rejected files</h4>
         <ul>{fileRejectionItems}</ul>
-      </aside>
+      </aside> */}
     </section>
   );
 }

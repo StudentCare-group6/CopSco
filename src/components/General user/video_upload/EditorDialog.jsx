@@ -14,6 +14,7 @@ import Editor from "./Editor";
 import ModalButton from "./ModalButton";
 import useFormContext from "../../../hooks/useFormContext";
 import { useState, useEffect } from "react";
+import Stack from "@mui/material/Stack";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -87,12 +88,10 @@ export default function EditorDialog() {
     setPage,
     endTime,
     startTime,
-    videoUrl,
     videoFile,
-    setVideoUrl,
+    setTrimmedVideo
   } = useFormContext();
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
-  const [videoTrimmedUrl, setVideoTrimmedUrl] = useState("");
   useEffect(() => {
     //Load the ffmpeg script
     loadScript(
@@ -153,10 +152,11 @@ export default function EditorDialog() {
       );
       //Convert data to url and store in videoTrimmedUrl state
       const data = ffmpeg.FS("readFile", `out.${videoFileType}`);
-      const url = URL.createObjectURL(
-        new Blob([data.buffer], { type: videoFile.type })
-      );
-      setVideoTrimmedUrl(url);
+      // const url = URL.createObjectURL(
+      //   new Blob([data.buffer], { type: videoFile.type })
+      // );
+      const trimmedBlob = new Blob([data.buffer], { type: videoFile.type });
+      setTrimmedVideo(trimmedBlob);
       setPage(page + 1);
     }
   };
@@ -197,7 +197,10 @@ export default function EditorDialog() {
           <Editor />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleTrim}>Trim</Button>
+          <Stack direction='row' justifyContent='space-around' width = '100%'>
+            <Button onClick={handleBack}>Back</Button>
+            <Button onClick={handleTrim}>Next</Button>
+          </Stack>
         </DialogActions>
       </BootstrapDialog>
     </div>
