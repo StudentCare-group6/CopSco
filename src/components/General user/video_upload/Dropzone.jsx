@@ -24,8 +24,9 @@ export default function Dropzone(props) {
       if (acceptedFiles.length > 0) {
         // Create a temporary URL for the uploaded video
         const temporaryUrl = URL.createObjectURL(acceptedFiles[0]);
-        setVideoUrl(temporaryUrl);
-        setVideoFile(acceptedFiles[0]);
+        setVideoUrl(temporaryUrl); //set video url
+        localStorage.setItem('videoUrl', temporaryUrl);
+        setVideoFile(acceptedFiles[0]); //set vide file
         const videoElement = document.createElement('video');
         videoElement.preload = 'metadata';
         videoElement.src = temporaryUrl;
@@ -38,7 +39,6 @@ export default function Dropzone(props) {
           const videoHeight = videoElement.videoHeight;
           setVideoDimensions({ width: videoWidth, height: videoHeight });
         });
-
         handleNext();
       }
     }
