@@ -4,33 +4,36 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import { Typography } from '@mui/material';
 import ReactPlayer from 'react-player';
+import { VideoContext } from '../../../context/VideoContext';
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
     <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <ReactPlayer url={videoUrl} controls width="100%" height="300px"
-      onReady = {() => console.log('onReady callback')}
-      onStart = {() => console.log('onStart callback')}
-      onPause = {() => console.log('onPause callback')}
-      onEnded = {() => console.log('onEnded callback')}
-      onError = {() => console.log('onError callback')}
+        onReady={() => console.log('onReady callback')}
+        onStart={() => console.log('onStart callback')}
+        onPause={() => console.log('onPause callback')}
+        onEnded={() => console.log('onEnded callback')}
+        onError={() => console.log('onError callback')}
       />
     </div>
   );
 };
 
-
 const Evidence = ({ videoData }) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { setSelectedVideo } = React.useContext(VideoContext);
+  
 
-  const directVideoDetails = () => {
-    navigate('/police-operator/video-details'); 
+  const directVideoDetails = (video) => {
+    setSelectedVideo(video); // Set the selected video in the context
+    navigate('/police-operator/video-details');
   };
 
   return (
     <div className="overflow-y-hidden">
       {videoData.map((item, index) => (
-        <div key={index} onClick={directVideoDetails}>
+        <div key={index} onClick={() => directVideoDetails(item)}> {/* Pass the selected video to the function */}
           <VideoPlayer videoUrl={item.video} />
           <ImageListItem key={item.video}>
             <ImageListItemBar

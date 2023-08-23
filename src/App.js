@@ -40,6 +40,7 @@ import AdminRoutes from "./setup/routes/AdminRoutes";
 import Team from "./pages/Admin/Team";
 import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
+import { VideoProvider } from "./context/VideoContext";
 
 export default function App() {
   const THEME = createTheme({
@@ -155,12 +156,21 @@ export default function App() {
             </Route>
 
             {/* police operator routes */}
-            <Route element={<RequireAuth allowedRole="police-operator" />}>
-              <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
-                <Route path="" element={<PoliceHome />} />
-                <Route path="video-details" element={<VideoDetails />} />
+            
+              <Route element={<RequireAuth allowedRole="police-operator" />}>
+                  <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
+                    <Route path="" element={
+                      <VideoProvider>
+                        <PoliceHome />
+                      </VideoProvider>
+                    } />
+                    <Route path="video-details" element={
+                      <VideoProvider>
+                        <VideoDetails />
+                      </VideoProvider>
+                    } />
+                  </Route>
               </Route>
-            </Route>
             <Route element={<RequireAuth allowedRole="police-division" />}>
               <Route path="police-division/" element={<PoliceDivisionRoutes />}>
                 <Route path="" element={<AddingOfficers />} />

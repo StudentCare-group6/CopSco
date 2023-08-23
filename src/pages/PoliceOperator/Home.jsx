@@ -2,6 +2,7 @@ import React from "react";
 import Filters from "../../components/PoliceOperator/Home/Filters";
 import VideoSamples from "../../components/PoliceOperator/Home/VideoSamples";
 import PaginationRounded from "../../components/PoliceOperator/Home/Pagination";
+import { VideoContext } from "../../context/VideoContext";
 
 
 export default function Home() {

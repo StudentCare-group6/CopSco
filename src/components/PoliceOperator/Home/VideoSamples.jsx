@@ -27,7 +27,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'https://youtu.be/0u0gXPkqKrw',
+      video: 'https://youtu.be/5LrDIWkK_Bc',
       title: 'Drunk Driving',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -36,7 +36,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'https://youtu.be/0u0gXPkqKrw',
+      video: 'https://youtu.be/ngVvDegsAW8',
       title: 'Over Speeding',
       date: '01.07.2023',
       time: '14:56 PM',

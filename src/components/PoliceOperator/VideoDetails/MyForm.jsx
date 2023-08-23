@@ -75,11 +75,10 @@ const MyForm = () => {
   const violationTypes = useWatch({ control, name: 'violationTypes', defaultValue: [] });
 
   const onSubmit = (data) => {
-
     console.log("Submitted data:", data);
     console.log("Selected violation types:", data.violationTypes);
     toast.success("Sent to relevant division!");
-    //timeout to show toast
+
     setTimeout(() => {
       navigate('/police-operator/');
     }, 2000);
@@ -101,7 +100,7 @@ const MyForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-[80%] ml-28 mt-5 mb-5">
+        <div className="w-[80%] ml-28 mt-20 mb-5">
           <Divider textAlign="center">Mark violation status</Divider>
         </div>
         <Controller
