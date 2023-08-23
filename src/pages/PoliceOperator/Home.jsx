@@ -18,7 +18,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="pagination-center-aligned">
+      <div className="ml-[38%] mt-10">
         <PaginationRounded />
       </div>
     </>

@@ -8,7 +8,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';=
+import 'react-toastify/dist/ReactToastify.css';
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
 import Typography from '@mui/material/Typography';

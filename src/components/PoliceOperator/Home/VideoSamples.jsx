@@ -18,7 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function VideoSamples() {
   const videoData = [
     {
-      video: 'video2.mp4',
+      video: 'https://youtu.be/0u0gXPkqKrw',
       title: 'Improper Turn',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -27,7 +27,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video3.mp4',
+      video: 'https://youtu.be/0u0gXPkqKrw',
       title: 'Drunk Driving',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -36,7 +36,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video4.mp4',
+      video: 'https://youtu.be/0u0gXPkqKrw',
       title: 'Over Speeding',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -45,7 +45,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video5.mp4',
+      video: 'https://youtu.be/0u0gXPkqKrw',
       title: 'Drunk Driving',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -54,7 +54,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video6.mp4',
+      video: 'https://youtu.be/0u0gXPkqKrw',
       title: 'Parking Violation',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -63,7 +63,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'video7.mp4',
+      video: 'https://youtu.be/0u0gXPkqKrw',
       title: 'Drunk Driving',
       date: '01.07.2023',
       time: '14:56 PM',

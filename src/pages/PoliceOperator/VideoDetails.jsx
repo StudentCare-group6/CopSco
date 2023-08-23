@@ -8,6 +8,7 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import VideoMainDetails from "../../components/PoliceOperator/VideoDetails/VideoMainDetails";
 import Actions from "../../components/PoliceOperator/VideoDetails/Actions";
 import MyForm from "../../components/PoliceOperator/VideoDetails/MyForm";
+import ChevronRightIcon from "@heroicons/react/24/outline";
 
 const VideoPlayer = ({ videoUrl }) => {
   return (

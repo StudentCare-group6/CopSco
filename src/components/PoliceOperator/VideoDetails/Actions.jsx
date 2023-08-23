@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import MultipleSelectPlaceholder from './Select';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import { ChevronRightOutlined } from '@mui/icons-material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function stringToColor(string) {
   let hash = 0;

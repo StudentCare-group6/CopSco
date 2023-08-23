@@ -3,24 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import { Typography } from '@mui/material';
+import ReactPlayer from 'react-player';
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
     <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <video controls style={{ height: '100%', width: '100%' }}>
-        <source src={videoUrl} />
-        Your browser does not support the video tag.
-      </video>
+      <ReactPlayer url={videoUrl} controls width="100%" height="300px"
+      onReady = {() => console.log('onReady callback')}
+      onStart = {() => console.log('onStart callback')}
+      onPause = {() => console.log('onPause callback')}
+      onEnded = {() => console.log('onEnded callback')}
+      onError = {() => console.log('onError callback')}
+      />
     </div>
   );
 };
+
 
 const Evidence = ({ videoData }) => {
   const navigate = useNavigate(); 
 
   const directVideoDetails = () => {
-    navigate('/video'); 
-
+    navigate('/police-operator/video-details'); 
   };
 
   return (
