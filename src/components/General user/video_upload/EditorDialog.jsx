@@ -11,10 +11,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/material/styles";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Editor from "./Editor";
-import ModalButton from "./ModalButton";
 import useFormContext from "../../../hooks/useFormContext";
 import { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -83,14 +83,8 @@ let ffmpeg;
 export default function EditorDialog() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-  const {
-    page,
-    setPage,
-    endTime,
-    startTime,
-    videoFile,
-    setTrimmedVideo
-  } = useFormContext();
+  const { page, setPage, endTime, startTime, videoFile, setTrimmedVideo } =
+    useFormContext();
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   useEffect(() => {
     //Load the ffmpeg script
@@ -130,6 +124,7 @@ export default function EditorDialog() {
   };
   const handleBack = () => setPage(page - 1);
   //Trim functionality of the video
+  const [loading, setLoading] = React.useState(false);
   const handleTrim = async () => {
     if (isScriptLoaded) {
       const { name, type } = videoFile;
@@ -137,27 +132,39 @@ export default function EditorDialog() {
       ffmpeg.FS("writeFile", name, await window.FFmpeg.fetchFile(videoFile));
       const videoFileType = type.split("/")[1];
       //Run the ffmpeg command to trim video
-      await ffmpeg.run(
-        "-i",
-        name,
-        "-ss",
-        `${convertToHHMMSS(startTime)}`,
-        "-to",
-        `${convertToHHMMSS(endTime)}`,
-        "-acodec",
-        "copy",
-        "-vcodec",
-        "copy",
-        `out.${videoFileType}`
-      );
-      //Convert data to url and store in videoTrimmedUrl state
-      const data = ffmpeg.FS("readFile", `out.${videoFileType}`);
-      // const url = URL.createObjectURL(
-      //   new Blob([data.buffer], { type: videoFile.type })
-      // );
-      const trimmedBlob = new Blob([data.buffer], { type: videoFile.type });
-      setTrimmedVideo(trimmedBlob);
-      setPage(page + 1);
+      const metaData = await ffmpeg.run("-i", name);
+      console.log(metaData);
+      try {
+        setLoading(true);
+        const ffmpegResult = await ffmpeg.run(
+          "-i",
+          name,
+          "-ss",
+          `${convertToHHMMSS(startTime)}`,
+          "-to",
+          `${convertToHHMMSS(endTime)}`,
+          "-acodec",
+          "copy",
+          "-vcodec",
+          "copy",
+          `out.${videoFileType}`
+        );
+        console.log(ffmpegResult.fferr);
+        //Convert data to url and store in videoTrimmedUrl state
+        const data = ffmpeg.FS("readFile", `out.${videoFileType}`);
+        const url = URL.createObjectURL(
+          new Blob([data.buffer], { type: videoFile.type })
+        );
+        console.log(url);
+        const trimmedBlob = new Blob([data.buffer], { type: videoFile.type });
+        setTrimmedVideo(trimmedBlob);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        //Set the page to next page
+        setLoading(false);
+        setPage(page + 1);
+      }
     }
   };
 
@@ -197,9 +204,13 @@ export default function EditorDialog() {
           <Editor />
         </DialogContent>
         <DialogActions>
-          <Stack direction='row' justifyContent='space-around' width = '100%'>
+          <Stack direction="row" justifyContent="space-around" width="100%">
             <Button onClick={handleBack}>Back</Button>
-            <Button onClick={handleTrim}>Next</Button>
+            {loading ? (
+              <CircularProgress size={24} /> // Display the spinner
+            ) : (
+              <Button onClick={handleTrim}>Next</Button>
+            )}
           </Stack>
         </DialogActions>
       </BootstrapDialog>

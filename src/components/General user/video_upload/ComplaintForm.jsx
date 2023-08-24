@@ -19,6 +19,7 @@ import Stack from '@mui/material/Stack';
 import VideoThumbnail from 'react-video-thumbnail';
 import Alert from '@mui/material/Alert';
 import { adjustSectionValue } from '@mui/x-date-pickers/internals/hooks/useField/useField.utils';
+import useAuth from '../../../hooks/useAuth';
 
 const vehicalTypes = [
   {
@@ -190,12 +191,15 @@ export default function ComplaintDialog() {
   };
 
   const { page,getValues,setValue, setPage, videoUrl, trimmedVideo, register, errors } = useFormContext();
+  const {auth} = useAuth();
   const handleNext = () => setPage(page + 1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setValue('video',trimmedVideo);
-    console.log(getValues());
+    setValue('user',auth.user);
+    console.log(getValues()); 
+    handleNext();
   };
 
   return (
@@ -231,7 +235,7 @@ export default function ComplaintDialog() {
                     type="text"
                     size="small"
                     helperText="Enter vehicle number"
-                    {...register("vehicleNumber")}
+                    {...register("vehicleNum")}
                   />
                 </Grid>
                 <Grid item xs={6} >
@@ -242,7 +246,7 @@ export default function ComplaintDialog() {
                     fullWidth
                     helperText="Select vehicle type"
                     size="small"
-                    {...register("vehicleType", {
+                    {...register("type", {
                       required: "field required",
                     })}
                   >
@@ -254,18 +258,18 @@ export default function ComplaintDialog() {
                   </TextField>
                 </Grid>
                 <Grid item xs={6}>
-                  {errors.vehicleNumber?.message ? (
+                  {errors.vehicleNum?.message ? (
                     <Alert sx={{ mt: "10px" }} severity="error">
-                      {errors.vehicleNumber?.message}
+                      {errors.vehicleNum?.message}
                     </Alert>
                   ) : (
                     ""
                   )}
                 </Grid>
                 <Grid item xs={6}>
-                  {errors.vehicleNumber?.message ? (
+                  {errors.type?.message ? (
                     <Alert sx={{ mt: "10px" }} severity="error">
-                      {errors.vehicleType?.message}
+                      {errors.type?.message}
                     </Alert>
                   ) : (
                     ""

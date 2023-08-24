@@ -72,7 +72,7 @@ export default function UploadDialog() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Button variant="outlined" sx={{ color: '#999999' }} onClick={handleClickOpen} startIcon={<AddOutlinedIcon />}>
+        <Button variant="outlined" sx={{ color: theme.palette.primary[200] }} onClick={handleClickOpen} startIcon={<AddOutlinedIcon />}>
           Upload Evidence
         </Button>
         <BootstrapDialog

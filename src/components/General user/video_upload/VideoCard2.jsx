@@ -9,8 +9,7 @@ import { Stack } from "@mui/material";
 import PaidIcon from "@mui/icons-material/Paid";
 import StarIcon from "@mui/icons-material/Star";
 import Button from "@mui/material/Button";
-import VideoThumbnail from 'react-video-thumbnail';
-
+import VideoThumbnail from "react-video-thumbnail";
 
 function Reward(props) {
   return (
@@ -23,9 +22,7 @@ function Reward(props) {
   );
 }
 
-
 export default function MediaControlCard(props) {
-
   return (
     <Card
       sx={{ display: "flex", boxShadow: "none" }}
@@ -39,11 +36,17 @@ export default function MediaControlCard(props) {
         sx={{ width: 400, height: "auto" }}
       >
         {/* <source src={props.url} type="video/mp4" /> */}
-        <VideoThumbnail
-          videoUrl={props.url}
-          width= {480}
-          height= {320}
-        />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "auto",
+            height: "100%",
+          }}
+        >
+          <VideoThumbnail videoUrl={props.url} />
+        </div>
         {/* Your browser does not support the video tag. */}
       </CardMedia>
       <Box sx={{ display: "flex", flexDirection: "column", width: "70%" }}>
@@ -89,7 +92,11 @@ export default function MediaControlCard(props) {
             <Box>
               <Stack gap={3}>
                 <Reward text={props.reward} />
-                <Button variant="outlined" color="error" className="rounded-full">
+                <Button
+                  variant="outlined"
+                  color="error"
+                  className="rounded-full"
+                >
                   Delete
                 </Button>
               </Stack>
