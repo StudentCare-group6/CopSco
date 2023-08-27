@@ -3,7 +3,7 @@ import ComplaintDialog from './ComplaintForm.jsx';
 import UploadDialog from './UploadDialog.jsx';
 import DeclarationForm from './DeclarationForm.jsx';
 import useFormContext from  '../../../hooks/useFormContext';
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function FormInputs() {
     const {page} = useFormContext();

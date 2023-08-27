@@ -10,10 +10,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ImageSlideShow from '../components/Login/ImageCarousel2';
 import { Stack, useMediaQuery } from '@mui/material';
-import GoogleButton from 'react-google-button';
-import Divider from '@mui/material/Divider';
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/posts'

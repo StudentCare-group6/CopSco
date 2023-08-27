@@ -1,8 +1,4 @@
 import React from "react";
-import styled from "@mui/material/styles/styled";
-import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
-import { Typography } from "@mui/material";
-import CustomSeparator from "../../components/PoliceOperator/VideoDetails/Breadcrumbs";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import VideoMainDetails from "../../components/PoliceOperator/VideoDetails/VideoMainDetails";

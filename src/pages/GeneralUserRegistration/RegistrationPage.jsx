@@ -14,7 +14,7 @@ import FormInputs from "./FormInputs";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/posts";
-import {useState} from "react";
+import { useState } from "react";
 import { Snackbar, Alert } from '@mui/material';
 
 function Copyright(props) {
@@ -47,13 +47,13 @@ export default function Register() {
     subtitle,
     handleSubmit,
     getValues,
-    setValue,
-    errors,
+    setValue
   } = useFormContext();
   const [errMsg, setErrMsg] = useState('');
   const handleClose = () => {
     setErrMsg('');
   };
+
   const onSubmit = async (e) => {
     if (page === 3) {
       if (getValues("verifyMode") === "1") {
@@ -78,7 +78,7 @@ export default function Register() {
           //send the uploaded files to the backend
           const frontFile = e.nicFrontFile[0];
           const backFile = e.nicRearFile[0];
-          const userImageBlob = localStorage.getItem("takenPhoto");
+          const userImageBlob = getValues("verificationPIC");
           const nicNum = getValues("nic");
           const FrontName = getValues("nic") + "_front.png";
           const BackName = getValues("nic") + "_rear.png";
@@ -94,6 +94,7 @@ export default function Register() {
           const userImageFile = new File([userImageBlob], UserImageName, {
             type: userImageBlob.type,
           });
+          console.log(userImageBlob.type);
 
           let formData2 = new FormData();
           formData2.append("nic_front", renamedFrontFile);
@@ -109,9 +110,9 @@ export default function Register() {
           console.log(err.response.headers);
         }
       } catch (err) {
-        if(err.response?.status===400){
+        if (err.response?.status === 400) {
           setErrMsg("A user with the same nic already exists");
-        }else{
+        } else {
           setErrMsg("Registration failed");
         }
       }
@@ -152,7 +153,7 @@ export default function Register() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-            <Snackbar
+      <Snackbar
         open={Boolean(errMsg)}
         autoHideDuration={6000} // Adjust the duration as needed
         onClose={handleClose}
@@ -173,7 +174,7 @@ export default function Register() {
       <Grid container component="main" sx={{ height: "100vh" }}>
         <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
           <Typography
-            sx={{ margin: '20px' , fontFamily:'inter'}}
+            sx={{ margin: '20px', fontFamily: 'inter' }}
             component="h1"
             variant="h5"
             className="font-extrabold text-black"
@@ -184,13 +185,13 @@ export default function Register() {
             justifyContent="center"
             alignItems="center"
             spacing={3}
-            sx={{ marginTop: "3%"}}
+            sx={{ marginTop: "3%" }}
           >
             <Typography
               component="h1"
               variant="h4"
               className="font-extrabold text-neutral-500"
-              sx = {{fontFamily:'inter' }}
+              sx={{ fontFamily: 'inter' }}
             >
               {title[page]}
             </Typography>

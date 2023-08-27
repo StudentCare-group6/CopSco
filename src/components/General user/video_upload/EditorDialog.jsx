@@ -129,14 +129,11 @@ export default function EditorDialog() {
     if (isScriptLoaded) {
       const { name, type } = videoFile;
       //Write video to memory
+      setLoading(true);
       ffmpeg.FS("writeFile", name, await window.FFmpeg.fetchFile(videoFile));
       const videoFileType = type.split("/")[1];
-      //Run the ffmpeg command to trim video
-      const metaData = await ffmpeg.run("-i", name);
-      console.log(metaData);
       try {
-        setLoading(true);
-        const ffmpegResult = await ffmpeg.run(
+        await ffmpeg.run(
           "-i",
           name,
           "-ss",
@@ -149,13 +146,8 @@ export default function EditorDialog() {
           "copy",
           `out.${videoFileType}`
         );
-        console.log(ffmpegResult.fferr);
         //Convert data to url and store in videoTrimmedUrl state
         const data = ffmpeg.FS("readFile", `out.${videoFileType}`);
-        const url = URL.createObjectURL(
-          new Blob([data.buffer], { type: videoFile.type })
-        );
-        console.log(url);
         const trimmedBlob = new Blob([data.buffer], { type: videoFile.type });
         setTrimmedVideo(trimmedBlob);
       } catch (error) {
@@ -205,11 +197,11 @@ export default function EditorDialog() {
         </DialogContent>
         <DialogActions>
           <Stack direction="row" justifyContent="space-around" width="100%">
-            <Button onClick={handleBack}>Back</Button>
+            <Button onClick={handleBack} sx = {{padding:'20px'}}>Back</Button>
             {loading ? (
               <CircularProgress size={24} /> // Display the spinner
             ) : (
-              <Button onClick={handleTrim}>Next</Button>
+              <Button onClick={handleTrim} sx = {{padding:'20px'}}>Next</Button>
             )}
           </Stack>
         </DialogActions>

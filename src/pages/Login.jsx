@@ -17,7 +17,7 @@ import Divider from '@mui/material/Divider';
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/posts'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Snackbar, Alert } from '@mui/material';
 import useInput from '../hooks/useInput';
 import useToggle from '../hooks/useToggle';
@@ -46,8 +46,6 @@ export default function Login() {
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
   const userRef = useRef();
 
   const [user, resetUser, userAttributes] = useInput('user', '');
@@ -78,7 +76,8 @@ export default function Login() {
       );
       const accessToken = response.data.accessToken;
       const role = response.data.userrole;
-      setAuth({ user, pwd, role, accessToken });
+      const fname = response.data.fname;
+      setAuth({ user, pwd, role, fname, accessToken });
       resetUser();
       setPwd('');
       if (role === 'general-user') {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Routes, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { CssBaseline, useMediaQuery } from "@mui/material";
 import Header from "../../components/Traffic police/Header";
 import DrawerComponent from "../../components/Traffic police/Appbar";

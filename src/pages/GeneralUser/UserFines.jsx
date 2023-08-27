@@ -10,9 +10,10 @@ import { useEffect } from "react";
 
 export default function UserFines() {
 
-  const { spotFines, setSpotFines } = useFineContext();
+  const { setSpotFines } = useFineContext();
+  const { auth } = useAuth();
   const violationData = {
-    nic: '200012702905'
+    nic: auth.user
   };
   const getSpotFines = async () => {
     try {
@@ -27,11 +28,8 @@ export default function UserFines() {
 
   useEffect(() => {
     getSpotFines(); // Fetch data when the component mounts
+    // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    console.log(spotFines); // Log the updated state whenever spotFines changes
-  }, [spotFines]);
 
   const [value, setValue] = useState(0);
 

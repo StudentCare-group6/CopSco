@@ -10,15 +10,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import ModalButton from './ModalButton';
 import SmallText from './SmallText';
-import { Grid, TextField, MenuItem, Typography, Box } from '@mui/material';
-import violationImage from './violation.jpg';
+import { Grid, TextField, MenuItem, Typography } from '@mui/material';
 import useFormContext from '../../../hooks/useFormContext';
 import Stack from '@mui/material/Stack';
 import VideoThumbnail from 'react-video-thumbnail';
 import Alert from '@mui/material/Alert';
-import { adjustSectionValue } from '@mui/x-date-pickers/internals/hooks/useField/useField.utils';
 import useAuth from '../../../hooks/useAuth';
 
 const vehicalTypes = [
@@ -190,18 +187,29 @@ export default function ComplaintDialog() {
     setOpen(false);
   };
 
-  const { page,getValues,setValue, setPage, videoUrl, trimmedVideo, register, errors } = useFormContext();
-  const {auth} = useAuth();
+  const { page, getValues, setValue, setPage, videoUrl, trimmedVideo, register, errors, videoThumbnail, setVideoThumbnail } = useFormContext();
+  const { auth } = useAuth();
   const handleNext = () => setPage(page + 1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setValue('video',trimmedVideo);
-    setValue('user',auth.user);
-    console.log(getValues()); 
+    setValue('video', trimmedVideo);
+    setValue('user', auth.user);
+    setValue('previewImage', videoThumbnail);
+    console.log(getValues());
     handleNext();
   };
-
+  const thumbnailHandler = (thumbnailUrl) => {
+    // Convert the thumbnail URL to a Blob
+    fetch(thumbnailUrl)
+      .then(response => response.blob())
+      .then(thumbnailBlob => {
+        setVideoThumbnail(thumbnailBlob);
+      })
+      .catch(error => {
+        console.error('Error fetching or converting thumbnail:', error);
+      });
+  };
   return (
     <div>
       <Button
@@ -412,7 +420,7 @@ export default function ComplaintDialog() {
                       height: 'auto',
                     }}
                   >
-                    <VideoThumbnail videoUrl={videoUrl} />
+                    <VideoThumbnail videoUrl={videoUrl} thumbnailHandler={thumbnailHandler} />
                   </div>
 
                 </Stack>
