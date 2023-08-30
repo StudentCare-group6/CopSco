@@ -22,7 +22,7 @@ export default function MediaControlCard(props) {
         controls // This adds play/pause controls to the video
         loop // This makes the video loop
         muted // This mutes the video (remove if not needed)
-        sx = {{ width: "auto", height: "210px"}}
+        sx = {{ width: "auto", height: "120px"}}
       >
         {/* <source src={props.url} type="video/mp4" /> */}
         <div
@@ -30,8 +30,9 @@ export default function MediaControlCard(props) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            height: "120px",
             width: "auto",
-            height: "210px",
+            objectFit: "cover",
           }}
         >
           <VideoThumbnail videoUrl={props.url} />

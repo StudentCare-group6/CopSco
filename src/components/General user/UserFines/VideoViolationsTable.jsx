@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircleIcon from '@mui/icons-material/Circle';
 import VideoCard from "../video_upload/VideoCard";
+import ViewFineModal from "./ViewFineModal";
 
 
 export default function VideoViolationsTable() {
@@ -24,7 +25,7 @@ export default function VideoViolationsTable() {
         }
         return (
             <Stack direction='row' gap={2}>
-                <Button variant="contained" color="primary">View</Button>
+                <ViewFineModal />
             </Stack>
         )
     }

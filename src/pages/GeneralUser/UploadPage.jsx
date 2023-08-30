@@ -14,7 +14,7 @@ import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -39,51 +39,54 @@ export default function UploadPage() {
     setValue(newValue);
   };
 
-      const columns = [
-        {
-            field: 'id',
-            headerName: 'ID',
-        },
-        {
-            field: 'name',
-            headerName: 'Name',
-            flex: 1,
-            cellClassName: 'name-column--cell'
-        },
-        {
-            field: 'age',
-            headerName: 'Age',
-            type: 'number',
-            headerAlign: 'left',
-            align: 'left'
-        },
-        {
-            field: 'phone',
-            headerName: 'Phone Number',
-            flex: 1,
-        },
-        {
-            field: 'email',
-            headerName: 'Email',
-            flex: 1,
-        },
-        {
-            field: 'role',
-            headerName: 'Role',
-            flex: 1,
-            renderCell: ({row: {role}}) => {
-                return(
-                  <VideoCard2
-                  title="Driver trying to run a traffic light in Bambalapitiya"
-                  reward="300"
-                  rating="3"
-                  url={video1}
-                />
+  const columns = [
+    {
+      field: 'role',
+      headerName: 'Role',
+      flex: 1,
+      renderCell: ({ row: { role } }) => {
+        return (
+          <VideoCard2
+            title="Driver trying to run a traffic light in Bambalapitiya"
+            reward="300"
+            rating="3"
+            url={video1}
+          />
 
-                )
-            }
-        },
-    ];
+        )
+      }
+    },
+    {
+      field: 'id',
+      headerName: 'ID',
+      flex: 1,
+    },
+    {
+      field: 'name',
+      headerName: 'Name',
+      flex: 1,
+      cellClassName: 'name-column--cell'
+    },
+    {
+      field: 'age',
+      headerName: 'Age',
+      type: 'number',
+      headerAlign: 'left',
+      align: 'left',
+      flex: 1,
+    },
+    {
+      field: 'phone',
+      headerName: 'Phone Number',
+      flex: 1,
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      flex: 1,
+    },
+
+  ];
   return (
     <div>
       <Box component="main" sx={{ flexGrow: 1, p: 3, height: "100vh" }}>
@@ -134,7 +137,7 @@ export default function UploadPage() {
           >
             <Box
               m='40px 0 0 0'
-              height='75vh'
+              height='70vh'
               sx={{
                 "& .MuiDataGrid-root": {
                   border: 'none',
@@ -163,7 +166,7 @@ export default function UploadPage() {
               <DataGrid
                 rows={mockDataTeam}
                 columns={columns}
-                rowHeight={210}
+                rowHeight={120}
               />
             </Box>
           </TabPanel>
