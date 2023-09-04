@@ -1,11 +1,11 @@
 import VideoMainDetails from "../../components/PoliceOperator/VideoDetails/VideoMainDetails";
 import MyForm from "../../components/PoliceOperator/VideoDetails/MyForm";
-import React, { useContext } from "react";
-import { VideoContext } from "../../context/VideoContext";
+import React from "react";
+import useVideoContext from "../../hooks/useVideoContext";
 import ReactPlayer from "react-player";
 
 const VideoDetails = () => {
-  const { selectedVideo } = useContext(VideoContext);
+  const { selectedVideo } = useVideoContext();
 
   return (
     <div>

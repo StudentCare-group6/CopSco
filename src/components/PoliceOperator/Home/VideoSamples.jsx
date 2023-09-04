@@ -5,6 +5,9 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Evidence from './Evidence';
+import axios from '../../../api/posts';
+import useAuth from '../../../hooks/useAuth';
+import { useEffect, useState } from 'react';
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -16,6 +19,28 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function VideoSamples() {
+
+  const { auth } = useAuth();
+  const [videoData1, setVideoData] = useState([]);
+  const operatorData = {
+    id: auth.user
+  }
+  const getvideos = async () => {
+    try {
+      const response = await axios.get("/videos",{
+        params: operatorData
+      });
+      setVideoData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getvideos();
+    console.log(videoData1);
+  }, []);
+
   const videoData = [
     {
       video: 'https://youtu.be/0u0gXPkqKrw',

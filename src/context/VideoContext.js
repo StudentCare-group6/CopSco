@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 
 const VideoContext = createContext();
 
-const VideoProvider = ({ children }) => {
+export const VideoProvider = ({ children }) => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   return (
@@ -12,4 +12,4 @@ const VideoProvider = ({ children }) => {
   );
 };
 
-export { VideoContext, VideoProvider };
+export default VideoContext;

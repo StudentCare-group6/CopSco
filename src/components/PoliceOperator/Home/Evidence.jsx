@@ -4,7 +4,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import { Typography } from '@mui/material';
 import ReactPlayer from 'react-player';
-import { VideoContext } from '../../../context/VideoContext';
+import useVideoContext from '../../../hooks/useVideoContext';
 
 const VideoPlayer = ({ videoUrl }) => {
   return (
@@ -22,7 +22,7 @@ const VideoPlayer = ({ videoUrl }) => {
 
 const Evidence = ({ videoData }) => {
   const navigate = useNavigate();
-  const { setSelectedVideo } = React.useContext(VideoContext);
+  const { setSelectedVideo } = useVideoContext();
   
 
   const directVideoDetails = (video) => {
