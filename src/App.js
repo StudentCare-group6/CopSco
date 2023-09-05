@@ -56,9 +56,9 @@ export default function App() {
   return (
     <ThemeProvider theme={THEME}>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        {/* <Route path="/" element={<Layout />}> */}
           {/* public routes */}
-          <Route path="" element={<LandingPage />} />
+          {/* <Route path="" element={<LandingPage />} />
           <Route path="login" element={<Login />} />
           <Route
             path="registration"
@@ -67,14 +67,14 @@ export default function App() {
                 <Registration />
               </FormProvider>
             }
-          />
-          <Route path="unauthorized" element={<Unauthorized />} />
-          <Route path="copsco/login" element={<Login2 />} />
+          /> */}
+          {/* <Route path="unauthorized" element={<Unauthorized />} />
+          <Route path="copsco/login" element={<Login2 />} /> */}
           {/* protected routes */}
 
-          <Route element={<PersistLogin />}>
+          {/* <Route element={<PersistLogin />}> */}
             {/* general user routes */}
-            <Route element={<RequireAuth allowedRole="general-user" />}>
+            {/* <Route element={<RequireAuth allowedRole="general-user" />}>
               <Route path="general-user/" element={<GeneralUserRoutes />}>
                 <Route
                   path=""
@@ -105,13 +105,13 @@ export default function App() {
                   }
                 />
               </Route>
-            </Route>
-          </Route>
-          <Route element={<PolicePersistLogin />}>
+            </Route> */}
+          {/* </Route> */}
+          {/* <Route element={<PolicePersistLogin />}> */}
              {/* traffic police routes */}
-            <Route element={<RequireAuth allowedRole="traffic-police" />}>
-              <Route path="traffic-police/" element={<TrafficPoliceRoutes />}>
-                <Route
+            {/* <Route element={<RequireAuth allowedRole="traffic-police" />}>
+              <Route path="traffic-police/" element={<TrafficPoliceRoutes />}> */}
+                {/* <Route
                   path=""
                   element={
                     <DetailsProvider>
@@ -126,8 +126,8 @@ export default function App() {
                       <UserDetails />
                     </DetailsProvider>
                   }
-                />
-                <Route path="notifications" element={<Notifications />} />
+                /> */}
+                {/* <Route path="notifications" element={<Notifications />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="statistics" element={<Statistics />} />
                 <Route path="information" element={<Information />} />
@@ -140,8 +140,8 @@ export default function App() {
                       </FormProvider>
                     </DetailsProvider>
                   }
-                />
-                <Route
+                /> */}
+                {/* <Route
                   path="fine-confirmation"
                   element={
                     <DetailsProvider>
@@ -153,12 +153,13 @@ export default function App() {
                 />
                 <Route path="fine-print" element={<FinePrint />} />
               </Route>
-            </Route>
+            </Route> */}
 
             {/* police operator routes */}
             
-              <Route element={<RequireAuth allowedRole="police-operator" />}>
-                  <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
+              {/*<Route element={<RequireAuth allowedRole="police-operator" />}> */}
+              <Route>
+                  <Route path="police-operator/">
                     <Route path="" element={
                       <VideoProvider>
                         <PoliceHome />
@@ -171,12 +172,13 @@ export default function App() {
                     } />
                   </Route>
               </Route>
-            <Route element={<RequireAuth allowedRole="police-division" />}>
-              <Route path="police-division/" element={<PoliceDivisionRoutes />}>
+            {/* <Route element={<RequireAuth allowedRole="police-division" />}> */}
+            <Route>
+              <Route path="police-division/">
                 <Route path="" element={<AddingOfficers />} />
               </Route>
             </Route>
-            <Route element={<RequireAuth allowedRole="admin" />}>
+            {/* <Route element={<RequireAuth allowedRole="admin" />}>
               <Route path="admin/" element={<AdminRoutes />}>
                 <Route path="" element={<Dashboard />} />
                 <Route path="team" element={<Team />} />
@@ -190,9 +192,9 @@ export default function App() {
                 />
                 <Route path="faq" element={<FAQ />} />
               </Route>
-            </Route>
-          </Route>
-        </Route>
+            </Route> */}
+          {/* </Route>
+        </Route> */}
       </Routes>
     </ThemeProvider>
   );
