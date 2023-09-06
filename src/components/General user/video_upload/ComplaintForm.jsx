@@ -403,7 +403,19 @@ export default function ComplaintDialog() {
                     rows={5}
                     fullWidth
                     helperText="Enter a description about the incident"
+                    {...register("description", {
+                      required: "field required",
+                    })}
                   />
+                </Grid>
+                <Grid item xs={4}>
+                  {errors.description?.message ? (
+                    <Alert sx={{ mt: "10px" }} severity="error">
+                      {errors.description?.message}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
                 </Grid>
               </Grid>
             </Grid>

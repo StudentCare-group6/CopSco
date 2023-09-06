@@ -62,20 +62,25 @@ export default function DeclarationForm() {
         e.preventDefault();
         try {
             let formData = new FormData();
+            //handling general data
             formData.append("video", getValues("video"));
             formData.append("username", getValues("username"));
-            formData.append("previewImage", getValues("previewImage"));
             formData.append("vehicleNum", getValues("vehicleNum"));
             formData.append("type", getValues("type"));
             formData.append("violaton", getValues("violation"));
             formData.append("district", getValues("district"));
             formData.append("city", getValues("city"));
             formData.append("description", getValues("description"));
+            //handling thumbnail
+            const blob = getValues("previewImage");
+            const file = new File([blob], "thumbnail.jpg", { type: "image/jpeg" });
+            formData.append("previewImage", file);
+
             const response = await axios.post("upload/upload-video", formData);
             console.log(response);
             setPage(0);
         } catch (err) {
-          console.log(err);
+            console.log(err);
         }
     }
     const handleClickOpen = () => {
@@ -119,7 +124,7 @@ export default function DeclarationForm() {
                     </Box>
 
                 </DialogContent>
-                <Button onClick={handleNext} sx = {{padding:'20px'}}>
+                <Button onClick={handleNext} sx={{ padding: '20px' }}>
                     Accept & Sumbit
                 </Button>
             </BootstrapDialog>

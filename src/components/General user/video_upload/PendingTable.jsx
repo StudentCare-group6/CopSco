@@ -6,9 +6,17 @@ import Stack from "@mui/material/Stack";
 import { Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VideoCardModal from './VideoCardModal';
+import useFineContext from '../../../hooks/useFineContext';
+import image from "../../../images/box.png";
 
+function formatDate(inputDateString) {
+    const inputDate = new Date(inputDateString);
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const formattedDate = inputDate.toLocaleDateString('en-US', options);
+    return formattedDate;
+}
 
-export default function UploadsTable() {
+export default function PendingTable() {
     const columns = [
         {
             field: 'video',
@@ -16,9 +24,9 @@ export default function UploadsTable() {
             headerAlign: 'center',
             align: 'center',
             flex: 1,
-            renderCell: () => {
+            renderCell: (params) => {
                 return (
-                    <VideoCardModal />
+                    <VideoCardModal url = {params.value} />
                 )
             }
         },
@@ -105,47 +113,62 @@ export default function UploadsTable() {
         }
 
     ];
-    const rows = uploadData.map((item, index) => ({
-        id: index + 1,
-        video: item.video,
-        description: item.description,
-        reward: item.reward,
-        location: item.location,
-        date: item.date
-    }));
-    return (
-        <Box
-            height='70vh'
-            sx={{
-                "& .MuiDataGrid-root": {
-                    border: 'none',
-                },
-                "& .MuiDataGrid-cell": {
+    const { pendingUploads } = useFineContext();
+   
 
-                },
-                "& .name-column--cell": {
-                    color: '#475569',
+    if (pendingUploads.length === 0 || pendingUploads.length === undefined) {
+        return (
+            <div className='flex flex-col items-center mt-10 h-screen'>
+                <img src={image} alt='empty' className='w-20 h-20' />
+                <Typography variant='h6' className='my-5'>
+                    No pending videos, Click on the upload button to upload a video
+                </Typography>
+            </div>
+        )
+    } else {
+        const rows = pendingUploads.map((item, index) => ({
+            id: index + 1,
+            video: item.thumbnail,
+            description: item.description,
+            reward: 'Rs.500',
+            location: item.district + ', ' + item.city,
+            date: formatDate(item.reportdate)
+        }));
 
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                    borderTop: 'solid 1px #e0e0e0',
-                    color: '#020617',
-                    fontWeight: 'extra-bold',
-                    fontSize: '16px',
-                },
-                "& .MuiDataGrid-virtualScroller": {
-                },
-                "& .MuiDataGrid-footerContainer": {
-                    borderTop: 'none',
-                    color: 'white',
-                },
-            }}
-        >
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                rowHeight={120}
-            />
-        </Box >
-    )
+        return (
+            <Box
+                height='70vh'
+                sx={{
+                    "& .MuiDataGrid-root": {
+                        border: 'none',
+                    },
+                    "& .MuiDataGrid-cell": {
+
+                    },
+                    "& .name-column--cell": {
+                        color: '#475569',
+
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                        borderTop: 'solid 1px #e0e0e0',
+                        color: '#020617',
+                        fontWeight: 'extra-bold',
+                        fontSize: '16px',
+                    },
+                    "& .MuiDataGrid-virtualScroller": {
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                        borderTop: 'none',
+                        color: 'white',
+                    },
+                }}
+            >
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    rowHeight={120}
+                />
+            </Box >
+        )
+    }
 }

@@ -18,7 +18,7 @@ const style = {
     borderRadius: '10px'
 };
 
-export default function ViewFineModal() {
+export default function ViewFineModal(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -27,9 +27,9 @@ export default function ViewFineModal() {
         <div>
             <div class="relative flex justify-center items-center overflow-hidden bg-cover bg-no-repeat" style={{ width: '80%', height: 'auto' }} onClick={handleOpen}>
                 <img
-                    src="https://media.12news.com/assets/KPNX/images/ea167263-8eed-45ba-97c1-4c557bb81469/ea167263-8eed-45ba-97c1-4c557bb81469_1920x1080.jpg"
+                    src={`http://localhost:8000/images/previews/${props.url}`}
                     class="transition duration-300 ease-in-out hover:scale-110"
-                    alt="Louvre" />
+                    alt="video-thumbnail" />
             </div>
             <Modal
                 aria-labelledby="transition-modal-title"
