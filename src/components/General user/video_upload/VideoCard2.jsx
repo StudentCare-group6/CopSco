@@ -2,17 +2,35 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import video1 from './video1.mp4';
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useEffect } from 'react';
 
+export default function RecipeReviewCard(props) {
+  const axiosPrivate = useAxiosPrivate();
+  const [video, setVideo] = React.useState(null); // [video, setVideo
+  const getVideo = async () => {
+    try {
+      const response = await axiosPrivate.get(`upload/view-video/${props.access}`);
+      setVideo(response.data.url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getVideo();
+  }, []);
 
-export default function RecipeReviewCard() {
+  useEffect(() => {
+    console.log(video); // Log the updated video value when it changes
+  }, [video]);
 
   return (
-    <Card sx={{ maxWidth: 700, borderStyle:'none', borderRadius:'10px' }}>
-     
+    <Card sx={{ maxWidth: 700, borderStyle: 'none', borderRadius: '10px' }}>
+
       <CardMedia
         component="video"
         height="auto"
-        src={video1}
+        src={video}
         autoPlay
         controls
       />

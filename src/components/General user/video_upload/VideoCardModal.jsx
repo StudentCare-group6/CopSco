@@ -22,7 +22,7 @@ export default function ViewFineModal(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    console.log(props.videoKey)
     return (
         <div>
             <div class="relative flex justify-center items-center overflow-hidden bg-cover bg-no-repeat" style={{ width: '80%', height: 'auto' }} onClick={handleOpen}>
@@ -46,7 +46,7 @@ export default function ViewFineModal(props) {
             >
                 <Fade in={open}>
                     <Box sx={style}>
-                        <VideoCard />
+                        <VideoCard access = {props.videoKey}/>
                     </Box>
                 </Fade>
             </Modal>

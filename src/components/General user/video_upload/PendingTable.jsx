@@ -26,7 +26,7 @@ export default function PendingTable() {
             flex: 1,
             renderCell: (params) => {
                 return (
-                    <VideoCardModal url = {params.value} />
+                    <VideoCardModal url={params.value[0]} videoKey={params.value[1]}/>
                 )
             }
         },
@@ -118,7 +118,7 @@ export default function PendingTable() {
 
     if (pendingUploads.length === 0 || pendingUploads.length === undefined) {
         return (
-            <div className='flex flex-col items-center mt-10 h-screen'>
+            <div className='flex flex-col items-center mt-10'>
                 <img src={image} alt='empty' className='w-20 h-20' />
                 <Typography variant='h6' className='my-5'>
                     No pending videos, Click on the upload button to upload a video
@@ -128,7 +128,7 @@ export default function PendingTable() {
     } else {
         const rows = pendingUploads.map((item, index) => ({
             id: index + 1,
-            video: item.thumbnail,
+            video: [item.thumbnail,item.videokey],
             description: item.description,
             reward: 'Rs.500',
             location: item.district + ', ' + item.city,

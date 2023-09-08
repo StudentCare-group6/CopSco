@@ -1,6 +1,5 @@
 import React from 'react';
 import { DataGrid } from "@mui/x-data-grid";
-import { uploadData } from "../../../data/finesList2";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import { Typography, Button } from '@mui/material';
@@ -26,7 +25,7 @@ export default function AcceptedTable() {
             flex: 1,
             renderCell: (params) => {
                 return (
-                    <VideoCardModal url={params.value} />
+                    <VideoCardModal url={params.value[0]} videoKey={params.value[1]}/>
                 )
             }
         },
@@ -118,7 +117,7 @@ export default function AcceptedTable() {
 
     if (acceptedUploads.length === 0 || acceptedUploads.length === undefined) {
         return (
-            <div className='flex flex-col items-center mt-10 h-screen'>
+            <div className='flex flex-col items-center mt-10'>
                 <img src={image} alt='empty' className='w-20 h-20' />
                 <Typography variant='h6' className='my-5'>
                     No accepted videos, Don't worry keep uploading !
@@ -128,7 +127,7 @@ export default function AcceptedTable() {
     } else {
         const rows = acceptedUploads.map((item, index) => ({
             id: index + 1,
-            video: item.thumbnail,
+            video: [item.thumbnail,item.videokey],
             description: item.description,
             reward: 'Rs.500',
             location: item.district + ', ' + item.city,
