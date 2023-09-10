@@ -14,6 +14,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Dropzone from './Dropzone';
 import theme from '../theme';
 import { ThemeProvider } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -72,9 +73,16 @@ export default function UploadDialog() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Button variant="outlined" sx={{ color: theme.palette.primary[200] }} onClick={handleClickOpen} startIcon={<AddOutlinedIcon />}>
-          Upload Evidence
-        </Button>
+      <Button
+        startIcon={<CloudUploadIcon />}
+        variant="contained"
+        color="primary"
+        onClick={handleClickOpen}
+        className="rounded-full"
+        sx = {{boxShadow: 'none', textTransform: 'none'}}
+      >
+        Upload Evidence
+      </Button>
         <BootstrapDialog
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"

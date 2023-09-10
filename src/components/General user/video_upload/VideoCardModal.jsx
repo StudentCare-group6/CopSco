@@ -25,7 +25,7 @@ export default function ViewFineModal(props) {
     console.log(props.videoKey)
     return (
         <div>
-            <div class="relative flex justify-center items-center overflow-hidden bg-cover bg-no-repeat" style={{ width: '80%', height: 'auto' }} onClick={handleOpen}>
+            <div class="relative flex justify-center items-center overflow-hidden bg-cover bg-no-repeat" style={{width: '100%', height: 'auto' }} onClick={handleOpen}>
                 <img
                     src={`http://localhost:8000/images/previews/${props.url}`}
                     class="transition duration-300 ease-in-out hover:scale-110"
