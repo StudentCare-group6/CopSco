@@ -13,10 +13,14 @@ import Stack from "@mui/material/Stack";
 import paymentImg from "../../../images/credit-card.png";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
+import PaymentResponse from "./PaymentResponse";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ResponsiveDialog(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
+  const navigate = useNavigate();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const darkTheme = createTheme({
     palette: {
@@ -39,48 +43,13 @@ export default function ResponsiveDialog(props) {
       const response = await axios.get("finePayment/payfine_online", {
         params: fineData,
       });
-      const formData = new FormData();
-      formData.append("merchant_id", "1223908");
-      formData.append("return_url", "http://localhost:3000/general-user/fines");
-      formData.append("cancel_url", "http://localhost:3000/general-user/fines");
-      formData.append("notify_url", "http://localhost:3000/general-user/fines");
-      formData.append("order_id", "ItemNo12345");
-      formData.append("items", "Door bell wireless");
-      formData.append("currency", "LKR");
-      formData.append("amount", "1000");
-      formData.append("first_name", "Saman");
-      formData.append("last_name", "Perera");
-      formData.append("email", "samanp@gmail.com");
-      formData.append("phone", "0771234567");
-      formData.append("address", "No.1, Galle Road");
-      formData.append("city", "Colombo");
-      formData.append("country", "Sri Lanka");
-      formData.append("hash", response.data[0].hash);
-      try {
-        const response = await fetch(
-          "https://sandbox.payhere.lk/pay/checkout",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        if (response.ok) {
-          const responseData = await response.text(); // Get response as text
-          console.log("Payment response:", responseData);
-        } else {
-          // Handle non-200 status codes here
-          console.error("Payment error:", response.statusText);
-        }
-      } catch (error) {
-        // Handle network errors
-        console.error("Network error:", error);
+      if(response.data != null){
+        navigate("/general-user/payment");
       }
     } catch (error) {
       console.log(error);
     }
   };
-
   return (
     <ThemeProvider theme={darkTheme}>
       <div>

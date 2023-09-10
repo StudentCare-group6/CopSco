@@ -40,6 +40,7 @@ import AdminRoutes from "./setup/routes/AdminRoutes";
 import Team from "./pages/Admin/Team";
 import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
+import PaymentPage from "./pages/GeneralUser/PaymentPage";
 
 export default function App() {
   const THEME = createTheme({
@@ -99,6 +100,16 @@ export default function App() {
                     <ThemeProvider theme={theme}>
                       <CssBaseline>
                         <ProfilePage />
+                      </CssBaseline>
+                    </ThemeProvider>
+                  }
+                />
+                <Route
+                  path="payment"
+                  element={
+                    <ThemeProvider theme={theme}>
+                      <CssBaseline>
+                        <PaymentPage />
                       </CssBaseline>
                     </ThemeProvider>
                   }

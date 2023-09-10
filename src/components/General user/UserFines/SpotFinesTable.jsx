@@ -6,7 +6,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import useFineContext from "../../../hooks/useFineContext";
 import { policeDivisions } from "../Constants";
 import image from "../../../images/like.png";
-import ResponsiveDialog from "./PaymentModal";
+
 
 function formatDate(inputDate) {
   const parts = inputDate.split(/[-T:Z]/);
