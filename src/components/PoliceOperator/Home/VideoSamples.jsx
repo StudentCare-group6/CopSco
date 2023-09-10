@@ -27,10 +27,9 @@ export default function VideoSamples() {
   }
   const getvideos = async () => {
     try {
-      const response = await axios.get("/videos",{
-        params: operatorData
-      });
+      const response = await axios.get("violations/viewUploadedViolations");
       setVideoData(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
