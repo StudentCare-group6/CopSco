@@ -14,7 +14,17 @@ function createData(name, NICfront, NICback, UserPic) {
 
 const rows = [
   createData('Oshada Rupesinghe', '-', '-' , '-' ),
-  createData('Tharindu Dhananjaya', 'Uploaded', 'Uploaded', 'Uploaded'),
+  createData('Tharindu Dhananjaya', 
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+</svg>,
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+</svg>,
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+</svg>
+),
 ];
 
 export default function BasicTable() {
@@ -22,26 +32,37 @@ export default function BasicTable() {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell>User name</TableCell>
-            <TableCell align="right">NIC front view</TableCell>
-            <TableCell align="right">NIC rear view</TableCell>
-            <TableCell align="right">User photo</TableCell>
-          </TableRow>
+            <TableRow>
+              <TableCell style={{ width: 100 }} align="left">
+                User Name
+              </TableCell>
+              <TableCell style={{ width: 50 }} align="left">
+                NIC Front view
+              </TableCell>
+              <TableCell style={{ width: 80 }} align="left">
+                NIC rear view
+              </TableCell>
+              <TableCell style={{ width: 80 }} align="left">
+                User photo
+              </TableCell>
+            </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {/* <Link to={`/police-division/VerifyUserDocuments/${row.name}`}>{row.name}</Link> */}
-                <Link to={`/police-division/VerifyUserDocuments/`}>{row.name}</Link>
+            <TableRow key={row.name}>
+              
+              <TableCell style={{ width: 100 }} align="left">
+              <Link to={`/police-division/VerifyUserDocuments/`}>{row.name}</Link>
               </TableCell>
-              <TableCell align="right">{row.NICfront}</TableCell>
-              <TableCell align="right">{row.NICback}</TableCell>
-              <TableCell align="right">{row.UserPic}</TableCell>
+              <TableCell style={{ width: 50 }} align="left">
+                {row.NICfront}
+              </TableCell>
+              <TableCell style={{ width: 80 }} align="left">
+                {row.NICback}
+              </TableCell>
+              <TableCell style={{ width: 80 }} align="left">
+                {row.UserPic}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
