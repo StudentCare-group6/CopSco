@@ -63,6 +63,14 @@ export default function UserFines() {
           }
           sx={{ fontWeight: "bold" }} />
 
+        <Tab
+          label={
+            <Badge badgeContent={1} color="primary">
+              Appealed violations
+            </Badge>
+          }
+          sx={{ fontWeight: "bold" }} />
+
       </Tabs>
       <TabPanel value={value} index={0} className="py-10">
         <VideoViolationsTable />
@@ -70,6 +78,9 @@ export default function UserFines() {
 
       <TabPanel value={value} index={1} className="py-10">
         <SpotFinesTable />
+      </TabPanel>
+      <TabPanel value={value} index={1} className="py-10">
+        
       </TabPanel>
     </Box>
   );

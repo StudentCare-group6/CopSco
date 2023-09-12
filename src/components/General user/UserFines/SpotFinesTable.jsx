@@ -1,21 +1,22 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import CircleIcon from "@mui/icons-material/Circle";
 import useFineContext from "../../../hooks/useFineContext";
 import { policeDivisions } from "../Constants";
 import image from "../../../images/like.png";
+import { Button } from "@mui/material";
+import ErrorIcon from '@mui/icons-material/Error';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import CheckIcon from '@mui/icons-material/Check';
+import ResponsiveDialog from "./PaymentModal";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 
-function formatDate(inputDate) {
-  const parts = inputDate.split(/[-T:Z]/);
-
-  const year = parts[0];
-  const day = parts[2];
-  const month = parts[1]; // Adding 1 to adjust for zero-indexed months
-
-  return `${year}/${month}/${day}`;
+function formatDate(inputDateString) {
+  const inputDate = new Date(inputDateString);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = inputDate.toLocaleDateString("en-US", options);
+  return formattedDate;
 }
 
 function getDivisionName(divisionId) {
@@ -28,6 +29,7 @@ function getDivisionName(divisionId) {
 }
 
 export default function SpotFinesTable() {
+
   const { spotFines } = useFineContext();
 
   if (spotFines.length === 0 || spotFines.length === undefined) {
@@ -55,45 +57,39 @@ export default function SpotFinesTable() {
     const StatusRenderer = ({ status }) => {
       if (status == "1") {
         return (
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={1}
-            className="px-3 p-2 border border-green-600 rounded-full"
+          <Button
+            startIcon={<CheckIcon />}
+            variant="contained"
+            color="error"
+            className="bg-green-700 rounded-full"
+            sx={{ boxShadow: 'none', textTransform: 'none' }}
           >
-            <CircleIcon sx={{ fontSize: 8 }} className="text-green-700" />
-            <Typography component="div" className="text-sm text-green-700">
-              Settled
-            </Typography>
-          </Stack>
+            Settled
+          </Button>
         );
-      } else if (status == "Over Due") {
+      } else if (status == "2") {
         return (
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={1}
-            className="px-3 p-2 border border-red-500 rounded-full"
+          <Button
+            startIcon={<ErrorIcon />}
+            variant="contained"
+            color="error"
+            className="bg-red-700 rounded-full"
+            sx={{ boxShadow: 'none', textTransform: 'none' }}
           >
-            <CircleIcon sx={{ fontSize: 8 }} className="text-red-600" />
-            <Typography component="div" className="text-sm text-red-600">
-              Over Due
-            </Typography>
-          </Stack>
+            Overdue
+          </Button>
         );
       } else {
         return (
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={1}
-            className="px-3 p-2 border border-blue-400 rounded-full"
+          <Button
+            startIcon={<PendingActionsIcon />}
+            variant="contained"
+            color="primary"
+            className="rounded-full"
+            sx={{ boxShadow: 'none', textTransform: 'none' }}
           >
-            <CircleIcon sx={{ fontSize: 8 }} className="text-blue-500" />
-            <Typography component="div" className="text-sm text-blue-500">
-              Pending
-            </Typography>
-          </Stack>
+            Pending
+          </Button>
         );
       }
     };
@@ -101,50 +97,86 @@ export default function SpotFinesTable() {
     const columns = [
       {
         field: "offence",
-        headerName: "Offence(s)",
+        headerName: "Offence",
         flex: 1,
         headerAlign: "center",
+
       },
       {
         field: "status",
         headerName: "Payment Status",
-        width: 150,
+        flex: 1,
         headerAlign: "center",
+        align: "center",
         renderCell: (params) => <StatusRenderer status={params.row.status} />,
       },
       {
         field: "division",
         headerName: "Police Division",
-        width: 200,
+        flex: 1,
         headerAlign: "center",
+        align: "center",
       },
       {
         field: "amount",
         headerName: "Total Payable",
-        width: 150,
+        flex: 1,
         headerAlign: "center",
+        align: "center",
       },
       {
         field: "dueDate",
         headerName: "Due Date",
-        width: 150,
+        flex: 1,
         headerAlign: "center",
+        align: "center",
+        renderCell: (params) => {
+          return (
+            <Typography variant="body2">
+              {params.value}
+            </Typography>
+          );
+        }
       },
       {
         field: "demerits",
         headerName: "Demerit Points",
-        width: 150,
+        flex: 1,
         headerAlign: "center",
+        align: "center",
       },
-      { field: "date", headerName: "Date", width: 150, headerAlign: "center" },
-      { field: "time", headerName: "Time", width: 150, headerAlign: "center" },
+      {
+        field: "date", headerName: "Date", flex: 1, align: "center", headerAlign: "center", renderCell: (params) => {
+          return (
+            <Typography variant="body2">
+              {params.value}
+            </Typography>
+          );
+        }
+      },
+      { field: "time", headerName: "Time", flex: 1, align: "center", headerAlign: "center" },
       {
         field: "actions",
         headerName: "Actions",
-        width: 150,
+        flex: 1,
         headerAlign: "center",
+        align: "center",
         renderCell: (params) => {
-          return <ResponsiveDialog id={params.value} />;
+          if (params.row.status == "1") {
+            return (
+              <Button
+                startIcon={<CheckCircleIcon />}
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-green-700"
+                sx={{ boxShadow: 'none', textTransform: 'none' }}
+              >
+                Fine Paid
+              </Button>)
+          } else {
+            return <ResponsiveDialog id={params.value} />;
+          }
+
         },
       },
     ];
@@ -168,33 +200,29 @@ export default function SpotFinesTable() {
           width: "95%",
           margin: "auto",
         }}
-        className="shadow-md rounded-2xl"
+        className="rounded-2xl"
       >
         <DataGrid
-          className="shadow-md rounded-2xl border-none"
+          className="rounded-2xl border-none"
           {...spotFineData}
           sx={{
-            "& .MuiDataGrid-columnHeader": {
-              backgroundColor: "white",
-              color: "#020617",
-              fontWeight: "bold",
-            },
-
-            "& .MuiDataGrid-columnHeaderTitle": {
-              fontWeight: "bold",
-              color: "#020617",
-            },
             "& .MuiDataGrid-root": {
-              backgroundColor: "white",
+              border: "none",
             },
+            "& .MuiDataGrid-cell": {},
+            "& .name-column--cell": {
+              color: "#475569",
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderTop: "solid 1px #e0e0e0",
+              color: "#020617",
+              fontWeight: "extra-bold",
+              fontSize: "16px",
+            },
+            "& .MuiDataGrid-virtualScroller": {},
             "& .MuiDataGrid-footerContainer": {
-              backgroundColor: "white",
-            },
-            "& .MuiDataGrid-cell": {
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "white",
+              borderTop: "none",
+              color: "white",
             },
           }}
           rowHeight={90}

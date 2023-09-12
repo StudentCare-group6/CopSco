@@ -3,69 +3,133 @@ import { DataGrid } from "@mui/x-data-grid";
 import { videoFineData } from "../../../data/finesList2";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import CircleIcon from '@mui/icons-material/Circle';
 import VideoCard from "../video_upload/VideoCard";
-import ViewFineModal from "./ViewFineModal";
+import CheckIcon from '@mui/icons-material/Check';
+import ErrorIcon from '@mui/icons-material/Error';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import Payment from '@mui/icons-material/Payment';
+import CheckCircle from "@mui/icons-material/CheckCircle";
+import ViewFineModal from "./VideoCardModal";
+import Typography from "@mui/material/Typography";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 
 export default function VideoViolationsTable() {
 
-    const VideoCardRenderer = ({ vidName, vidPreview }) => {
-        return <VideoCard vidName={vidName} vidPreview={vidPreview} />;
-    };
 
     const ButtonRenderer = ({ status }) => {
-        if (status === 'Accepted') {
+        if (status === 'Settled') {
             return (
-                <Stack direction='row' gap={2}>
-                    <Button variant="outlined" color="primary">Pay</Button>
-                </Stack>
+                <Button
+                    startIcon={<CheckCircle />}
+                    variant="contained"
+                    color="error"
+                    className="bg-green-700 rounded-full"
+                    sx={{ boxShadow: 'none', textTransform: 'none' }}
+                >
+                    Fine Paid
+                </Button>
+            );
+        } else {
+            return (
+                <Button
+                    startIcon={<Payment />}
+                    variant="contained"
+                    color="error"
+                    className="bg-slate-900 rounded-full"
+                    sx={{ boxShadow: "none", textTransform: "none" }}
+                >
+                    Pay Fine
+                </Button>
             )
         }
-        return (
-            <Stack direction='row' gap={2}>
-                <ViewFineModal />
-            </Stack>
-        )
     }
 
     const StatusRenderer = ({ status }) => {
-        if (status === 'Accepted') {
+        if (status === 'Settled') {
             return (
-                <Stack direction='row' alignItems='center' spacing={1} className='px-3 p-2 border border-green-600 rounded-full'>
-                    <CircleIcon sx={{ fontSize: 8 }} className='text-green-700' />
-                    <Typography component="div" className='text-sm text-green-700'>
-                        Accepted
-                    </Typography>
-                </Stack>
-
-            );
-        } else if (status === 'Settled') {
-            return (
-                <Stack direction='row' alignItems='center' spacing={1} className='px-3 p-2 border border-slate-400 rounded-full'>
-                    <CircleIcon sx={{ fontSize: 8 }} className='text-slate-500' />
-                    <Typography component="div" className='text-sm text-slate-500'>
-                        Settled
-                    </Typography>
-                </Stack>
+                <Button
+                    startIcon={<CheckIcon />}
+                    variant="contained"
+                    color="error"
+                    className="bg-green-700 rounded-full"
+                    sx={{ boxShadow: 'none', textTransform: 'none' }}
+                >
+                    Settled
+                </Button>
             );
         } else if (status === 'Over Due') {
             return (
-                <Stack direction='row' alignItems='center' spacing={1} className='px-3 p-2 border border-red-500 rounded-full'>
-                    <CircleIcon sx={{ fontSize: 8 }} className='text-red-600' />
-                    <Typography component="div" className='text-sm text-red-600'>
-                        Over Due
+                <Button
+                    startIcon={<ErrorIcon />}
+                    variant="contained"
+                    color="error"
+                    className="bg-red-700 rounded-full"
+                    sx={{ boxShadow: 'none', textTransform: 'none' }}
+                >
+                    Overdue
+                </Button>
+            );
+        } else {
+            return (
+                <Button
+                    startIcon={<PendingActionsIcon />}
+                    variant="contained"
+                    color="primary"
+                    className="rounded-full"
+                    sx={{ boxShadow: 'none', textTransform: 'none' }}
+                >
+                    Pending
+                </Button>
+            );
+        }
+    }
+
+    const AppealRenderer = ({ appeal }) => {
+        if (appeal === 'Over Due') {
+            return (
+                <Stack direction="column" >
+                    <Typography variant="body2" color="text.secondary" className="text-gray-600">
+                        21 Jun 2023, 12:00 PM
                     </Typography>
+                    <Button
+                        startIcon={<AccessTimeIcon />}
+                        className=" rounded-full"
+                        color="error"
+                        sx={{ boxShadow: 'none', textTransform: 'none' }}
+                    >
+                        Date passed
+                    </Button>
+                </Stack>
+            );
+        } else if (appeal === 'Settled') {
+            return (
+                <Stack direction="column" >
+                    <Typography variant="body2" color="text.secondary" className="text-gray-400">
+                        21 Jun 2023, 12:00 PM
+                    </Typography>
+                    <Button
+                        startIcon={<AccessTimeIcon />}
+                        className="text-gray-400 rounded-full"
+                        sx={{ boxShadow: 'none', textTransform: 'none' }}
+                    >
+                        --
+                    </Button>
                 </Stack>
             );
         } else {
             return (
-                <Stack direction='row' alignItems='center' spacing={1} className='px-3 p-2 border border-blue-400 rounded-full'>
-                    <CircleIcon sx={{ fontSize: 8 }} className='text-blue-500' />
-                    <Typography component="div" className='text-sm text-blue-500'>
-                        Pending
+                <Stack direction="column" >
+                    <Typography variant="body2" className="text-gray-600">
+                        21 Jun 2023, 12:00 PM
                     </Typography>
+                    <Button
+                        startIcon={<AccessTimeIcon />}
+                        className="text-gray-600 rounded-full"
+                        sx={{ boxShadow: 'none', textTransform: 'none' }}
+                    >
+                        19h
+                    </Button>
                 </Stack>
             );
         }
@@ -78,26 +142,26 @@ export default function VideoViolationsTable() {
             height: 'auto',
             padding: '20px',
             headerAlign: "center",
+            align: "center",
             renderCell: (params) => (
-                <VideoCardRenderer
-                    vidName={params.row.vidName}
-                    vidPreview={params.row.vidPreview}
-                />
+                <ViewFineModal />
             ),
-            width: 200,
+            flex: 1,
         },
         {
             field: "offence",
-            headerName: "Offence(s)",
+            headerName: "Offence",
             flex: 1,
             headerAlign: "center",
+           
         }
         ,
         {
             field: "status",
-            headerName: "Status",
-            width: 150,
+            headerName: "Payment Status",
+            flex: 1,
             headerAlign: "center",
+            align: "center",
             renderCell: (params) => (
                 <StatusRenderer
                     status={params.row.status}
@@ -107,20 +171,33 @@ export default function VideoViolationsTable() {
         {
             field: "location",
             headerName: "Location",
-            width: 150,
-            headerAlign: "center"
+            flex: 1,
+            headerAlign: "center",
+            align: "center",
         },
         {
             field: "division",
             headerName: "Police Division",
-            width: 150,
+            flex: 1,
             headerAlign: "center",
+            align: "center",
         },
-        { field: "dueDate", headerName: "Due Date", width: 150, headerAlign: "center" },
-        { field: "date", headerName: "Date", width: 150, headerAlign: "center" },
-        { field: "time", headerName: "Time", width: 150, headerAlign: "center" },
+        { field: "dueDate", headerName: "Due Date", flex: 1, headerAlign: "center", align: "center" },
         {
-            field: "actions", headerName: "Actions", width: 150, headerAlign: "center", renderCell: (params) => (
+            field: "appealBefore",
+            headerName: "Appeal Before",
+            flex: 1,
+            headerAlign: "center",
+            align: "center",
+            renderCell: (params) => (
+                <AppealRenderer
+                    appeal={params.row.status}
+                />
+            )
+        },
+
+        {
+            field: "actions", headerName: "Actions", flex: 1, headerAlign: "center", align: "center", renderCell: (params) => (
                 <ButtonRenderer status={params.row.status} />
             )
         }
@@ -133,8 +210,6 @@ export default function VideoViolationsTable() {
         status: item.status,
         location: item.location,
         division: item.division,
-        date: item.date,
-        time: item.time,
         dueDate: item.dueDate,
     }));
     return (
@@ -146,32 +221,28 @@ export default function VideoViolationsTable() {
                 margin: "auto",
             }}
 
-            className='shadow-md rounded-2xl'
+            className='rounded-2xl'
         >
-            <DataGrid className='shadow-md rounded-2xl border-none'
+            <DataGrid className='rounded-2xl border-none'
                 {...videoFineData}
                 sx={{
-                    "& .MuiDataGrid-columnHeader": {
-                        backgroundColor: "white",
-                        color: "#020617",
-                        fontWeight: "bold",
-                    },
-
-                    "& .MuiDataGrid-columnHeaderTitle": {
-                        fontWeight: "bold",
-                        color: "#020617",
-                    },
                     "& .MuiDataGrid-root": {
-                        backgroundColor: "white",
+                        border: "none",
                     },
+                    "& .MuiDataGrid-cell": {},
+                    "& .name-column--cell": {
+                        color: "#475569",
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                        borderTop: "solid 1px #e0e0e0",
+                        color: "#020617",
+                        fontWeight: "extra-bold",
+                        fontSize: "16px",
+                    },
+                    "& .MuiDataGrid-virtualScroller": {},
                     "& .MuiDataGrid-footerContainer": {
-                        backgroundColor: "white",
-                    },
-                    "& .MuiDataGrid-cell": {
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: "white",
+                        borderTop: "none",
+                        color: "white",
                     },
                 }}
                 rowHeight={120}

@@ -1,12 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Box from '@mui/material/Box';
 
 export default function PaymentPage() {
   const [htmlResponse, setHtmlResponse] = useState("");
 
   useEffect(() => {
     const formData = new FormData();
-    formData.append("merchant_id", "1223908");
+    formData.append("merchant_id", "1223804");
     formData.append("return_url", "http://localhost:3000/general-user/fines");
     formData.append("cancel_url", "http://localhost:3000/general-user/fines");
     formData.append("notify_url", "http://localhost:3000/general-user/fines");
@@ -47,15 +48,15 @@ export default function PaymentPage() {
     fetchData();
   }, []);
   return (
-    <div>
+    <Box width = '100%' height = '100vh' >
       {htmlResponse && (
         <iframe
           title="PayHere Payment Response"
           srcDoc={htmlResponse} // Set the HTML content here
           width="100%"
-          height="500px"
+          height="100%"
         />
       )}
-    </div>
+    </Box>
   );
 }

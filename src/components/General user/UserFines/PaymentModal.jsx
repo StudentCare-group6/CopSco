@@ -13,9 +13,13 @@ import Stack from "@mui/material/Stack";
 import paymentImg from "../../../images/credit-card.png";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
-import PaymentResponse from "./PaymentResponse";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {Payhere, AccountCategory} from "@payhere-js-sdk/client";
+import {Customer, CurrencyType, PayhereCheckout, CheckoutParams} from '@payhere-js-sdk/client';
+
+function onPayhereCheckoutError(errorMsg) {
+  alert(errorMsg)
+}
 
 export default function ResponsiveDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -43,9 +47,30 @@ export default function ResponsiveDialog(props) {
       const response = await axios.get("finePayment/payfine_online", {
         params: fineData,
       });
-      if(response.data != null){
-        navigate("/general-user/payment");
-      }
+      console.log(response.data[0]);
+      Payhere.init(response.data[0].merchant_id,AccountCategory.SANDBOX);
+      const customer = new Customer({
+        first_name: "Demo",
+        last_name: "User",
+        phone: "+94771234567",
+        email: "user@example.com",
+        address: "No. 50, Highlevel Road",
+        city: "Panadura",
+        country: "Sri Lanka",
+      })
+      const checkoutData = new CheckoutParams({
+        returnUrl: 'http://localhost:3000/general-user/fines',
+        cancelUrl: 'http://localhost:3000/general-user/fines',
+        notifyUrl: 'http://localhost:3000/general-user/fines',
+        order_id: response.data[0].reference_id,
+        itemTitle: 'Spot Fine Payment',
+        currency: CurrencyType.LKR,
+        amount: response.data[0].amount,
+        hash : response.data[0].hash,
+      })
+      const checkout = new PayhereCheckout(customer,checkoutData,onPayhereCheckoutError)
+      checkout.start()
+     
     } catch (error) {
       console.log(error);
     }
@@ -120,3 +145,4 @@ export default function ResponsiveDialog(props) {
     </ThemeProvider>
   );
 }
+
