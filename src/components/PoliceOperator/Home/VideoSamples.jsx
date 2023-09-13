@@ -42,7 +42,7 @@ export default function VideoSamples() {
 
   const videoData = [
     {
-      video: 'https://youtu.be/0u0gXPkqKrw',
+      video: videoData1.videoUrls[0].url,
       title: 'Improper Turn',
       date: '01.07.2023',
       time: '14:56 PM',
