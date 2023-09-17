@@ -8,6 +8,8 @@ import Evidence from './Evidence';
 import axios from '../../../api/posts';
 import useAuth from '../../../hooks/useAuth';
 import { useEffect, useState } from 'react';
+import { Typography } from '@mui/material';
+import { Image } from '@mui/icons-material';
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -20,6 +22,26 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function VideoSamples() {
 
+  if (videoData1.length === 0 || videoData1.length === undefined) {
+    return (
+      <div className="flex flex-col items-center mt-10">
+        <img src={image} alt="empty" className="w-20 h-20" />
+        <Typography variant="h6" className="my-5">
+          No accepted videos, Don't worry keep uploading !
+        </Typography>
+      </div>
+    );
+  } else {
+    const rows = videoData1.map((item, index) => ({
+      id: index + 1,
+      video: [item.thumbnail, item.videokey],
+      description: item.description,
+      reward: "500",
+      location: item.district + ", " + item.city,
+      date: formatDate(item.reportdate),
+    }));
+  }
+  
   const { auth } = useAuth();
   const [videoData1, setVideoData] = useState([]);
   const operatorData = {
@@ -51,7 +73,7 @@ export default function VideoSamples() {
       uploaderPicture: 'propic1.png',
     },
     {
-      video: 'https://youtu.be/5LrDIWkK_Bc',
+      video: videoData1.videoUrls[1].url,
       title: 'Drunk Driving',
       date: '01.07.2023',
       time: '14:56 PM',
@@ -65,33 +87,6 @@ export default function VideoSamples() {
       date: '01.07.2023',
       time: '14:56 PM',
       location: 'Delkanda',
-      status: 'Pending',
-      uploaderPicture: 'propic1.png',
-    },
-    {
-      video: 'https://youtu.be/0u0gXPkqKrw',
-      title: 'Drunk Driving',
-      date: '01.07.2023',
-      time: '14:56 PM',
-      location: 'Piliyandala',
-      status: 'Pending',
-      uploaderPicture: 'propic1.png',
-    },
-    {
-      video: 'https://youtu.be/0u0gXPkqKrw',
-      title: 'Parking Violation',
-      date: '01.07.2023',
-      time: '14:56 PM',
-      location: 'Galle',
-      status: 'Pending',
-      uploaderPicture: 'propic1.png',
-    },
-    {
-      video: 'https://youtu.be/0u0gXPkqKrw',
-      title: 'Drunk Driving',
-      date: '01.07.2023',
-      time: '14:56 PM',
-      location: 'Trincomalee',
       status: 'Pending',
       uploaderPicture: 'propic1.png',
     },
