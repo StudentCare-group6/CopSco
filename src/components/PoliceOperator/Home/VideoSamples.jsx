@@ -25,7 +25,6 @@ export default function VideoSamples() {
   if (videoData1.length === 0 || videoData1.length === undefined) {
     return (
       <div className="flex flex-col items-center mt-10">
-        <img src={image} alt="empty" className="w-20 h-20" />
         <Typography variant="h6" className="my-5">
           No accepted videos, Don't worry keep uploading !
         </Typography>
@@ -62,35 +61,46 @@ export default function VideoSamples() {
     console.log(videoData1);
   }, []);
 
-  const videoData = [
-    {
-      video: videoData1.videoUrls[0].url,
-      title: 'Improper Turn',
-      date: '01.07.2023',
-      time: '14:56 PM',
-      location: 'Galle',
-      status: 'Pending',
-      uploaderPicture: 'propic1.png',
-    },
-    {
-      video: videoData1.videoUrls[1].url,
-      title: 'Drunk Driving',
-      date: '01.07.2023',
-      time: '14:56 PM',
-      location: 'Dehiwala',
-      status: 'Pending',
-      uploaderPicture: 'propic1.png',
-    },
-    {
-      video: 'https://youtu.be/ngVvDegsAW8',
-      title: 'Over Speeding',
-      date: '01.07.2023',
-      time: '14:56 PM',
-      location: 'Delkanda',
-      status: 'Pending',
-      uploaderPicture: 'propic1.png',
-    },
-  ];
+  // const videoData = [
+  //   {
+  //     video: videoData1.videoUrls[0].url,
+  //     title: 'Improper Turn',
+  //     date: '01.07.2023',
+  //     time: '14:56 PM',
+  //     location: 'Galle',
+  //     status: 'Pending',
+  //     uploaderPicture: 'propic1.png',
+  //   },
+  //   {
+  //     video: videoData1.videoUrls[1].url,
+  //     title: 'Drunk Driving',
+  //     date: '01.07.2023',
+  //     time: '14:56 PM',
+  //     location: 'Dehiwala',
+  //     status: 'Pending',
+  //     uploaderPicture: 'propic1.png',
+  //   },
+  //   {
+  //     video: 'https://youtu.be/ngVvDegsAW8',
+  //     title: 'Over Speeding',
+  //     date: '01.07.2023',
+  //     time: '14:56 PM',
+  //     location: 'Delkanda',
+  //     status: 'Pending',
+  //     uploaderPicture: 'propic1.png',
+  //   },
+  // ];
+
+  for (let i = 0; i < videoData.length; i++) {
+    const videoItem = videoData[i];
+    
+    const videoUrl = videoItem.video;
+    const videoTitle = videoItem.title;
+    
+    console.log(`Video URL: ${videoUrl}`);
+    console.log(`Video Title: ${videoTitle}`);
+    
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
