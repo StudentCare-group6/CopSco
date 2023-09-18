@@ -1,69 +1,225 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import { Link } from 'react-router-dom'
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function createData(name, NICfront, NICback, UserPic) {
-  return { name, NICfront, NICback, UserPic };
+function createData(name, status, NIC, username, location) {
+  return {
+    name,
+    status,
+    history: [{ NIC, username, location }],
+    historyEntry: {
+      NIC: '',
+      username: '',
+      location: '',
+    },
+    isEditing: false,
+  };
 }
 
+function Row(props) {
+  const { row, onStatusChange, onUpdateHistory, openRow, setOpenRow } = props;
+  const open = row === openRow;
+
+  const handleStatusChange = () => {
+    const newStatus = row.status === 'Verify' ? 'Verified' : 'Verify';
+    onStatusChange(row, newStatus);
+  };
+
+  const handleReject = () => {
+    const newStatus = 'Rejected';
+    onStatusChange(row, newStatus);
+  };
+
+    row.isEditing = true;
+
+  const handleSave = () => {
+    onUpdateHistory(row, [...row.history]);
+  };
+
+
+  const handleFieldChange = (field, value) => {
+    row.historyEntry[field] = value;
+  };
+
+  return (
+    <React.Fragment>
+      <TableRow>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpenRow(open ? null : row)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          <Typography>{row.name}</Typography>
+        </TableCell>
+        <TableCell component="td" scope="row">
+          {row.status}
+        </TableCell>
+        <TableCell>
+          <Button variant="contained" color="primary" onClick={handleStatusChange}>
+            Accept
+          </Button>
+          &nbsp;&nbsp;
+          <Button variant="contained" color="secondary" onClick={handleReject}>
+            Reject
+          </Button>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell colSpan={4}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <div style={{ paddingLeft: '16px' }}>
+              <Box sx={{ margin: 1 }}>
+                <Typography variant="subtitle2" gutterBottom component="div">
+                  Verify user documents
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  <TableBody>
+                    {row.history.map((historyRow, index) => (
+                      <TableRow key={index}>
+                        <TableCell>
+                          {row.isEditing ? (
+                            <TextField
+                              className=""
+                              label="NIC number"
+                              value={historyRow.NIC}
+                              onChange={(e) => handleFieldChange('NIC', e.target.value)}
+                            />
+                          ) : (
+                            historyRow.NIC
+                          )}
+                        </TableCell>
+
+                        <TableCell>
+                          {row.isEditing ? (
+                            <TextField
+                              className=""
+                              label="User Name"
+                              value={historyRow.username}
+                              onChange={(e) => handleFieldChange('username', e.target.value)}
+                            />
+                          ) : (
+                            historyRow.username
+                          )}
+                        </TableCell>
+
+                        <TableCell>
+                          {row.isEditing ? (
+                            <TextField
+                              className=""
+                              label="Location"
+                              value={historyRow.location}
+                              onChange={(e) => handleFieldChange('location', e.target.value)}
+                            />
+                          ) : (
+                            historyRow.location
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {row.isEditing && (
+                      <TableRow>
+                        <TableCell colSpan={4}>
+                          <Button variant="outlined" onClick={handleSave}>
+                            Update
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </Box>
+            </div>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
+}
+
+Row.propTypes = {
+  row: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    history: PropTypes.arrayOf(
+      PropTypes.shape({
+        date: PropTypes.string.isRequired,
+        customerId: PropTypes.string.isRequired,
+        amount: PropTypes.number.isRequired,
+      })
+    ).isRequired,
+    historyEntry: PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      customerId: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
+  onStatusChange: PropTypes.func.isRequired,
+  onUpdateHistory: PropTypes.func.isRequired,
+  openRow: PropTypes.object,
+  setOpenRow: PropTypes.func,
+};
+
 const rows = [
-  createData('Oshada Rupesinghe', '-', '-' , '-' ),
-  createData('Tharindu Dhananjaya', 
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-</svg>,
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-</svg>,
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-</svg>
-),
+  createData('Uthpalani Jayasinghe', 'Verify', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+  createData('Amal Perera', 'Verified', '200079300568', 'Amal Perera', 'Colombo'),
 ];
 
-export default function BasicTable() {
+export default function CollapsibleTable() {
+  const [tableData, setTableData] = React.useState(rows);
+  const [openRow, setOpenRow] = React.useState(null);
+
+  const handleStatusChange = (row, newStatus) => {
+    const updatedData = tableData.map((dataRow) => {
+      if (dataRow === row) {
+        return { ...dataRow, status: newStatus };
+      }
+      return dataRow;
+    });
+    setTableData(updatedData);
+  };
+
+  const handleUpdateHistory = (row, updatedHistory) => {
+    const updatedData = tableData.map((dataRow) => {
+      if (dataRow === row) {
+        return { ...dataRow, history: updatedHistory };
+      }
+      return dataRow;
+    });
+    setTableData(updatedData);
+  };
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-            <TableRow>
-              <TableCell style={{ width: 100 }} align="left">
-                User Name
-              </TableCell>
-              <TableCell style={{ width: 50 }} align="left">
-                NIC Front view
-              </TableCell>
-              <TableCell style={{ width: 80 }} align="left">
-                NIC rear view
-              </TableCell>
-              <TableCell style={{ width: 80 }} align="left">
-                User photo
-              </TableCell>
-            </TableRow>
-        </TableHead>
+      <Table aria-label="collapsible table">
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              
-              <TableCell style={{ width: 100 }} align="left">
-              <Link to={`/police-division/VerifyUserDocuments/`}>{row.name}</Link>
-              </TableCell>
-              <TableCell style={{ width: 50 }} align="left">
-                {row.NICfront}
-              </TableCell>
-              <TableCell style={{ width: 80 }} align="left">
-                {row.NICback}
-              </TableCell>
-              <TableCell style={{ width: 80 }} align="left">
-                {row.UserPic}
-              </TableCell>
-            </TableRow>
+          {tableData.map((row, index) => (
+            <Row
+              key={index}
+              row={row}
+              onStatusChange={handleStatusChange}
+              onUpdateHistory={handleUpdateHistory}
+              openRow={openRow}
+              setOpenRow={setOpenRow}
+            />
           ))}
         </TableBody>
       </Table>
