@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { Snackbar, Alert } from '@mui/material';
 import useInput from '../hooks/useInput';
 import useToggle from '../hooks/useToggle';
-
+import jwt_decode from "jwt-decode";
 
 function Copyright(props) {
   return (
@@ -77,9 +77,12 @@ export default function Login() {
       const accessToken = response.data.accessToken;
       const role = response.data.userrole;
       const fname = response.data.fname;
-      setAuth({ user, pwd, role, fname, accessToken });
+      const decoded = jwt_decode(accessToken);
+      const user_id = decoded.userid;
+      setAuth({ user, pwd, role, fname, accessToken, user_id });
       resetUser();
       setPwd('');
+
       if (role === 'general-user') {
         navigate('/general-user');
       } else if (role === 'police-operator') {

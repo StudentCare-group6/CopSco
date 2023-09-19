@@ -27,6 +27,7 @@ import PersistLogin from "./components/PersistLogin";
 import PolicePersistLogin from "./components/PolicePersistLogin";
 import { DetailsProvider } from "./context/userDetailsContext";
 import { FineProvider } from "./context/userFinesContext";
+import { GeneralUserProvider } from "./context/GeneralUserContext";
 import LandingPage from "./pages/LandingPage";
 import UserFines from "./pages/GeneralUser/UserFines";
 import PoliceHome from "./pages/PoliceOperator/Home";
@@ -75,7 +76,7 @@ export default function App() {
           <Route element={<PersistLogin />}>
             {/* general user routes */}
             <Route element={<RequireAuth allowedRole="general-user" />}>
-              <Route path="general-user/" element={<GeneralUserRoutes />}>
+              <Route path="general-user/" element={<GeneralUserProvider><GeneralUserRoutes /></GeneralUserProvider>}>
                 <Route
                   path=""
                   element={

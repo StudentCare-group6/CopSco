@@ -10,6 +10,8 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import CheckIcon from '@mui/icons-material/Check';
 import ResponsiveDialog from "./PaymentModal";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import useGeneralUserContext from "../../../hooks/useGeneralUserContext";
+import {useEffect, useState} from "react";
 
 
 function formatDate(inputDateString) {
@@ -30,8 +32,18 @@ function getDivisionName(divisionId) {
 
 export default function SpotFinesTable() {
 
+  const { searchKey } = useGeneralUserContext();
   const { spotFines } = useFineContext();
+  const [filteredRows, setFilteredRows] = useState([]);
+  useEffect(() => {
+    // Filter rows based on the search key
+    const newFilteredRows = spotFines.filter((item) => {
+      const description = item.description.toLowerCase();
+      return description.includes(searchKey.toLowerCase());
+    });
 
+    setFilteredRows(newFilteredRows);
+  }, [searchKey, spotFines ]);
   if (spotFines.length === 0 || spotFines.length === undefined) {
     return (
       <div className="flex flex-col items-center  h-screen">
@@ -42,7 +54,7 @@ export default function SpotFinesTable() {
       </div>
     );
   } else {
-    const spotFineData = spotFines.map((fine) => ({
+    const spotFineData = filteredRows.map((fine) => ({
       referenceId: fine.reference_id,
       offence: fine.description,
       status: fine.status,

@@ -408,7 +408,7 @@ export default function ComplaintDialog() {
                     })}
                   />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12}>
                   {errors.description?.message ? (
                     <Alert sx={{ mt: "10px" }} severity="error">
                       {errors.description?.message}

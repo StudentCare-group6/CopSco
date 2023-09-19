@@ -8,6 +8,8 @@ import useFineContext from "../../../hooks/useFineContext";
 import image from "../../../images/box.png";
 import ResponsiveDialog from "./RemoveDialogBox";
 import WalletIcon from "@mui/icons-material/Wallet";
+import useGeneralUserContext from "../../../hooks/useGeneralUserContext";
+import {useEffect, useState} from "react";
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -17,6 +19,8 @@ function formatDate(inputDateString) {
 }
 
 export default function AcceptedTable() {
+
+  const { searchKey } = useGeneralUserContext();
   const getRowSpacing = React.useCallback((params) => {
     return {
       top: params.isFirstVisible ? 0 : 5,
@@ -118,6 +122,16 @@ export default function AcceptedTable() {
     },
   ];
   const { acceptedUploads } = useFineContext();
+  const [filteredRows, setFilteredRows] = useState([]);
+  useEffect(() => {
+    // Filter rows based on the search key
+    const newFilteredRows = acceptedUploads.filter((item) => {
+      const description = item.description.toLowerCase();
+      return description.includes(searchKey.toLowerCase());
+    });
+
+    setFilteredRows(newFilteredRows);
+  }, [searchKey, acceptedUploads]);
 
   if (acceptedUploads.length === 0 || acceptedUploads.length === undefined) {
     return (
@@ -129,7 +143,7 @@ export default function AcceptedTable() {
       </div>
     );
   } else {
-    const rows = acceptedUploads.map((item, index) => ({
+    const rows = filteredRows.map((item, index) => ({
       id: index + 1,
       video: [item.thumbnail, item.videokey],
       description: item.description,

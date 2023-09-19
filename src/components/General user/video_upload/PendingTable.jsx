@@ -8,6 +8,8 @@ import useFineContext from "../../../hooks/useFineContext";
 import image from "../../../images/box.png";
 import ResponsiveDialog from "./DeleteDialogBox";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import useGeneralUserContext from "../../../hooks/useGeneralUserContext";
+import {useEffect, useState} from "react";
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -17,6 +19,8 @@ function formatDate(inputDateString) {
 }
 
 export default function PendingTable() {
+
+  const { searchKey } = useGeneralUserContext();
   const getRowSpacing = React.useCallback((params) => {
     return {
       top: params.isFirstVisible ? 0 : 5,
@@ -119,6 +123,16 @@ export default function PendingTable() {
     },
   ];
   const { pendingUploads } = useFineContext();
+  const [filteredRows, setFilteredRows] = useState([]);
+  useEffect(() => {
+    // Filter rows based on the search key
+    const newFilteredRows = pendingUploads.filter((item) => {
+      const description = item.description.toLowerCase();
+      return description.includes(searchKey.toLowerCase());
+    });
+
+    setFilteredRows(newFilteredRows);
+  }, [searchKey, pendingUploads]);
 
   if (pendingUploads.length === 0 || pendingUploads.length === undefined) {
     return (
@@ -130,7 +144,7 @@ export default function PendingTable() {
       </div>
     );
   } else {
-    const rows = pendingUploads.map((item, index) => ({
+    const rows = filteredRows.map((item, index) => ({
       id: index + 1,
       video: [item.thumbnail, item.videokey],
       description: item.description,

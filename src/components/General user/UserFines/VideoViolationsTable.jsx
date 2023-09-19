@@ -175,13 +175,6 @@ export default function VideoViolationsTable() {
             headerAlign: "center",
             align: "center",
         },
-        {
-            field: "division",
-            headerName: "Police Division",
-            flex: 1,
-            headerAlign: "center",
-            align: "center",
-        },
         { field: "dueDate", headerName: "Due Date", flex: 1, headerAlign: "center", align: "center" },
         {
             field: "appealBefore",

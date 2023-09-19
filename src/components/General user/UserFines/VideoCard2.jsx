@@ -4,30 +4,10 @@ import CardMedia from '@mui/material/CardMedia';
 import video1 from './video1.mp4';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useEffect } from 'react';
-import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import { Typography } from '@mui/material';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 export default function RecipeReviewCard(props) {
   const axiosPrivate = useAxiosPrivate();
@@ -47,28 +27,18 @@ export default function RecipeReviewCard(props) {
   useEffect(() => {
     console.log(video); // Log the updated video value when it changes
   }, [video]);
-  const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const keyValuePairs = [
+    { key: 'Due Date', value: 'Aug 15, 2023' },
+    { key: 'Vehicle No.', value: 'KN-3846' },
+    { key: 'Appeal Before', value: 'Aug 15, 2023' },
+    { key: 'Police Division', value: 'Cinnamon Gardens' },
+    { key: 'Amount', value: '5000.00' },
+    { key: 'Demerit Points', value: '10' }
+  ];
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
+    <Card sx={{ maxWidth: 400, boxShadow: 'none', borderRadius: '15px' }}>
       <CardMedia
         component="video"
         height="194"
@@ -77,57 +47,23 @@ export default function RecipeReviewCard(props) {
         controls
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
-        </Typography>
+        <Grid container spacing={2} alignItems='center' justifyContent='center'>
+          {keyValuePairs.map((pair, index) => (
+            <>
+              <Grid item xs={6} sm={6} key={index}>
+                <Typography variant='body2' fontWeight='bold'>
+                  {pair.key}:
+                </Typography>
+              </Grid>
+              <Grid item xs={6} sm={6} key={index}>
+                <Typography variant='body2'>
+                  {pair.value}
+                </Typography>
+              </Grid>
+            </>
+          ))}
+        </Grid>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-            aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-            medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-            occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-            large plate and set aside, leaving chicken and chorizo in the pan. Add
-            pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-            stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is absorbed,
-            15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-            mussels, tucking them down into the rice, and cook again without
-            stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don&apos;t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }

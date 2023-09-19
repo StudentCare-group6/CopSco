@@ -11,6 +11,7 @@ import RejectedTable from "../../components/General user/video_upload/RejectedTa
 import { useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useFineContext from "../../hooks/useFineContext";
+import useAuth from "../../hooks/useAuth";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -32,11 +33,14 @@ export default function UploadPage() {
 
   const [value, setValue] = useState(0);
   const axiosPrivate = useAxiosPrivate();
+  const {auth} = useAuth();
+  const userData = {
+    user: auth.user_id,
+  };
   const { acceptedUploads, rejectedUploads, pendingUploads, setAcceptedUploads, setRejectedUploads, setPendingUploads } = useFineContext();
   const getUploads = async () => {
     try {
-      const response = await axiosPrivate.get("upload/get-uploads");
-      console.log(response.data);
+      const response = await axiosPrivate.get("upload/get-uploads", { params: userData });
       for (let i = 0; i < response.data.length; i++) {
         const upload = response.data[i];
         const isDuplicate = pendingUploads.some((item) => item.id === upload.id) || acceptedUploads.some((item) => item.id === upload.id) || rejectedUploads.some((item) => item.id === upload.id);
