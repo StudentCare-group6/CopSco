@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -7,7 +7,6 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
@@ -15,6 +14,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
+// Import the Modal and Backdrop components
+import Modal from '@mui/material/Modal';
+import Backdrop from '@mui/material/Backdrop';
+import Fade from '@mui/material/Fade';
 
 function createData(name, status, NIC, username, location) {
   return {
@@ -35,7 +39,7 @@ function Row(props) {
   const open = row === openRow;
 
   const handleStatusChange = () => {
-    const newStatus = row.status === 'Verify' ? 'Verified' : 'Verify';
+    const newStatus = 'Verified';
     onStatusChange(row, newStatus);
   };
 
@@ -44,15 +48,30 @@ function Row(props) {
     onStatusChange(row, newStatus);
   };
 
-    row.isEditing = true;
+  row.isEditing = true;
 
   const handleSave = () => {
     onUpdateHistory(row, [...row.history]);
   };
 
-
   const handleFieldChange = (field, value) => {
     row.historyEntry[field] = value;
+  };
+
+  // State for the image modal
+  const [isImageModalOpen, setImageModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+
+  // Function to open the image modal
+  const openImageModal = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setImageModalOpen(true);
+  };
+
+  // Function to close the image modal
+  const closeImageModal = () => {
+    setSelectedImage('');
+    setImageModalOpen(false);
   };
 
   return (
@@ -74,11 +93,11 @@ function Row(props) {
           {row.status}
         </TableCell>
         <TableCell>
-          <Button variant="contained" color="primary" onClick={handleStatusChange}>
+          <Button variant="contained" color="primary" className="ml-[50%]" onClick={handleStatusChange}>
             Accept
           </Button>
           &nbsp;&nbsp;
-          <Button variant="contained" color="secondary" onClick={handleReject}>
+          <Button variant="outlined" onClick={handleReject}>
             Reject
           </Button>
         </TableCell>
@@ -91,8 +110,22 @@ function Row(props) {
                 <Typography variant="subtitle2" gutterBottom component="div">
                   Verify user documents
                 </Typography>
+
                 <Table size="small" aria-label="purchases">
                   <TableBody>
+                    <TableRow>
+                      <div className="ml-5 mb-5 mt-5">
+                        <Button variant="outlined" onClick={() => openImageModal('https://i.imgur.com/X3l01xC.jpg')}>
+                          NIC Front View
+                        </Button>
+                        &nbsp;&nbsp;
+                        <Button variant="outlined" onClick={() => openImageModal('https://i.imgur.com/X3l01xC.jpg')}>
+                          NIC Rear View
+                        </Button>
+                      </div>
+                    </TableRow>
+
+                    {/* Documents */}
                     {row.history.map((historyRow, index) => (
                       <TableRow key={index}>
                         <TableCell>
@@ -151,6 +184,25 @@ function Row(props) {
           </Collapse>
         </TableCell>
       </TableRow>
+
+      {/* Image Modal */}
+      <Modal
+        open={isImageModalOpen}
+        onClose={closeImageModal}
+        aria-labelledby="image-modal-title"
+        aria-describedby="image-modal-description"
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={isImageModalOpen}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <img src={selectedImage} alt="Image" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+          </div>
+        </Fade>
+      </Modal>
     </React.Fragment>
   );
 }
