@@ -20,19 +20,25 @@ import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Fade from '@mui/material/Fade';
 
-function createData(name, status, NIC, username, location) {
+function createData(name, NICfrontview, NICrearview , NIC, fullname, location) {
   return {
     name,
-    status,
-    history: [{ NIC, username, location }],
+    NICfrontview,
+    NICrearview,
+    history: [{ NIC, fullname, location }],
     historyEntry: {
       NIC: '',
-      username: '',
+      fullname: '',
       location: '',
+      status: '',
     },
-    isEditing: false,
   };
 }
+
+const rows = [
+  createData('Uthpalani Jayasinghe', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+  createData('Amal Perera', '', '', '200079300568', 'Amal Perera', 'Colombo'),
+];
 
 function Row(props) {
   const { row, onStatusChange, onUpdateHistory, openRow, setOpenRow } = props;
@@ -86,6 +92,7 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+        
         <TableCell component="th" scope="row">
           <Typography>{row.name}</Typography>
         </TableCell>
@@ -110,10 +117,6 @@ function Row(props) {
                 <Typography variant="subtitle2" gutterBottom component="div">
                   Verify user documents
                 </Typography>
-
-                <Table size="small" aria-label="purchases">
-                  <TableBody>
-                    <TableRow>
                       <div className="ml-5 mb-5 mt-5">
                         <Button variant="outlined" onClick={() => openImageModal('https://i.imgur.com/X3l01xC.jpg')}>
                           NIC Front View
@@ -122,35 +125,37 @@ function Row(props) {
                         <Button variant="outlined" onClick={() => openImageModal('https://i.imgur.com/X3l01xC.jpg')}>
                           NIC Rear View
                         </Button>
+                        &nbsp;&nbsp;
+                        <Button variant="outlined" onClick={() => openImageModal('https://i.imgur.com/X3l01xC.jpg')}>
+                          User Picture
+                        </Button>
                       </div>
-                    </TableRow>
-
+                <Table size="small" aria-label="purchases">
+                  <TableBody>
+                    
                     {/* Documents */}
                     {row.history.map((historyRow, index) => (
                       <TableRow key={index}>
+                      
                         <TableCell>
-                          {row.isEditing ? (
                             <TextField
                               className=""
                               label="NIC number"
-                              value={historyRow.NIC}
+                              defaultValue={historyRow.NIC}
                               onChange={(e) => handleFieldChange('NIC', e.target.value)}
                             />
-                          ) : (
-                            historyRow.NIC
-                          )}
                         </TableCell>
 
                         <TableCell>
                           {row.isEditing ? (
                             <TextField
                               className=""
-                              label="User Name"
-                              value={historyRow.username}
-                              onChange={(e) => handleFieldChange('username', e.target.value)}
+                              label="Full Name"
+                              defaultValue={historyRow.fullname}
+                              onChange={(e) => handleFieldChange('fullname', e.target.value)}
                             />
                           ) : (
-                            historyRow.username
+                            historyRow.fullname
                           )}
                         </TableCell>
 
@@ -159,13 +164,14 @@ function Row(props) {
                             <TextField
                               className=""
                               label="Location"
-                              value={historyRow.location}
+                              defaultValue={historyRow.location}
                               onChange={(e) => handleFieldChange('location', e.target.value)}
                             />
                           ) : (
                             historyRow.location
                           )}
                         </TableCell>
+
                       </TableRow>
                     ))}
                     {row.isEditing && (
@@ -229,11 +235,6 @@ Row.propTypes = {
   openRow: PropTypes.object,
   setOpenRow: PropTypes.func,
 };
-
-const rows = [
-  createData('Uthpalani Jayasinghe', 'Verify', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-  createData('Amal Perera', 'Verified', '200079300568', 'Amal Perera', 'Colombo'),
-];
 
 export default function CollapsibleTable() {
   const [tableData, setTableData] = React.useState(rows);

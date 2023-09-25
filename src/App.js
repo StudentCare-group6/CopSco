@@ -185,18 +185,18 @@ export default function App() {
                   </VideoProvider>
                 } />
                 <Route path="verifying-documents" element={<VerifyingDocuments />} />
-                <Route path="VerifyUserDocuments" element={<VerifyUserDocuments />} />
+
                 <Route path="Home" element={
                   <VideoProvider>
                     <DivisionHome />
                   </VideoProvider>
                 } />
+                
                 <Route path="FineIssue" element={
                   <VideoProvider>
                     <FineIssue />
                   </VideoProvider>
                 } />
-                
               </Route>
             </Route>
             <Route element={<RequireAuth allowedRole="admin" />}>

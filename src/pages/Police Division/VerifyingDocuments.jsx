@@ -54,35 +54,9 @@ export default function VerifyingDocuments() {
               }
               sx={{ fontWeight: "bold" }}
             />
-
-            <Tab
-              label={
-                <Badge badgeContent={1} color="primary">
-                  Accepted
-                </Badge>
-              }
-              sx={{ fontWeight: "bold" }}
-            />
-
-            <Tab
-              label={
-                <Badge badgeContent={1} color="primary">
-                  Rejected
-                </Badge>
-              }
-              sx={{ fontWeight: "bold" }}
-            />
           </Tabs>
           <TabPanel value={value} index={0} className="py-10">
             <PendingReviews />
-          </TabPanel>
-
-          <TabPanel value={value} index={1} className="py-10">
-            {/* <TableDocuments /> */}
-          </TabPanel>
-
-          <TabPanel value={value} index={2} className="py-10">
-            {/* <TableDocuments /> */}
           </TabPanel>
         </Box>
       </Box>

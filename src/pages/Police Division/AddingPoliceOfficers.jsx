@@ -9,7 +9,7 @@ export default function Home() {
   return (
     
     <Box>
-      <div className="w-[20%] ml-auto mr-44 mt-7">
+      <div className="w-[20%] ml-auto mr-44 mt-7" sx={{ height: '100vh' }}>
         <SearchBar />
       </div>
       <PoliceOfficers />

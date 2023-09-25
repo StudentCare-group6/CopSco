@@ -62,7 +62,7 @@ const VerifyUserDocuments = () => {
 
   return (
     <div>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, height: '80vh' }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, height: '100vh' }}>
         <Box className="py-6">
           <Stack direction="row" justifyContent="space-between">
             <h2 className="text-3xl font-bold">Verify User Documents</h2>
