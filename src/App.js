@@ -43,6 +43,7 @@ import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
 import PaymentPage from "./pages/GeneralUser/PaymentPage";
 
+
 export default function App() {
   const THEME = createTheme({
     typography: {
@@ -167,15 +168,43 @@ export default function App() {
             </Route>
 
             {/* police operator routes */}
-            <Route element={<RequireAuth allowedRole="police-operator" />}>
-              <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
-                <Route path="" element={<PoliceHome />} />
-                <Route path="video-details" element={<VideoDetails />} />
+            
+              <Route element={<RequireAuth allowedRole="police-operator" />}>
+              {/* <Route> */}
+                  <Route path="police-operator/" element={<PoliceOperatorRoutes />} >
+                    <Route path="" element={
+                      <VideoProvider>
+                        <PoliceHome />
+                      </VideoProvider>
+                    } />
+                    <Route path="video-details" element={
+                      <VideoProvider>
+                        <VideoDetails />
+                      </VideoProvider>
+                    } />
+                  </Route>
               </Route>
-            </Route>
             <Route element={<RequireAuth allowedRole="police-division" />}>
+            {/* <Route> */}
               <Route path="police-division/" element={<PoliceDivisionRoutes />}>
-                <Route path="" element={<AddingOfficers />} />
+                <Route path="" element={
+                  <VideoProvider>
+                    <AddingOfficers />
+                  </VideoProvider>
+                } />
+                <Route path="verifying-documents" element={<VerifyingDocuments />} />
+                <Route path="VerifyUserDocuments" element={<VerifyUserDocuments />} />
+                <Route path="Home" element={
+                  <VideoProvider>
+                    <DivisionHome />
+                  </VideoProvider>
+                } />
+                <Route path="FineIssue" element={
+                  <VideoProvider>
+                    <FineIssue />
+                  </VideoProvider>
+                } />
+                
               </Route>
             </Route>
             <Route element={<RequireAuth allowedRole="admin" />}>

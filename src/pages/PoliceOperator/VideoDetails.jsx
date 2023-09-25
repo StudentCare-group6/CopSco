@@ -1,41 +1,30 @@
-import React from "react";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
 import VideoMainDetails from "../../components/PoliceOperator/VideoDetails/VideoMainDetails";
-import Actions from "../../components/PoliceOperator/VideoDetails/Actions";
 import MyForm from "../../components/PoliceOperator/VideoDetails/MyForm";
+import React, { useState } from "react";
+import useVideoContext from "../../hooks/useVideoContext";
+import ReactPlayer from "react-player";
 
-const VideoPlayer = ({ videoUrl }) => {
-  return (
-    <div
-      style={{
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <video controls style={{ height: "100%", width: "100%" }}>
-        <source src={videoUrl} />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-  );
-};
+const VideoDetails = () => {
+  const { selectedVideo } = useVideoContext();
+  const [pausedTime, setPausedTime] = useState(null);
 
-const videoData = [
-  {
-    video: "video2.mp4",
-    title: "Improper Turn",
-    date: "01.07.2023",
-    time: "14:56 PM",
-    location: "Thummulla",
-    status: "Pending",
-    uploaderPicture: "propic1.png",
-  },
-];
+  // Handle video pause event
+  const handlePause = () => {
+    const player = videoRef.current.getInternalPlayer(); 
+    const pausedTime = player.getCurrentTime(); 
+    const pausedTimeInSeconds = Math.floor(pausedTime);
 
-function VideoDetails() {
+  const minutes = Math.floor(pausedTimeInSeconds / 60);
+  const seconds = Math.floor(pausedTimeInSeconds % 60);
+
+  const formattedPausedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+  setPausedTime(formattedPausedTime);
+  console.log('Paused timestamp:', formattedPausedTime);
+  };
+
+  const videoRef = React.createRef();
+
   return (
     <div>
       {/* Video Verification */}
@@ -44,29 +33,39 @@ function VideoDetails() {
         <div className="w-[50%] ml-20 mt-5">
           {/* Video */}
           <div>
-            {videoData.map((item, index) => (
-              <React.Fragment key={index}>
-                <VideoPlayer videoUrl={item.video} />
-                <ImageListItem key={index}>
-                  <ImageListItemBar title={<div></div>} position="below" />
-                </ImageListItem>
-              </React.Fragment>
-            ))}
+            {selectedVideo && (
+              <ReactPlayer
+                ref={videoRef}
+                url={selectedVideo.video}
+                controls
+                width="100%"
+                height="400px"
+                onPause={handlePause}
+                onReady={() => console.log('onReady callback')}
+                onStart={() => console.log('onStart callback')}
+                onEnded={() => console.log('onEnded callback')}
+                onError={() => console.log('onError callback')}
+              />
+            )}
           </div>
           {/* Video details */}
           <div className="mt-[-45px] mb-10">
             <VideoMainDetails />
+            {pausedTime !== null && (
+              <div>
+                <p>Paused Timestamp: {pausedTime}</p>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Actions */}
         <div className="w-[50%]">
-          <Actions />
-          <MyForm />
+          <MyForm pausedTime={pausedTime} />
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default VideoDetails;

@@ -70,114 +70,135 @@ const MyForm = () => {
   const email = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
   return (
-    <div>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mt-5">
-        <Controller
-          name="PoliceOfficerName"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: '*This field is required.',
-            pattern: {
-              value: namePattern,
-              message: '* Name can not contain numbers or special characters.',
-            },
-          }}
-          render={({ field }) => (
-            <input
-              {...field}
-              placeholder="Police Officer Name"
-              className="border rounded w-[400px] p-2 ml-[15%] text-left text-md mt-[-750px]"
-            />
-          )}
-        />
-        {errors.PoliceOfficerName && <span className="text-red-500 text-sm ml-28">{errors.PoliceOfficerName.message}</span>}
+    <div style={{ height: '500px', display: 'flex', flexDirection: 'column',}}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ flex: 1 }}>
+        {/* Police officer name */}
+        <div className="mb-5">
+          <Controller className="mt-5"
+            name="policeOfficerName"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: '*This field is required.',
+              pattern: {
+                value: namePattern,
+                message: '*Name can not contain numbers or special characters.',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Police Officer Name"
+                placeholder="Police Officer Name"
+                variant="outlined"
+                fullWidth
+                error={!!errors.policeOfficerName}
+                helperText={errors.policeOfficerName?.message}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
+              />
+            )}
+          />
         </div>
-
-        <div>
-            <Controller
+        
+        {/* Police number */}
+        <div className="mb-5">
+          <Controller className="mt-5"
             name="policeNumber"
             control={control}
             defaultValue=""
             rules={{
-                required: '*This field is required.',
-                pattern: {
+              required: '*This field is required.',
+              pattern: {
                 value: policeNumber,
-                message: '* Invalid email.',
-                },
+                message: '*Invalid number.',
+              },
             }}
             render={({ field }) => (
-                <input
+              <TextField
                 {...field}
+                label="Police Number"
                 placeholder="Police Number"
-                className="border rounded w-[400px] p-2 ml-[15%] text-left text-md mt-2"
-                />
+                variant="outlined"
+                fullWidth
+                error={!!errors.policeNumber}
+                helperText={errors.policeNumber?.message}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
+              />
             )}
-            />
-            {errors.policeNumber && <span className="text-red-500 text-sm ml-28">{errors.policeNumber.message}</span>}
+          />
+        </div>
+
+        {/* Email */}
+        <div className="mb-5">
+          <Controller className="mt-5"
+            name="email"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: '*This field is required.',
+              pattern: {
+                value: email,
+                message: '*Invalid email address.',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Email"
+                placeholder="Email"
+                variant="outlined"
+                fullWidth
+                error={!!errors.email}
+                helperText={errors.email?.message}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
+              />
+            )}
+          />
         </div>
         
+        {/* Phone Number */}
+        <div className="mb-5">
+          <Controller className="mt-5"
+            name="phoneNumber"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: '*This field is required.',
+              pattern: {
+                value: phoneNumber,
+                message: '*Invalid phone number.',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Phone Number"
+                placeholder="Phone Number"
+                variant="outlined"
+                fullWidth
+                error={!!errors.phoneNumber}
+                helperText={errors.phoneNumber?.message}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px', marginBottom: '100px' }}
+              />
+            )}
+          />
+        </div>
 
+        <div className="flex justify-center ml-24 mb-5" >
+          <ThemeProvider theme={theme}>
+            <Stack direction="row" spacing={2}>
+              <Button variant="contained" type="submit">
+                Continue
+              </Button>
+              <Button variant="outlined" onClick={() => window.location.reload()}>
+                Cancel
+              </Button>
+            </Stack>
+          </ThemeProvider>
+        </div>
 
-        <Controller
-          name="email"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: '*This field is required.',
-            pattern: {
-            value: email,
-            message: '* Number can not contain any letters.',
-            },
-        }}
-          render={({ field }) => (
-            <input
-              {...field}
-              placeholder="Email"
-              className="border rounded w-[400px] p-2 ml-[15%] text-left text-md mt-2"
-            />
-          )}
-        />
-        {errors.email && <span className="text-red-500 text-sm ml-28">{errors.email.message}</span>}
-
-        <Controller
-          name="phoneNumber"
-          control={control}
-          defaultValue=""
-          rules={{
-            required: '*This field is required.',
-            pattern: {
-            value: phoneNumber,
-            message: '* Invalid phone number.',
-            },
-        }}
-          render={({ field }) => (
-            <input
-              {...field}
-              placeholder="Phone Number"
-              className="border rounded w-[400px] p-2 ml-[15%] text-left text-md mt-2"
-            />
-          )}
-        />
-        {errors.phoneNumber && <span className="text-red-500 text-sm ml-28">{errors.phoneNumber.message}</span>}
-
-
-    <div className="flex justify-center ml-24 mt-10">
-      <ThemeProvider theme={theme}>
-        <Stack direction="row" spacing={2}>
-        <Button variant="contained" type="submit">
-          Continue
-        </Button>
-        <Button variant="outlined" onClick={() => window.location.reload()}>
-          Cancel
-        </Button>
-        </Stack>
-      </ThemeProvider>
-    </div>
-    
-    </form>
-    <ToastContainer />
+      </form>
+      <ToastContainer />
     </div>
   );
 }

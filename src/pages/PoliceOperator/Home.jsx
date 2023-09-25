@@ -3,7 +3,6 @@ import Filters from "../../components/PoliceOperator/Home/Filters";
 import VideoSamples from "../../components/PoliceOperator/Home/VideoSamples";
 import PaginationRounded from "../../components/PoliceOperator/Home/Pagination";
 
-
 export default function Home() {
   
   return (
@@ -18,7 +17,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="pagination-center-aligned">
+      <div className="ml-[38%] mt-10">
         <PaginationRounded />
       </div>
     </>
