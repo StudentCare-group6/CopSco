@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Header from '../../components/General user/Header';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import CustomizedSteppers from '../../components/Traffic police/Steppers.jsx';

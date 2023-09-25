@@ -17,11 +17,11 @@ import Divider from '@mui/material/Divider';
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/posts'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Snackbar, Alert } from '@mui/material';
 import useInput from '../hooks/useInput';
 import useToggle from '../hooks/useToggle';
-
+import jwt_decode from "jwt-decode";
 
 function Copyright(props) {
   return (
@@ -46,8 +46,6 @@ export default function Login() {
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
   const userRef = useRef();
 
   const [user, resetUser, userAttributes] = useInput('user', '');
@@ -78,9 +76,13 @@ export default function Login() {
       );
       const accessToken = response.data.accessToken;
       const role = response.data.userrole;
-      setAuth({ user, pwd, role, accessToken });
+      const fname = response.data.fname;
+      const decoded = jwt_decode(accessToken);
+      const user_id = decoded.userid;
+      setAuth({ user, pwd, role, fname, accessToken, user_id });
       resetUser();
       setPwd('');
+
       if (role === 'general-user') {
         navigate('/general-user');
       } else if (role === 'police-operator') {
@@ -152,7 +154,6 @@ export default function Login() {
             <Stack sx={{ width: formWidth, margin: '50px' }}>
               <Divider>OR</Divider>
             </Stack>
-
 
             <Typography component="h1" variant="h5">
               Sign in

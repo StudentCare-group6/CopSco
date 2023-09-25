@@ -10,13 +10,13 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import ModalButton from './ModalButton';
 import SmallText from './SmallText';
-import { Grid, TextField, MenuItem } from '@mui/material';
-import violationImage from './violation.jpg';
+import { Grid, TextField, MenuItem, Typography } from '@mui/material';
 import useFormContext from '../../../hooks/useFormContext';
 import Stack from '@mui/material/Stack';
 import VideoThumbnail from 'react-video-thumbnail';
+import Alert from '@mui/material/Alert';
+import useAuth from '../../../hooks/useAuth';
 
 const vehicalTypes = [
   {
@@ -114,6 +114,29 @@ const City = [
   // Add more cities here
 ];
 
+const Province = [
+  {
+    value: 'western',
+    label: 'Western',
+  },
+  {
+    value: 'southern',
+    label: 'Southern',
+  },
+  {
+    value: 'central',
+    label: 'Central',
+  },
+  {
+    value: 'north_central',
+    label: 'North Central',
+  },
+  {
+    value: 'north_western',
+    label: 'North Western',
+  },
+];
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -164,9 +187,29 @@ export default function ComplaintDialog() {
     setOpen(false);
   };
 
-  const { page, setPage, videoUrl, videoDimensions } = useFormContext();
+  const { page, getValues, setValue, setPage, videoUrl, trimmedVideo, register, errors, videoThumbnail, setVideoThumbnail } = useFormContext();
+  const { auth } = useAuth();
   const handleNext = () => setPage(page + 1);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setValue('video', trimmedVideo);
+    setValue('user', auth.user);
+    setValue('previewImage', videoThumbnail);
+    console.log(getValues());
+    handleNext();
+  };
+  const thumbnailHandler = (thumbnailUrl) => {
+    // Convert the thumbnail URL to a Blob
+    fetch(thumbnailUrl)
+      .then(response => response.blob())
+      .then(thumbnailBlob => {
+        setVideoThumbnail(thumbnailBlob);
+      })
+      .catch(error => {
+        console.error('Error fetching or converting thumbnail:', error);
+      });
+  };
   return (
     <div>
       <Button
@@ -187,26 +230,33 @@ export default function ComplaintDialog() {
           <center><b>Edit Details</b></center>
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Grid container spacing={5}>
+          <Grid container spacing={5} alignItems='center'>
             <Grid item xs={6}>
               {/* Form */}
-              <form action="" method="post">
-                <Stack spacing={3}>
+              <Grid component="form" container spacing={2}>
+                <Grid item xs={6}>
                   <TextField
                     name="vehical_number"
                     label="Vehicle Number:"
                     variant="outlined"
                     fullWidth
-                    size="small"
                     type="text"
+                    size="small"
+                    helperText="Enter vehicle number"
+                    {...register("vehicleNum")}
                   />
+                </Grid>
+                <Grid item xs={6} >
                   <TextField
                     id="outlined-select-vehical-type"
                     select
                     label="Vehicle Type"
                     fullWidth
-                    size="small"
                     helperText="Select vehicle type"
+                    size="small"
+                    {...register("type", {
+                      required: "field required",
+                    })}
                   >
                     {vehicalTypes.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -214,13 +264,36 @@ export default function ComplaintDialog() {
                       </MenuItem>
                     ))}
                   </TextField>
+                </Grid>
+                <Grid item xs={6}>
+                  {errors.vehicleNum?.message ? (
+                    <Alert sx={{ mt: "10px" }} severity="error">
+                      {errors.vehicleNum?.message}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid item xs={6}>
+                  {errors.type?.message ? (
+                    <Alert sx={{ mt: "10px" }} severity="error">
+                      {errors.type?.message}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid item xs={12}>
                   <TextField
                     id="outlined-select-violation-type"
                     select
                     label="Violation Type"
                     fullWidth
-                    size="small"
                     helperText="Violation Occurred"
+                    size="small"
+                    {...register("violation", {
+                      required: "field required",
+                    })}
                   >
                     {violationTypes.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -228,6 +301,36 @@ export default function ComplaintDialog() {
                       </MenuItem>
                     ))}
                   </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  {errors.violation?.message ? (
+                    <Alert sx={{ mt: "10px" }} severity="error">
+                      {errors.violation?.message}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    id="outlined-select-district"
+                    select
+                    label="Province"
+                    fullWidth
+                    size="small"
+                    helperText="Select the province"
+                    {...register("province", {
+                      required: "field required",
+                    })}
+                  >
+                    {Province.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={4}>
                   <TextField
                     id="outlined-select-district"
                     select
@@ -235,6 +338,9 @@ export default function ComplaintDialog() {
                     fullWidth
                     size="small"
                     helperText="Select the district"
+                    {...register("district", {
+                      required: "field required",
+                    })}
                   >
                     {District.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -242,6 +348,8 @@ export default function ComplaintDialog() {
                       </MenuItem>
                     ))}
                   </TextField>
+                </Grid>
+                <Grid item xs={4}>
                   <TextField
                     id="outlined-select-city"
                     select
@@ -249,6 +357,9 @@ export default function ComplaintDialog() {
                     fullWidth
                     size="small"
                     helperText="Select the city"
+                    {...register("city", {
+                      required: "field required",
+                    })}
                   >
                     {City.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -256,32 +367,87 @@ export default function ComplaintDialog() {
                       </MenuItem>
                     ))}
                   </TextField>
+                </Grid>
+                <Grid item xs={4}>
+                  {errors.province?.message ? (
+                    <Alert sx={{ mt: "10px" }} severity="error">
+                      {errors.province?.message}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid item xs={4}>
+                  {errors.district?.message ? (
+                    <Alert sx={{ mt: "10px" }} severity="error">
+                      {errors.district?.message}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid item xs={4}>
+                  {errors.city?.message ? (
+                    <Alert sx={{ mt: "10px" }} severity="error">
+                      {errors.city?.message}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid item xs={12} >
                   <TextField
                     id="outlined-multiline-description"
                     label="Description"
                     multiline
                     rows={5}
                     fullWidth
+                    helperText="Enter a description about the incident"
+                    {...register("description", {
+                      required: "field required",
+                    })}
                   />
-                </Stack>
-              </form>
+                </Grid>
+                <Grid item xs={12}>
+                  {errors.description?.message ? (
+                    <Alert sx={{ mt: "10px" }} severity="error">
+                      {errors.description?.message}
+                    </Alert>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} padding={5}>
               {/* Preview and note */}
-              <Stack spacing={3}>
-                <VideoThumbnail
-                  videoUrl={videoUrl}
-                  width={videoDimensions.width}
-                  height={videoDimensions.height}
-                />
-                <p className="font-bold mt-4">Why do we collect this information?</p>
-                <SmallText text="By obtaining supplementary information related to the video evidence, law enforcement can strengthen the evidentiary value of the footage, establish a more accurate account of events, and conduct a thorough and fair investigation." />
+              <Stack spacing={5}>
+                <Stack alignItems='center' justifyContent='center' width='100%' sx={{ backgroundColor: '#D9D9D9' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '70%',
+                      height: 'auto',
+                    }}
+                  >
+                    <VideoThumbnail videoUrl={videoUrl} thumbnailHandler={thumbnailHandler} />
+                  </div>
+
+                </Stack>
+                <Stack gap={1}>
+                  <Typography variant='subtitle2' sx={{ fontWeight: '600' }} color='#5A5A5A'>Why do we collect this information?</Typography>
+                  <SmallText text="By obtaining supplementary information related to the video evidence, law enforcement can strengthen the evidentiary value of the footage, establish a more accurate account of events, and conduct a thorough and fair investigation." />
+                </Stack>
               </Stack>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <ModalButton buttonText={"NEXT"} type={"primary"} onClick={handleNext} />
+          <Button onClick={handleSubmit} >
+            NEXT
+          </Button>
         </DialogActions>
       </BootstrapDialog>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import { Grid } from '@mui/material';
@@ -42,8 +42,8 @@ const Editor = ({ open, onClose }) => {
 
 
   return (
-    <div className='px-10 py-3 gap-10' style={{ height: '55vh' }}>
-      <Stack direction='column' gap={5}>
+    <div className='px-10 py-3 gap- ' style={{ height: '55vh' }}>
+      <Stack direction='column' gap={7}>
         <video ref={videoRef} controls width="100%" height="auto">
           <source src={videoUrl} type="video/mp4" />
           Your browser does not support the video tag.

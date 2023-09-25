@@ -3,15 +3,15 @@ import Box from "@mui/material/Box";
 import { Tab, Tabs } from "@mui/material";
 import Badge from "@mui/material/Badge";
 import { useState } from "react";
-import VideoCard2 from "../../components/General user/video_upload/VideoCard2";
 import Popup from "../../components/General user/video_upload/Popup";
 import Stack from "@mui/material/Stack";
-import video1 from "../../components/General user/video_upload/video1.mp4";
-import video2 from "../../components/General user/video_upload/video 2.mp4";
-import video3 from "../../components/General user/video_upload/video 3.mp4";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+import AcceptedTable from "../../components/General user/video_upload/AcceptedTable";
+import PendingTable from "../../components/General user/video_upload/PendingTable";
+import RejectedTable from "../../components/General user/video_upload/RejectedTable";
+import { useEffect } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useFineContext from "../../hooks/useFineContext";
+import useAuth from "../../hooks/useAuth";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -30,7 +30,41 @@ function TabPanel(props) {
 }
 
 export default function UploadPage() {
+
   const [value, setValue] = useState(0);
+  const axiosPrivate = useAxiosPrivate();
+  const {auth} = useAuth();
+  const userData = {
+    user: auth.user_id,
+  };
+  const { acceptedUploads, rejectedUploads, pendingUploads, setAcceptedUploads, setRejectedUploads, setPendingUploads } = useFineContext();
+  const getUploads = async () => {
+    try {
+      const response = await axiosPrivate.get("upload/get-uploads", { params: userData });
+      for (let i = 0; i < response.data.length; i++) {
+        const upload = response.data[i];
+        const isDuplicate = pendingUploads.some((item) => item.id === upload.id) || acceptedUploads.some((item) => item.id === upload.id) || rejectedUploads.some((item) => item.id === upload.id);
+        if (!isDuplicate) {
+          if (upload.status === "Pending Review") {
+            setPendingUploads((prevPendingUploads) => [...prevPendingUploads, upload]);
+          } else if (upload.status === "Accepted") {
+            setAcceptedUploads((prevAcceptedUploads) => [...prevAcceptedUploads, upload]);
+          } else if (upload.status === "Rejected") {
+            setRejectedUploads((prevRejectedUploads) => [...prevRejectedUploads, upload]);
+          } else {
+            console.log("Error in getting uploads");
+          }
+        }
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUploads();
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -79,110 +113,14 @@ export default function UploadPage() {
               sx={{ fontWeight: "bold" }}
             />
           </Tabs>
-          <TabPanel
-            value={value}
-            index={0}
-            style={{ overflowY: "auto", height: "80vh" }}
-          >
-            <Stack direction = 'row' justifyContent='flex-end' className = 'mb-5'>
-              <Button variant = 'contained' sx = {{width:'100px'}}>Sort By</Button>
-            </Stack>
-            <VideoCard2
-              title="Driver trying to run a traffic light in Bambalapitiya"
-              reward="300"
-              rating="3"
-              url={video1}
-            />
-            <VideoCard2
-              title="Driver ignoring pedestrian crosswalk in Colombo"
-              reward="200"
-              rating="2"
-              url={video2}
-            />
-            <VideoCard2
-              title="Reckless driving on Galle Road"
-              reward="600"
-              rating="5"
-              url={video3}
-            />
-            <VideoCard2
-              title="Red light violation at Liberty Roundabout"
-              reward="1000"
-              rating="3"
-              url={video1}
-            />
-            <VideoCard2
-              title="Near miss incident on Duplication Road"
-              reward="300"
-              rating="4"
-              url={video2}
-            />
+          <TabPanel value={value} index={0} style={{ overflowY: "auto", height: "80vh" }}>
+            <AcceptedTable />
           </TabPanel>
-
-          <TabPanel value={value} index={1} className="py-10">
-            <VideoCard2
-              title="Driver trying to run a traffic light in Bambalapitiya"
-              reward="300"
-              rating="3"
-              url={video1}
-            />
-            <VideoCard2
-              title="Driver ignoring pedestrian crosswalk in Colombo"
-              reward="200"
-              rating="2"
-              url={video2}
-            />
-            <VideoCard2
-              title="Reckless driving on Galle Road"
-              reward="600"
-              rating="5"
-              url={video3}
-            />
-            <VideoCard2
-              title="Red light violation at Liberty Roundabout"
-              reward="1000"
-              rating="3"
-              url={video1}
-            />
-            <VideoCard2
-              title="Near miss incident on Duplication Road"
-              reward="300"
-              rating="4"
-              url={video2}
-            />
+          <TabPanel value={value} index={1} style={{ overflowY: "auto", height: "80vh" }}>
+            <PendingTable />
           </TabPanel>
-
-          <TabPanel value={value} index={2} className="py-10">
-            <VideoCard2
-              title="Driver trying to run a traffic light in Bambalapitiya"
-              reward="300"
-              rating="3"
-              url={video1}
-            />
-            <VideoCard2
-              title="Driver ignoring pedestrian crosswalk in Colombo"
-              reward="200"
-              rating="2"
-              url={video2}
-            />
-            <VideoCard2
-              title="Reckless driving on Galle Road"
-              reward="600"
-              rating="5"
-              url={video3}
-            />
-            <VideoCard2
-              title="Red light violation at Liberty Roundabout"
-              reward="1000"
-              rating="3"
-              url={video1}
-            />
-            <VideoCard2
-              title="Near miss incident on Duplication Road"
-              reward="300"
-              rating="4"
-              url={video2}
-            />
+          <TabPanel value={value} index={2} style={{ overflowY: "auto", height: "80vh" }}>
+            <RejectedTable />
           </TabPanel>
         </Box>
       </Box>

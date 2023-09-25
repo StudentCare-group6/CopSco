@@ -9,11 +9,11 @@ export default function Profile(props) {
     return (
         <Stack direction='row' alignItems='center' margin>
             <div className='px-5'>
-                <Typography variant='subtitle1'>Mr. {props.profile.name}</Typography>
+                <Typography variant='subtitle1'>Mr. {props.name}</Typography>
             </div>
             <div className="ml-auto flex items-center">
                 <HelpOutlineOutlinedIcon className="mr-4" />
-                <Avatar sx={{ bgcolor: deepOrange[500] }}>O</Avatar>
+                <Avatar sx={{ bgcolor: deepOrange[500] }}>{props.name[0]}</Avatar>
             </div>
         </Stack>
 

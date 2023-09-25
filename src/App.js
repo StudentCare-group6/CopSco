@@ -27,6 +27,7 @@ import PersistLogin from "./components/PersistLogin";
 import PolicePersistLogin from "./components/PolicePersistLogin";
 import { DetailsProvider } from "./context/userDetailsContext";
 import { FineProvider } from "./context/userFinesContext";
+import { GeneralUserProvider } from "./context/GeneralUserContext";
 import LandingPage from "./pages/LandingPage";
 import UserFines from "./pages/GeneralUser/UserFines";
 import PoliceHome from "./pages/PoliceOperator/Home";
@@ -40,11 +41,8 @@ import AdminRoutes from "./setup/routes/AdminRoutes";
 import Team from "./pages/Admin/Team";
 import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
-import { VideoProvider } from "./context/VideoContext";
-import VerifyingDocuments from "./pages/Police Division/VerifyingDocuments";
-import VerifyUserDocuments from "./pages/Police Division/VerifyUserDocuments";
-import DivisionHome from "./pages/Police Division/Home"
-import FineIssue from "./pages/Police Division/FineIssue"
+import PaymentPage from "./pages/GeneralUser/PaymentPage";
+
 
 export default function App() {
   const THEME = createTheme({
@@ -79,7 +77,7 @@ export default function App() {
           <Route element={<PersistLogin />}>
             {/* general user routes */}
             <Route element={<RequireAuth allowedRole="general-user" />}>
-              <Route path="general-user/" element={<GeneralUserRoutes />}>
+              <Route path="general-user/" element={<GeneralUserProvider><GeneralUserRoutes /></GeneralUserProvider>}>
                 <Route
                   path=""
                   element={
@@ -104,6 +102,16 @@ export default function App() {
                     <ThemeProvider theme={theme}>
                       <CssBaseline>
                         <ProfilePage />
+                      </CssBaseline>
+                    </ThemeProvider>
+                  }
+                />
+                <Route
+                  path="payment"
+                  element={
+                    <ThemeProvider theme={theme}>
+                      <CssBaseline>
+                        <PaymentPage />
                       </CssBaseline>
                     </ThemeProvider>
                   }
