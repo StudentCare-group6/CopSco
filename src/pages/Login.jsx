@@ -143,17 +143,17 @@ export default function Login() {
                 Login to your account
               </Typography>
               <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
-                Welcome back! Select a method to login
+                Welcome back!
               </Typography>
 
-              <GoogleButton
+              {/* <GoogleButton
                 onClick={() => { console.log('Google button clicked') }}
-              />
+              /> */}
             </Stack>
 
-            <Stack sx={{ width: formWidth, margin: '50px' }}>
+            {/* <Stack sx={{ width: formWidth, margin: '50px' }}>
               <Divider>OR</Divider>
-            </Stack>
+            </Stack> */}
 
             <Typography component="h1" variant="h5">
               Sign in

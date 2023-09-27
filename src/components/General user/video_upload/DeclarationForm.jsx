@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import useFormContext from '../../../hooks/useFormContext';
+import useAuth from '../../../hooks/useAuth';
 import Box from '@mui/material/Box';
 import axios from "../../../api/posts";
 
@@ -54,7 +55,7 @@ BootstrapDialogTitle.propTypes = {
 export default function DeclarationForm() {
 
     const theme = useTheme();
-
+    const { auth } = useAuth();
     const [open, setOpen] = React.useState(true);
     const { setPage, getValues } = useFormContext();
 
@@ -71,6 +72,7 @@ export default function DeclarationForm() {
             formData.append("district", getValues("district"));
             formData.append("city", getValues("city"));
             formData.append("description", getValues("description"));
+            formData.append("userID", auth.user_id);
             //handling thumbnail
             const blob = getValues("previewImage");
             const file = new File([blob], "thumbnail.jpg", { type: "image/jpeg" });

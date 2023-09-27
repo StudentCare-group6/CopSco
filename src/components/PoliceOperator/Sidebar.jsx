@@ -154,7 +154,7 @@ export default function Sidebar() {
 
                 </DrawerHeader>
                 <Divider />
-                <List sx={{ height: '50%' }} className='flex flex-col justify-between'>
+                <List sx={{ height: '35%' }} className='flex flex-col justify-between'>
                     {['Home', 'Profile', 'Information', 'Log out'].map((text, index) => {
                         const route = routes[index];
                         const isActive = isActiveRoute(route);

@@ -42,7 +42,9 @@ import Team from "./pages/Admin/Team";
 import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
 import PaymentPage from "./pages/GeneralUser/PaymentPage";
-
+import { VideoProvider } from "./context/VideoContext";
+import DivisionHome from "./pages/Police Division/Home"
+import FineIssue from "./pages/Police Division/FineIssue"
 
 export default function App() {
   const THEME = createTheme({
@@ -192,8 +194,6 @@ export default function App() {
                     <AddingOfficers />
                   </VideoProvider>
                 } />
-                <Route path="verifying-documents" element={<VerifyingDocuments />} />
-                <Route path="VerifyUserDocuments" element={<VerifyUserDocuments />} />
                 <Route path="Home" element={
                   <VideoProvider>
                     <DivisionHome />

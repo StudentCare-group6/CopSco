@@ -10,6 +10,7 @@ import useAuth from "../../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { Image } from "@mui/icons-material";
+import image from "../../../images/box.png";
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -29,8 +30,8 @@ export default function VideoSamples() {
   const getvideos = async () => {
     try {
       const response = await axios.get("violations/viewUploadedViolations");
-      setVideoData(response.data);
-      console.log(response.data);
+      setVideoData(response.data.videoUrls);
+      console.log(response.data.videoUrls);
     } catch (error) {
       console.error(error);
     }
@@ -38,35 +39,21 @@ export default function VideoSamples() {
 
   useEffect(() => {
     getvideos();
-    console.log(videoData1);
   }, []);
 
   if (videoData1.length === 0 || videoData1.length === undefined) {
     return (
-      <div className="flex flex-col items-center mt-10">
+      <div className="flex flex-col items-center justify-center mt-10" style = {{ height:'70vh' }}>
+        <img src={image} alt="empty" className="w-20 h-20" />
         <Typography variant="h6" className="my-5">
-          No accepted videos, Don't worry keep uploading !
+          No uploads available in queue !
         </Typography>
       </div>
     );
   } else {
-    const rows = videoData1.map((item, index) => ({
-      id: index + 1,
-      video: [item.thumbnail, item.videokey],
-      description: item.description,
-      reward: "500",
-      location: item.district + ", " + item.city,
-      date: item.reportdate,
-    }));
 
     for (let i = 0; i < videoData1.length; i++) {
       const videoItem = videoData1[i];
-
-      const videoUrl = videoItem.video;
-      const videoTitle = videoItem.title;
-
-      console.log(`Video URL: ${videoUrl}`);
-      console.log(`Video Title: ${videoTitle}`);
     }
 
     return (
