@@ -22,6 +22,7 @@ import { Snackbar, Alert } from '@mui/material';
 import useInput from '../hooks/useInput';
 import useToggle from '../hooks/useToggle';
 import jwt_decode from "jwt-decode";
+import image from '../images/logo.png';
 
 function Copyright(props) {
   return (
@@ -125,25 +126,26 @@ export default function Login() {
       <Grid container component="main" sx={{ height: '100vh' }}>
 
         <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
-          <Typography sx={{ margin: '20px' , fontFamily:'inter'}} component="h1" variant="h5" className='font-extrabold text-black' >
+          <Typography sx={{ margin: '20px', fontFamily: 'inter' }} component="h1" variant="h5" className='font-extrabold text-black' >
             CopSco
           </Typography>
           <Box
             sx={{
-              my: 8,
-              mx: 4,
+              height: '90%',
+              mx: 5,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
 
             <Stack justifyContent="center" alignItems="center" spacing={3}>
-              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{fontFamily:'inter'}} >
+              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{ fontFamily: 'inter' }} >
                 Login to your account
               </Typography>
-              <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
-                Welcome back!
+              <Typography component="h1" variant="h5" className='font-light text-neutral-500' >
+                Welcome back !
               </Typography>
 
               {/* <GoogleButton
@@ -154,11 +156,11 @@ export default function Login() {
             {/* <Stack sx={{ width: formWidth, margin: '50px' }}>
               <Divider>OR</Divider>
             </Stack> */}
+            <Stack sx={{ width: '100%' }} alignItems='center'>
+              <img src={image} alt="otp" className='w-52' />
+            </Stack>
 
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: formWidth }}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: formWidth }} >
 
               <TextField
                 margin="normal"

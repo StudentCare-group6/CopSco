@@ -18,7 +18,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Snackbar, Alert } from '@mui/material';
 import useInput from '../hooks/useInput';
 import useToggle from '../hooks/useToggle';
-
+import image from '../images/logo.png';
 
 function Copyright(props) {
   return (
@@ -47,7 +47,7 @@ export default function Login2() {
   const from = location.state?.from?.pathname || '/';
   const userRef = useRef();
 
-  const [user, resetUser, userAttributes] = useInput('user','');
+  const [user, resetUser, userAttributes] = useInput('user', '');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [check, toggleCheck] = useToggle('persist', false);
@@ -101,7 +101,7 @@ export default function Login2() {
       } else {
         setErrMsg('Login failed, try again');
       }
-     
+
     }
   };
 
@@ -120,7 +120,7 @@ export default function Login2() {
           severity="error"
           onClose={handleClose}
           role="alert"
-          variant = "filled"
+          variant="filled"
         >
           {errMsg}
         </Alert>
@@ -128,7 +128,7 @@ export default function Login2() {
       <Grid container component="main" sx={{ height: '100vh' }}>
 
         <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
-          <Typography sx={{ margin: '20px' , fontFamily:'inter'}} component="h1" variant="h5" className='font-extrabold text-black' >
+          <Typography sx={{ margin: '20px', fontFamily: 'inter' }} component="h1" variant="h5" className='font-extrabold text-black' >
             CopSco
           </Typography>
           <Box
@@ -143,7 +143,7 @@ export default function Login2() {
           >
 
             <Stack justifyContent="center" alignItems="center" spacing={5}>
-              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{fontFamily:'inter'}}  >
+              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{ fontFamily: 'inter' }}  >
                 Login to your account
               </Typography>
               <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
@@ -151,11 +151,10 @@ export default function Login2() {
               </Typography>
 
             </Stack>
-
-            <Typography component="h1" variant="h4" className='mt-10'>
-              Sign in
-            </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 5, width: formWidth }}>
+            <Stack sx={{ width: '100%' }} alignItems='center'>
+              <img src={image} alt="otp" className='w-52' />
+            </Stack>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2, width: formWidth }}>
 
               <TextField
                 margin="normal"
@@ -180,11 +179,11 @@ export default function Login2() {
               />
               <FormControlLabel
                 control={
-                <Checkbox 
-                   color="primary"
-                   id = "remember"
-                   onChange={toggleCheck}
-                   checked={check}
+                  <Checkbox
+                    color="primary"
+                    id="remember"
+                    onChange={toggleCheck}
+                    checked={check}
                   />}
                 label="Remember me"
               />

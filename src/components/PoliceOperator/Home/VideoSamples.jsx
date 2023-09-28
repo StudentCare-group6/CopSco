@@ -41,7 +41,7 @@ export default function VideoSamples() {
     getvideos();
   }, []);
 
-  if (videoData1.length === 0 || videoData1.length === undefined) {
+  if (videoData1.length === 0 || videoData1.length === undefined || videoData1.length === null) {
     return (
       <div className="flex flex-col items-center justify-center mt-10" style = {{ height:'70vh' }}>
         <img src={image} alt="empty" className="w-20 h-20" />

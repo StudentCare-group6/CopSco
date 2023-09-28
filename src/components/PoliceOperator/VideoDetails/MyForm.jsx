@@ -6,79 +6,25 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Check from "@mui/icons-material/Check";
-import StepConnector, {
-  stepConnectorClasses,
-} from "@mui/material/StepConnector";
+import StepConnector, { stepConnectorClasses } from "@mui/material/StepConnector";
 import { Button } from "@mui/material";
-import { useForm, Controller, useWatch } from "react-hook-form";
-import Divider from "@mui/material/Divider";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  FormHelperText,
-} from "@mui/material";
+import { MenuItem } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import Typography from "@mui/material/Typography";
 import CustomPaginationActionsTable from "./PreviousViolations";
 import image from "../../../images/copyright.png";
+import useFormContext from "../../../hooks/useFormContext";
+import Alert from "@mui/material/Alert";
+import { policeDivisions, offences, demeritPoints } from "../../../data/Constants";
+import useVideoContext from "../../../hooks/useVideoContext";
+import Box from "@mui/material/Box";
+import { useEffect } from "react";
+import VideoThumbnail from 'react-video-thumbnail';
 
-const theme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        contained: {
-          background: "#020617",
-          color: "white",
-          fontSize: "0.90rem",
-          borderRadius: "10px",
-          width: "200px",
-          padding: "5px 15px",
-          "&:hover": {
-            background: "black",
-          },
-        },
-        outlined: {
-          borderColor: "#020617",
-          color: "#020617",
-          fontSize: "0.90rem",
-          padding: "5px 15px",
-          width: "200px",
-          borderRadius: "10px",
-          "&:hover": {
-            background: "white",
-            color: "black",
-          },
-        },
-      },
-    },
-  },
-});
-
-const violations = [
-  { title: "Drunk Driving", points: 5 },
-  { title: "Improper Turn", points: 2 },
-  { title: "Driving without a License", points: 4 },
-  { title: "Speeding in a School Zone", points: 4 },
-  { title: "Running a Red Light", points: 3 },
-  { title: "Reckless Driving", points: 4 },
-  { title: "Texting While Driving", points: 3 },
-  { title: "Failure to Yield", points: 3 },
-  { title: "Hit and Run", points: 5 },
-  { title: "Driving with Expired Registration", points: 2 },
-  { title: "Driving in a Bus Lane", points: 2 },
-  { title: "Street Racing", points: 5 },
-  { title: "Driving without Insurance", points: 3 },
-];
-
-const vehicleNumberPattern = /^[A-Z]{2,3}\s\d{4}$/;
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -141,300 +87,42 @@ function QontoStepIcon(props) {
 
 const steps = ["Violation Details", "Previous Records", "Report violations"];
 
-const MyForm = ({ pausedTime }) => {
-  function ViolationDetails() {
-    const {
-      handleSubmit,
-      control,
-      formState: { errors },
-    } = useForm(); // Added useForm hook setup
 
-    const onSubmit = (data) => {
-      console.log("Submitted data:", data);
-
-      const showSuccessToast = () =>
-        toast.success("Successfully submitted the violation details!", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          progress: undefined,
-        });
-
-      showSuccessToast();
-    };
-
-    const violationTypes = useWatch({
-      control,
-      name: "violationTypes",
-      defaultValue: [],
-    });
-
-    return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Vehicle Number */}
-        <div>
-          <Controller
-            name="vehicleNumber"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: "*This field is required.",
-              pattern: {
-                value: vehicleNumberPattern,
-                message:
-                  "*Invalid vehicle number. Format should be ABC 1234 or AB 4578.",
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Vehicle Number"
-                placeholder="ABC 1234"
-                variant="outlined"
-                fullWidth
-                error={!!errors.vehicleNumber}
-                helperText={errors.vehicleNumber?.message}
-                sx={{ marginLeft: "10%", marginTop: "3%", width: "80%" }}
-              />
-            )}
-          />
-        </div>
-        <div className="ml-20">
-          <Typography variant="caption">* Change if it is wrong</Typography>
-        </div>
-
-        {/* Time stamp */}
-        <div className="flex">
-          <div className="w-[50%]">
-            <Controller
-              name="timeStamp"
-              control={control}
-              defaultValue={pausedTime}
-              rules={{
-                required: "*This field is required.",
-              }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Time Stamp"
-                  placeholder="00:00:00"
-                  variant="outlined"
-                  fullWidth
-                  error={!!errors.timeStamp}
-                  helperText={errors.timeStamp?.message}
-                  sx={{ marginLeft: "20%", marginTop: "10%", width: "250px" }}
-                />
-              )}
-            />
-          </div>
-        </div>
-        <div className="ml-20">
-          <Typography variant="caption">
-            Click on the scroll bar when you see the violation.
-          </Typography>
-        </div>
-
-        {/* Violation Type */}
-        <div>
-          <div className="w-[80%]">
-            <Controller
-              name="violationTypes"
-              control={control}
-              defaultValue={[]}
-              render={({ field }) => (
-                <Autocomplete
-                  multiple
-                  id="tags-outlined"
-                  options={violations}
-                  getOptionLabel={(option) => option.title}
-                  value={field.value}
-                  onChange={(event, newValue) => field.onChange(newValue)}
-                  filterSelectedOptions
-                  isOptionEqualToValue={(option, value) =>
-                    option.title === value.title
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      placeholder="Add violations"
-                      className="border rounded p-2 mt-2 text-left text-md"
-                      style={{ marginLeft: "11%", marginTop: "6%" }}
-                    />
-                  )}
-                />
-              )}
-            />
-          </div>
-          <div>
-            <Typography
-              style={{ marginLeft: "11%", marginTop: "6%" }}
-              variant="caption"
-            >
-              Selected violation types:
-            </Typography>
-            <br />
-            {violationTypes.map((item, index) => (
-              <span
-                key={index}
-                style={{
-                  marginLeft: "11%",
-                  marginTop: "6%",
-                  fontSize: "15px",
-                  fontWeight: "2rem",
-                }}
-              >
-                {item.title}
-                {index !== violationTypes.length - 1 && " "}
-                <br />
-              </span>
-            ))}
-          </div>
-        </div>
-      </form>
-    );
+const MyForm = ({ pausedTime, videoUrl }) => {
+  const [thumbnailUrl, setThumbnailUrl] = useState(null);
+  // const thumbnailHandler = (image) => {
+  //   // Convert the thumbnail URL to a Blob
+  //   fetch(image)
+  //     .then(response => response.blob())
+  //     .then(thumbnailBlob => {
+  //       setThumbnailUrl(thumbnailBlob);
+  //       console.log("Thumbnail Blob:", thumbnailBlob)
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching or converting thumbnail:', error);
+  //     });
+  // };
+  const { selectedVideo, setSelectedVideo, thumbnail } = useVideoContext();
+  const { register, errors, handleSubmit, getValues, setValue } = useFormContext();
+  var video = selectedVideo;
+  if (video === null || video === undefined) {
+    video = JSON.parse(localStorage.getItem('selectedVideo'));
+    setSelectedVideo(video);
   }
-
-  function PreviousRecords() {
-    return <CustomPaginationActionsTable />;
-  }
-
-  function ReportViolations() {
-    const {
-      handleSubmit,
-      control,
-      formState: { errors },
-    } = useForm(); // Added useForm hook setup
-
-    const onSubmit = (data) => {
-      console.log("Submitted data:", data);
-    };
-
-    const violationTypes = useWatch({
-      control,
-      name: "violationTypes",
-      defaultValue: [],
-    });
-
-    function Status(props) {
-      return (
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <CircleIcon sx={{ fontSize: 8 }} />
-          <Typography component="div">{props.text}</Typography>
-        </Stack>
-      );
-    }
-
-    return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Violation Type */}
-
-        <div>
-          <div className="w-[80%]">
-            <Controller
-              name="violationStatus"
-              control={control}
-              defaultValue=""
-              rules={{ required: "*This field is required." }}
-              render={({ field }) => (
-                <FormControl
-                  fullWidth
-                  variant="outlined"
-                  error={!!errors.violationStatus}
-                >
-                  <Select
-                    labelId="violationStatus-label"
-                    label="Mark the violation status"
-                    {...field}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        className="border rounded p-2 mt-2 text-left text-md"
-                        style={{ marginLeft: "11%", marginTop: "6%" }}
-                      />
-                    )}
-                    sx={{ width: "80%", marginLeft: "13%", marginTop: "6%" }}
-                    renderValue={(selected) => {
-                      let color = "";
-                      if (selected === "pending") {
-                        color = "orange";
-                      } else if (selected === "markAsAViolation") {
-                        color = "red";
-                      } else if (selected === "notAViolation") {
-                        color = "green";
-                      }
-                      return (
-                        <span style={{ color }}>
-                          {selected === "pending" ? (
-                            <Status text="Pending Review" />
-                          ) : (
-                            ""
-                          )}
-                          {selected === "markAsAViolation" ? (
-                            <Status text="Marked as a violation" />
-                          ) : (
-                            ""
-                          )}
-                          {selected === "notAViolation" ? (
-                            <Status text="Not a violation" />
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      );
-                    }}
-                  >
-                    <MenuItem value="" sx={{ color: "grey" }}>
-                      <em>Mark the violation status</em>
-                    </MenuItem>
-                    {/* Other options */}
-                    <MenuItem value="pending" sx={{ color: "orange" }}>
-                      Pending Review
-                    </MenuItem>
-                    <MenuItem value="markAsAViolation" sx={{ color: "red" }}>
-                      Marked as a violation
-                    </MenuItem>
-                    <MenuItem value="notAViolation" sx={{ color: "green" }}>
-                      Not a violation
-                    </MenuItem>
-                  </Select>
-
-                  {errors.violationStatus && (
-                    <FormHelperText sx={{ marginLeft: "15%" }}>
-                      {errors.violationStatus.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              )}
-            />
-          </div>
-        </div>
-
-        <div>
-          <Controller
-            name="reason"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Mention the reason if rejecting the violation"
-                placeholder="Video was not that clear"
-                variant="outlined"
-                fullWidth
-                error={!!errors.reason}
-                helperText={errors.reason?.message}
-                sx={{ marginLeft: "10%", marginTop: "8%", width: "80%" }}
-              />
-            )}
-          />
-        </div>
-        <ToastContainer />
-      </form>
-    );
-  }
+  const showSuccessToast = () =>
+  toast.success("Successfully submitted the violation details!", {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    progress: undefined,
+  });
+  const onSubmit = (e) => {
+    setValue('thumbnail', thumbnailUrl);
+    const data = getValues();
+    console.log("Submitted data:", data);
+    showSuccessToast();
+  };
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -450,43 +138,334 @@ const MyForm = ({ pausedTime }) => {
     <ReportViolations />,
   ];
 
+  function ViolationDetails() {
+    const [selectedOffences, setSelectedOffences] = useState([]); // State to hold selected offences
+    const [selectedPrices, setSelectedPrices] = useState([]);
+    const [selectedDemerit, setSelectedDemerit] = useState([]); // State to hold selected offences
+
+    const handleOffencesChange = (event) => {
+      const selectedValues = event.target.value;
+      setSelectedOffences(selectedValues);
+
+      const selectedPrices = selectedValues.map((offence) =>
+        offences.get(offence)
+      );
+      setSelectedPrices(selectedPrices);
+
+      const selectedDemerit = selectedValues.map((offence) =>
+        demeritPoints.get(offence)
+      );
+      setSelectedDemerit(selectedDemerit);
+      localStorage.setItem("selectedOffences", JSON.stringify(selectedValues));
+    };
+    useEffect(() => {
+      const localStorageSelectedValues = localStorage.getItem("selectedOffences");
+
+      if (localStorageSelectedValues) {
+        // Parse the stored values (assuming it's stored as JSON)
+        const parsedValues = JSON.parse(localStorageSelectedValues);
+
+        // Update the selected offences state with the parsed values
+        setSelectedOffences(parsedValues);
+      }
+    }, []);
+
+    return (
+      <>
+        <div>
+          <TextField
+            label="Vehicle Number"
+            defaultValue={video.vehicleNo}
+            variant="outlined"
+            sx={{ marginLeft: "10%", marginTop: "3%", width: "80%" }}
+            {...register("vehicleNo", {
+              required: "field required",
+              pattern: {
+                value: /^[A-Za-z]+-\d+$/i,
+                message:
+                  "Invalid vehicle Number, it should be of the form KN-3846",
+              },
+            })}
+          />
+          {errors.vehicleNo?.message ? (
+            <Alert sx={{ marginLeft: "10%", marginTop: "3%", width: "80%" }} severity="error">
+              {errors.vehicleNo?.message}
+            </Alert>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="ml-20">
+          <Typography variant="caption">* Change if it is wrong</Typography>
+        </div>
+
+        {/* Time stamp */}
+        <div className="flex">
+          <TextField
+            label="Time Stamp"
+            value={pausedTime}
+            variant="outlined"
+            fullWidth
+            sx={{ marginLeft: "10%", marginTop: "3%", width: "50%" }}
+            {...register("timeStamp", {
+              required: "Please select a timeStamp"
+            })}
+          />
+          {errors.timeStamp?.message ? (
+            <Alert sx={{ marginLeft: "10%", marginTop: "3%", width: "50%" }} severity="error">
+              {errors.timeStamp?.message}
+            </Alert>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="ml-20">
+          <Typography variant="caption">
+            *Pause the video at the position of the violation
+          </Typography>
+        </div>
+        {/* Violation Type */}
+        <div>
+          <TextField
+            id="offences"
+            label="Violation(s)"
+            sx={{ marginLeft: "10%", marginTop: "3%", width: "60%" }}
+            select
+            SelectProps={{
+              multiple: true,
+              value: selectedOffences,
+              onChange: handleOffencesChange,
+            }}
+            {...register("offences", {
+              required: "field required",
+            })}
+          >
+            {Array.from(offences.keys()).map((offence) => (
+              <MenuItem key={offence} value={offence}>
+                {offence}
+              </MenuItem>
+            ))}
+          </TextField>
+          {/* Display selected offences and their corresponding prices */}
+
+          <Stack alignItems="flex-start" sx={{ marginLeft: "10%", marginTop: "3%", width: "80%", height: "100px", overflowX: 'hidden', overflowY: 'scroll', backgroundColor: 'white', padding: '10px' }}>
+            <Typography
+              variant="body1"
+              color="initial"
+              className="font-bold"
+            >
+              Selected offences and fine amounts:{" "}
+            </Typography>
+            <ul>
+              {selectedOffences.map((offence, index) => (
+                <li key={offence} align="left" className="mt-5 text-sm">
+                  {offence}: {selectedPrices[index]}
+                </li>
+              ))}
+            </ul>
+          </Stack>
+
+          {errors.offences?.message ? (
+            <Alert sx={{ mt: "10px" }} severity="error">
+              {errors.offences?.message}
+            </Alert>
+          ) : (
+            ""
+          )}
+        </div>
+      </>
+    );
+  }
+
+  function PreviousRecords() {
+    return (
+      <Stack spacing={2}>
+        <Typography variant="body1" align="center" className="font-light text-neutral-500">
+          *Check for previous records
+        </Typography>
+        <CustomPaginationActionsTable />
+      </Stack>
+    );
+  }
+
+  function ReportViolations() {
+    const [selectedDivision, setSelectedDivision] = useState([]);
+    const [selectedDivisionCode, setSelectedDivisionCode] = useState(""); // State to hold selected offences
+    const handleDivisionChange = (event) => {
+      const selectedValue = event.target.value;
+      setSelectedDivision(selectedValue);
+
+      const selectedDivisionCode = policeDivisions.get(selectedValue);
+      setSelectedDivisionCode(selectedDivisionCode);
+      setValue('divisionCode', selectedDivisionCode);
+    };
+    function Status(props) {
+
+      if (props.text === 'Mark as a violation') {
+        return (
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <CircleIcon sx={{ fontSize: 8 }} className='text-red-500' /> {/* Set the color dynamically */}
+            <Typography component="div" className='text-red-500' variant='subtitle1' >{props.text}</Typography>
+          </Stack>
+        );
+      } else if (props.text === 'Not a violation') {
+        return (
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <CircleIcon sx={{ fontSize: 8 }} className='text-green-500' /> {/* Set the color dynamically */}
+            <Typography component="div" className='text-green-500' variant='subtitle1'>{props.text}</Typography>
+          </Stack>
+        );
+      } else {
+        return (
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <CircleIcon sx={{ fontSize: 8 }} className='text-gray-500' /> {/* Set the color dynamically */}
+            <Typography component="div" className='text-gray-500' variant='subtitle1'>{props.text}</Typography>
+          </Stack>
+        );
+      }
+    }
+
+    return (
+      <>
+        <Stack width='100%' height="100%" justifyContent='center' alignItems='center' >
+          <Typography variant="body1" align="center" className="font-light text-neutral-500">
+            *Enter division according to the violation location
+          </Typography>
+          <TextField
+            id="division"
+            margin="normal"
+            label="Division"
+            select
+            sx={{ marginTop: "3%", width: "80%" }}
+            SelectProps={{
+              sx: {
+                height: "50px",
+              },
+              value: selectedDivision,
+              onChange: handleDivisionChange,
+            }}
+            {...register("divisionTitle", {
+              required: "field required",
+            })}
+          >
+            {Array.from(policeDivisions.keys()).map((division) => (
+              <MenuItem key={division} value={division} sx={{ marginTop: "3%", width: "80%" }}>
+                {division}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
+            id="station"
+            margin="normal"
+            label="Violation status"
+            select
+            sx={{ marginTop: "3%", width: "80%" }}
+            SelectProps={{
+              sx: {
+                height: "50px",
+              },
+            }}
+            {...register("violationStatus", {
+              required: "field required",
+            })}
+          >
+
+            <MenuItem key={0} value={'Mark as a violation'} sx={{ color: '#ef4444' }}>
+              <Status text='Mark as a violation' />
+            </MenuItem>
+            <MenuItem key={1} value={'Not a violation'} sx={{ color: '#22c55e' }}>
+              <Status text='Not a violation' />
+            </MenuItem>
+            <MenuItem key={2} value={'Reject evidence'} sx={{ color: '#6b7280' }}>
+              <Status text='Reject evidence' />
+            </MenuItem>
+          </TextField>
+          {errors.violationStatus?.message ? (
+            <Alert sx={{ marginTop: "3%", width: "80%" }} severity="error">
+              {errors.violationStatus?.message}
+            </Alert>
+          ) : (
+            ""
+          )}
+
+          <TextField
+            label="Mention the reason if rejecting the violation"
+            placeholder="Video was not that clear"
+            variant="outlined"
+            multiline
+            rows={4}
+            sx={{ marginTop: "3%", width: "80%" }}
+            {...register("rejectionReason", {
+              required: "field required",
+            })}
+          />
+        </Stack>
+
+
+        <ToastContainer />
+      </>
+    );
+  }
+
+
   return (
     <Stack
-      sx={{ width: "100%", marginLeft: "3%", marginTop: "10%" }}
-      spacing={4}
+      sx={{ width: "90%", marginLeft: "3%", padding: '30px', height: '86vh' }}
+      spacing={2}
     >
-      <Stepper
-        alternativeLabel
-        activeStep={activeStep}
-        connector={<QontoConnector />}
-      >
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <Stack sx={{ width: "100%" }} alignItems="center">
-        <img alt="passwordImage" src={image} className="w-32" />
-      </Stack>
-      {stepContents[activeStep]}
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={2}>
+          <Typography variant="h5" align="center" className="font-light text-neutral-500">
+            Enter Violation Details
+          </Typography>
+          <Stack sx={{ width: "100%" }} alignItems="center">
+            <img alt="passwordImage" src={image} className="w-20" />
+          </Stack>
+          <div
+            // style={{
+            //   display: 'none',
+            //   height: '0px',
+            // }}
+          >
+            {/* <VideoThumbnail videoUrl={videoUrl} thumbnailHandler={thumbnailHandler} cors = {true} renderThumbnail = {true}/> */}
+          </div>
+          <Stepper
+            alternativeLabel
+            activeStep={activeStep}
+            connector={<QontoConnector />}
+          >
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <Box height='450px'>
+            {stepContents[activeStep]}
+          </Box>
+          <Stack direction='row' justifyContent='space-evenly'>
+            <Button
+              sx={{ width: '20%' }}
+              disabled={activeStep === 0}
+              onClick={() => handleStepChange(activeStep - 1)}
+              variant="outlined"
+            >
+              Back
+            </Button>
+            <Button
+              sx={{ width: '20%' }}
+              disabled={activeStep === steps.length - 1}
+              onClick={() => handleStepChange(activeStep + 1)}
+              variant="contained"
+            >
+              Next
+            </Button>
 
-      <div className="ml-20">
-        <Button
-          disabled={activeStep === 0}
-          onClick={() => handleStepChange(activeStep - 1)}
-        >
-          Back
-        </Button>
-        <Button
-          disabled={activeStep === steps.length - 1}
-          onClick={() => handleStepChange(activeStep + 1)}
-        >
-          Next
-        </Button>
-
-        {isLastStep && <Button type="submit">Finish</Button>}
-      </div>
+            {isLastStep && <Button sx={{ width: '20%' }} variant='outlined' type="submit">Finish</Button>}
+          </Stack>
+        </Stack>
+      </Box>
     </Stack>
   );
 };

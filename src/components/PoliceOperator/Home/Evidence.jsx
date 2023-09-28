@@ -37,6 +37,7 @@ const Evidence = ({ videoData }) => {
   const { setSelectedVideo } = useVideoContext();
   const directVideoDetails = (video) => {
     setSelectedVideo(video); // Set the selected video in the context
+    localStorage.setItem("selectedVideo", JSON.stringify(video)); // Set the selected video in the local storage
     navigate("/police-operator/video-details");
   };
 

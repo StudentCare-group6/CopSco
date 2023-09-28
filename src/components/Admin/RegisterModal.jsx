@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import image from '../../images/security.png';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
-import { policeDivisions } from "../../components/Traffic police/Constants";
+import { policeDivisions } from "../../data/Constants";
 
 
 const style = {

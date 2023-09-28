@@ -2,8 +2,13 @@ import React from "react";
 import Filters from "../../components/PoliceOperator/Home/Filters";
 import VideoSamples from "../../components/PoliceOperator/Home/VideoSamples";
 import PaginationRounded from "../../components/PoliceOperator/Home/Pagination";
+import { useEffect } from "react";
 
 export default function Home() {
+
+ useEffect(() => {
+    localStorage.removeItem('selectedOffences');
+  }, []);
   
   return (
     <>

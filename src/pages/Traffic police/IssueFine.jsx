@@ -22,7 +22,7 @@ import {
   offences,
   provinces,
   demeritPoints,
-} from "../../components/Traffic police/Constants";
+} from "../../data/Constants";
 import useFormContext from "../../hooks/useFormContext";
 import { Alert } from "@mui/material";
 import { useState } from "react";
