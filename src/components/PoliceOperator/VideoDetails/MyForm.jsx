@@ -24,6 +24,7 @@ import useVideoContext from "../../../hooks/useVideoContext";
 import Box from "@mui/material/Box";
 import { useEffect } from "react";
 import VideoThumbnail from 'react-video-thumbnail';
+import ThumbnailModal from "./ThumbnailModal";
 
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
@@ -89,19 +90,7 @@ const steps = ["Violation Details", "Previous Records", "Report violations"];
 
 
 const MyForm = ({ pausedTime, videoUrl }) => {
-  const [thumbnailUrl, setThumbnailUrl] = useState(null);
-  // const thumbnailHandler = (image) => {
-  //   // Convert the thumbnail URL to a Blob
-  //   fetch(image)
-  //     .then(response => response.blob())
-  //     .then(thumbnailBlob => {
-  //       setThumbnailUrl(thumbnailBlob);
-  //       console.log("Thumbnail Blob:", thumbnailBlob)
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching or converting thumbnail:', error);
-  //     });
-  // };
+
   const { selectedVideo, setSelectedVideo, thumbnail } = useVideoContext();
   const { register, errors, handleSubmit, getValues, setValue } = useFormContext();
   var video = selectedVideo;
@@ -110,15 +99,15 @@ const MyForm = ({ pausedTime, videoUrl }) => {
     setSelectedVideo(video);
   }
   const showSuccessToast = () =>
-  toast.success("Successfully submitted the violation details!", {
-    position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    progress: undefined,
-  });
+    toast.success("Successfully submitted the violation details!", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      progress: undefined,
+    });
   const onSubmit = (e) => {
-    setValue('thumbnail', thumbnailUrl);
+    // setValue('thumbnail', thumbnailUrl);
     const data = getValues();
     console.log("Submitted data:", data);
     showSuccessToast();
@@ -139,10 +128,33 @@ const MyForm = ({ pausedTime, videoUrl }) => {
   ];
 
   function ViolationDetails() {
+    // Split the time string into hours and minutes
+    var timeString;
+    if (pausedTime === null || pausedTime === undefined) {
+      timeString = "00:00"
+    } else {
+      timeString = pausedTime;
+    }
+    // Split the time string into minutes and seconds
+    const [minutes, seconds] = timeString.split(':').map(Number);
+    // Calculate the total number of seconds
+    const totalSeconds = minutes * 60 + seconds;
+
     const [selectedOffences, setSelectedOffences] = useState([]); // State to hold selected offences
     const [selectedPrices, setSelectedPrices] = useState([]);
     const [selectedDemerit, setSelectedDemerit] = useState([]); // State to hold selected offences
-
+    const thumbnailHandler = (image) => {
+      // Convert the thumbnail URL to a Blob
+      fetch(image)
+        .then(response => response.blob())
+        .then(thumbnailBlob => {
+          setValue('thumbnail', thumbnailBlob);
+          console.log(getValues('thumbnail'));
+        })
+        .catch(error => {
+          console.error('Error fetching or converting thumbnail:', error);
+        });
+    };
     const handleOffencesChange = (event) => {
       const selectedValues = event.target.value;
       setSelectedOffences(selectedValues);
@@ -200,7 +212,7 @@ const MyForm = ({ pausedTime, videoUrl }) => {
         </div>
 
         {/* Time stamp */}
-        <div className="flex">
+        <Stack direction='row' spacing={2}>
           <TextField
             label="Time Stamp"
             value={pausedTime}
@@ -211,14 +223,22 @@ const MyForm = ({ pausedTime, videoUrl }) => {
               required: "Please select a timeStamp"
             })}
           />
-          {errors.timeStamp?.message ? (
-            <Alert sx={{ marginLeft: "10%", marginTop: "3%", width: "50%" }} severity="error">
-              {errors.timeStamp?.message}
-            </Alert>
-          ) : (
-            ""
-          )}
-        </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '25%',
+              height: 'auto',
+              marginTop: '3%',
+            }}
+          >
+            <ThumbnailModal videoUrl={videoUrl}  totalSeconds={totalSeconds} />
+          </div>
+          <div style = {{display:'none'}}>
+            <VideoThumbnail videoUrl={videoUrl} thumbnailHandler={thumbnailHandler} snapshotAtTime={totalSeconds} renderThumbnail={false} />
+          </div>
+        </Stack>
         <div className="ml-20">
           <Typography variant="caption">
             *Pause the video at the position of the violation
@@ -236,10 +256,11 @@ const MyForm = ({ pausedTime, videoUrl }) => {
               value: selectedOffences,
               onChange: handleOffencesChange,
             }}
-            {...register("offences", {
-              required: "field required",
-            })}
+            {...register("offences")}
           >
+            <MenuItem value='none'>
+              <em>None</em>
+            </MenuItem>
             {Array.from(offences.keys()).map((offence) => (
               <MenuItem key={offence} value={offence}>
                 {offence}
@@ -264,14 +285,6 @@ const MyForm = ({ pausedTime, videoUrl }) => {
               ))}
             </ul>
           </Stack>
-
-          {errors.offences?.message ? (
-            <Alert sx={{ mt: "10px" }} severity="error">
-              {errors.offences?.message}
-            </Alert>
-          ) : (
-            ""
-          )}
         </div>
       </>
     );
@@ -422,14 +435,6 @@ const MyForm = ({ pausedTime, videoUrl }) => {
           <Stack sx={{ width: "100%" }} alignItems="center">
             <img alt="passwordImage" src={image} className="w-20" />
           </Stack>
-          <div
-            // style={{
-            //   display: 'none',
-            //   height: '0px',
-            // }}
-          >
-            {/* <VideoThumbnail videoUrl={videoUrl} thumbnailHandler={thumbnailHandler} cors = {true} renderThumbnail = {true}/> */}
-          </div>
           <Stepper
             alternativeLabel
             activeStep={activeStep}
