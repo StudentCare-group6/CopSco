@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { Payment } from "@mui/icons-material";
-import axios from "../../../api/posts";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import Stack from "@mui/material/Stack";
 import paymentImg from "../../../images/credit-card.png";
 import { createTheme } from "@mui/material/styles";
@@ -25,6 +25,7 @@ export default function ResponsiveDialog(props) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const navigate = useNavigate();
+  const axios = useAxiosPrivate();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const darkTheme = createTheme({
     palette: {
@@ -42,9 +43,10 @@ export default function ResponsiveDialog(props) {
   const fineData = {
     fineID: props.id,
   };
+
   const pay = async () => {
     try {
-      const response = await axios.get("finePayment/payfine_online", {
+      const response = await axios.get("payfine/payfine_online", {
         params: fineData,
       });
       console.log(response.data[0]);

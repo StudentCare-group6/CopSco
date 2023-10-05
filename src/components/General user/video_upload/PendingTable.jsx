@@ -9,7 +9,7 @@ import image from "../../../images/box.png";
 import ResponsiveDialog from "./DeleteDialogBox";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import useGeneralUserContext from "../../../hooks/useGeneralUserContext";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -117,8 +117,8 @@ export default function PendingTable() {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      renderCell: () => {
-        return <ResponsiveDialog />;
+      renderCell: (params) => {
+        return <ResponsiveDialog videoKey={params.value[0]} caseId={params.value[1]} />;
       },
     },
   ];
@@ -150,6 +150,7 @@ export default function PendingTable() {
       description: item.description,
       location: item.district + ", " + item.city,
       date: formatDate(item.reportdate),
+      actions: [item.videokey, item.caseid]
     }));
 
     return (

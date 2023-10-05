@@ -12,11 +12,28 @@ import CheckCircle from "@mui/icons-material/CheckCircle";
 import ViewFineModal from "./VideoCardModal";
 import Typography from "@mui/material/Typography";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAuth from "../../../hooks/useAuth";
+import { useEffect } from "react";
 
 export default function VideoViolationsTable() {
 
-
+    const {auth} = useAuth();
+    const violationData = {
+        nic: auth.user,
+    }
+    const axios = useAxiosPrivate();
+    const getVideoViolations = async () => {
+        try {
+            const response = await axios.get("fines/getFines",{params:violationData});
+            console.log(response.data);
+        }catch(error){
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        getVideoViolations();
+    }, []);
     const ButtonRenderer = ({ status }) => {
         if (status === 'Settled') {
             return (

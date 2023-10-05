@@ -22,6 +22,8 @@ import {
   ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import useLogout from "../../hooks/useLogout";
+import logo from "../../images/logo-transparent.png";
+import Stack from "@mui/material/Stack";
 
 const drawerWidth = 240;
 
@@ -154,10 +156,21 @@ export default function Sidebar() {
     <ThemeProvider theme={darkTheme}>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <Box p={3} width="250px" textAlign="center" role="presentation">
-            <Typography variant="h6" component="div">
-              CopSco
-            </Typography>
+          <Box p={3} width="250px"height = "80px" textAlign="center" role="presentation">
+            {open ? (
+              <Stack direction='row' spacing = {2}>
+
+                <img
+                  src={logo}
+                  alt="delete"
+                  style={{ height: "30%", width: "30%" }}
+                />
+
+                <Typography variant="h6" component="div">
+                  CopSco
+                </Typography>
+              </Stack>
+            ) : null}
           </Box>
           <IconButton onClick={handleDrawerOpen}>
             <MenuIcon className=" text-slate-400" />

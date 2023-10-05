@@ -25,7 +25,7 @@ import Box from "@mui/material/Box";
 import { useEffect } from "react";
 import VideoThumbnail from 'react-video-thumbnail';
 import ThumbnailModal from "./ThumbnailModal";
-
+import axios from "../../../api/posts";
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -106,13 +106,25 @@ const MyForm = ({ pausedTime, videoUrl }) => {
       closeOnClick: true,
       progress: undefined,
     });
-  const onSubmit = (e) => {
-    // setValue('thumbnail', thumbnailUrl);
-    const data = getValues();
-    console.log("Submitted data:", data);
-    showSuccessToast();
+  const onSubmit = async (e) => {
+    try {
+      let formData = new FormData();
+      formData.append("caseID", video.caseID);
+      formData.append("offences", getValues("offences"));
+      formData.append("divisionCode", getValues("divisionCode"));
+      formData.append("violationStatus", getValues("violationStatus"));
+      formData.append("remarks", getValues("remarks"));
+      const blob = getValues("thumbnail");
+      const file = new File([blob], "thumbnail", { type: "image/jpeg" });
+      formData.append("priviewImage", file);
+      const response = await axios.post("violations/getPastViolations/verifyUploads", formData);
+      console.log(response);
+      showSuccessToast();
+    } catch (err) {
+      console.log(err);
+    }
   };
-
+  // caseID , offences , divisionCode , violationStatus , remarks
   const [activeStep, setActiveStep] = useState(0);
 
   const handleStepChange = (step) => {
@@ -233,9 +245,9 @@ const MyForm = ({ pausedTime, videoUrl }) => {
               marginTop: '3%',
             }}
           >
-            <ThumbnailModal videoUrl={videoUrl}  totalSeconds={totalSeconds} />
+            <ThumbnailModal videoUrl={videoUrl} totalSeconds={totalSeconds} />
           </div>
-          <div style = {{display:'none'}}>
+          <div style={{ display: 'none' }}>
             <VideoThumbnail videoUrl={videoUrl} thumbnailHandler={thumbnailHandler} snapshotAtTime={totalSeconds} renderThumbnail={false} />
           </div>
         </Stack>
@@ -384,13 +396,13 @@ const MyForm = ({ pausedTime, videoUrl }) => {
             })}
           >
 
-            <MenuItem key={0} value={'Mark as a violation'} sx={{ color: '#ef4444' }}>
+            <MenuItem key={0} value={'accepted'} sx={{ color: '#ef4444' }}>
               <Status text='Mark as a violation' />
             </MenuItem>
             <MenuItem key={1} value={'Not a violation'} sx={{ color: '#22c55e' }}>
               <Status text='Not a violation' />
             </MenuItem>
-            <MenuItem key={2} value={'Reject evidence'} sx={{ color: '#6b7280' }}>
+            <MenuItem key={2} value={'rejected'} sx={{ color: '#6b7280' }}>
               <Status text='Reject evidence' />
             </MenuItem>
           </TextField>
@@ -409,7 +421,7 @@ const MyForm = ({ pausedTime, videoUrl }) => {
             multiline
             rows={4}
             sx={{ marginTop: "3%", width: "80%" }}
-            {...register("rejectionReason", {
+            {...register("remarks", {
               required: "field required",
             })}
           />
