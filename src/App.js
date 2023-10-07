@@ -169,7 +169,7 @@ export default function App() {
             <Route element={<RequireAuth allowedRole="admin" />}>
               <Route path="admin/" element={<AdminRoutes />}>
                 <Route path="" element={<Dashboard />} />
-                <Route path="team" element={<Team />} />
+                <Route path="team" element={ <FormProvider><Team /></FormProvider>} />
                 <Route
                   path="user-managment"
                   element={

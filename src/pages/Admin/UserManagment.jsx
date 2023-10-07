@@ -5,8 +5,9 @@ import Header from "../../components/Admin/Topbar";
 import Stack from '@mui/material/Stack';
 import RegisterModal from "../../components/Admin/RegisterModal";
 
-
 export default function UserManagment() {
+    
+
     const columns = [
         {
             field: 'id',
@@ -69,6 +70,9 @@ export default function UserManagment() {
         }
 
     ];
+
+    
+
     return (
         <Box m='20px'>
             <Stack direction='row' justifyContent='space-between' alignItems='center'>
