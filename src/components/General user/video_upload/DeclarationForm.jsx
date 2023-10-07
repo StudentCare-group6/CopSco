@@ -18,7 +18,7 @@ import { Snackbar, Alert } from '@mui/material';
 import { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TransitionAlerts from './SnackBar';
-import {Stack} from '@mui/material';
+import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -123,69 +123,68 @@ export default function DeclarationForm() {
                 >
                     Upload Evidence
                 </Button>
-                <BootstrapDialog
-                    onClose={handleClose}
-                    aria-labelledby="customized-dialog-title"
-                    open={open}
-                    maxWidth="md"
-                >
-                    <Snackbar
-                        open={Boolean(errMsg)}
-                        autoHideDuration={2000} // Adjust the duration as needed
-                        onClose={handleAlertClose}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                        }}
+                {openAlert ? (<TransitionAlerts open={openAlert} />) : (
+                    <BootstrapDialog
+                        onClose={handleClose}
+                        aria-labelledby="customized-dialog-title"
+                        open={open}
+                        maxWidth="md"
                     >
-                        <Alert
-                            severity="error"
-                            onClose={handleClose}
-                            role="alert"
-                            variant="filled"
+                        <Snackbar
+                            open={Boolean(errMsg)}
+                            autoHideDuration={2000} // Adjust the duration as needed
+                            onClose={handleAlertClose}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
                         >
-                            {errMsg}
-                        </Alert>
-                    </Snackbar>
-                    {openAlert ? (<TransitionAlerts open={openAlert} />) :
-                        (<BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+                            <Alert
+                                severity="error"
+                                onClose={handleClose}
+                                role="alert"
+                                variant="filled"
+                            >
+                                {errMsg}
+                            </Alert>
+                        </Snackbar>
+                        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
                             <center><b>Declaration Statement</b></center>
-                        </BootstrapDialogTitle>)
-                    }
-                    <DialogContent dividers>
-                        {loading ? (
-                            <Box sx={{ height: '300px', width: '500px' , overflow: 'hidden' }}>
-                                <Stack width='100%' height = '100%' alignItems = 'center' justifyContent='center'>
-                                    <CircularProgress size={60} />
-                                </Stack>
-                            </Box>
-                        ) : (
-                            <Box sx={{ height: '300px', overflow: 'scroll' }}>
-                                <p style={{ width: '500px', textAlign: 'justify', textIndent: '20px', whiteSpace: 'pre-wrap', padding: '20px' }}>
-                                    To Whom It May Concern,
+                        </BootstrapDialogTitle>
+                        <DialogContent dividers>
+                            {loading ? (
+                                <Box sx={{ height: '300px', width: '500px', overflow: 'hidden' }}>
+                                    <Stack width='100%' height='100%' alignItems='center' justifyContent='center'>
+                                        <CircularProgress size={60} />
+                                    </Stack>
+                                </Box>
+                            ) : (
+                                <Box sx={{ height: '300px', overflow: 'scroll' }}>
+                                    <p style={{ width: '500px', textAlign: 'justify', textIndent: '20px', whiteSpace: 'pre-wrap', padding: '20px' }}>
+                                        To Whom It May Concern,
 
-                                    I, Oshada Rupesinghe, hereby affirm the veracity of the evidence I am presenting regarding the traffic violation incident involving describe the incident, e.g., "on Aug 12 2023 at Bambalapitiya", as an accurate account of the events that transpired.
+                                        I, Oshada Rupesinghe, hereby affirm the veracity of the evidence I am presenting regarding the traffic violation incident involving describe the incident, e.g., "on Aug 12 2023 at Bambalapitiya", as an accurate account of the events that transpired.
 
-                                    I recognize the significance of providing accurate and honest information in this matter. I am fully aware of the potential legal and ethical consequences of providing false or misleading evidence. The details, statements, photographs, and any other materials submitted herewith are genuine and portray an exact representation of the incident.
+                                        I recognize the significance of providing accurate and honest information in this matter. I am fully aware of the potential legal and ethical consequences of providing false or misleading evidence. The details, statements, photographs, and any other materials submitted herewith are genuine and portray an exact representation of the incident.
 
-                                </p>
-                                <p style={{ width: '500px', textAlign: 'justify', textIndent: '20px', whiteSpace: 'pre-wrap', padding: '20px' }}>
-                                    I acknowledge that any inconsistencies or inaccuracies discovered in the evidence provided could lead to appropriate actions being taken, which may include penalties, fines, or legal proceedings.
+                                    </p>
+                                    <p style={{ width: '500px', textAlign: 'justify', textIndent: '20px', whiteSpace: 'pre-wrap', padding: '20px' }}>
+                                        I acknowledge that any inconsistencies or inaccuracies discovered in the evidence provided could lead to appropriate actions being taken, which may include penalties, fines, or legal proceedings.
 
-                                    By signing this declaration, I affirm that I have not omitted any pertinent information that may influence the accuracy or integrity of the evidence presented. I am committed to offering full cooperation and, if necessary, furnishing supplementary documentation or clarification to support the accuracy of my submission.
+                                        By signing this declaration, I affirm that I have not omitted any pertinent information that may influence the accuracy or integrity of the evidence presented. I am committed to offering full cooperation and, if necessary, furnishing supplementary documentation or clarification to support the accuracy of my submission.
 
-                                    This declaration is made willingly and without any form of coercion, and I fully comprehend its implications.
-                                </p>
-                            </Box>
-                        )}
-                    </DialogContent>
-                    {openAlert ? (<div></div>) : (
-                    <Button onClick={handleNext} sx={{ padding: '20px' }}>
-                        Accept & Sumbit
-                    </Button>
-                    )}
-                </BootstrapDialog>
+                                        This declaration is made willingly and without any form of coercion, and I fully comprehend its implications.
+                                    </p>
+                                </Box>
+                            )}
+                        </DialogContent>
+                           
+                        <Button onClick={handleNext} sx={{ padding: '20px' }}>
+                            Accept & Sumbit
+                        </Button>
 
+                    </BootstrapDialog>
+                )}
             </div>
         </ThemeProvider>
     );

@@ -12,6 +12,7 @@ export default function TransitionAlerts(props) {
     <Box sx={{ width: '100%' }}>
       <Collapse in={open}>
         <Alert
+          severity="success"
           action={
             <IconButton
               aria-label="close"

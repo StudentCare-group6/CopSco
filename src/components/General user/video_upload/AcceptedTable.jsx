@@ -116,8 +116,8 @@ export default function AcceptedTable() {
       headerAlign: "center",
       align: "center",
       flex: 1,
-      renderCell: () => {
-        return <ResponsiveDialog />;
+      renderCell: (params) => {
+        return <ResponsiveDialog caseId = {params.value}/>;
       },
     },
   ];
@@ -150,6 +150,7 @@ export default function AcceptedTable() {
       reward: "500",
       location: item.district + ", " + item.city,
       date: formatDate(item.reportdate),
+      actions : item.caseid
     }));
 
     return (
