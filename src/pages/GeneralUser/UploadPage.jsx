@@ -66,6 +66,7 @@ export default function UploadPage() {
     getUploads();
   }, []);
 
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

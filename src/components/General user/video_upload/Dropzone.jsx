@@ -7,7 +7,7 @@ import Box from '@mui/system/Box';
 import { useState, useEffect } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 let ffmpeg;
 
@@ -36,7 +36,7 @@ export default function Dropzone(props) {
   const { page, setPage, setVideoUrl, setVideoDuration, setVideoDimensions, setVideoFile } = useFormContext();
 
   const handleNext = () => setPage(page + 1);
-
+  const [loading, setLoading] = useState(false);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -60,7 +60,9 @@ export default function Dropzone(props) {
     });
   }, []);
   const handleMetaData = async (videoFile) => {
+    
     if (isScriptLoaded) {
+      setLoading(true);
       const { name } = videoFile;
       // Write video to memory
       ffmpeg.FS("writeFile", name, await window.FFmpeg.fetchFile(videoFile));
@@ -70,7 +72,7 @@ export default function Dropzone(props) {
 
       // Read the metadata file from the virtual file system
       const metadataData = ffmpeg.FS("readFile", "metadata.txt");
-      
+
       // Convert metadataData to a string
       const metadataString = new TextDecoder().decode(metadataData);
 
@@ -81,7 +83,7 @@ export default function Dropzone(props) {
       } else {
         setOpenSnackbar(true);
       }
-
+      setLoading(false);
     }
   };
   const {
@@ -121,33 +123,41 @@ export default function Dropzone(props) {
       <Box
         {...getRootProps({
           sx: {
-            border: '3px dashed #ccc',
+            border: '3px dashed #888',
             borderRadius: '10px',
             padding: '50px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            textAlign: 'center'
+            textAlign: 'center',
+            cursor: 'pointer'
           }
         })}
       >
-        <input {...getInputProps()} />
-        <CloudUploadIcon sx={{ width: '20%', height: '20%', color: '#888' }} />
-        <p>
-          <u>
-            <b>Click to Upload</b>
-          </u>{' '}
-          or drag and drop
-        </p>
-        <p sx={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '16px', color: '#888' }}>
-          (Maximum File Size: 500MB)
-        </p>
-        <SmallText text={"Your videos will be private to you till you submit them"} />
-        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-          <MuiAlert elevation={6} variant="filled" onClose={handleCloseSnackbar} severity="error">
-            Invalid video metadata. Please upload a valid video. (Note that videos downloaded from Social Media are not supported)
-          </MuiAlert>
-        </Snackbar>
+        {loading ? (
+          <CircularProgress sx={{ color: 'primary.main' }} />
+        ) : (
+          <>
+            <input {...getInputProps()} />
+            <CloudUploadIcon sx={{ width: '20%', height: '20%', color: '#888' }} />
+            <p>
+              <u>
+                Click to Upload
+              </u>{' '}
+              or drag and drop
+            </p>
+            <p style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '16px', color: '#888' }}>
+              (Maximum File Size: 500MB)
+            </p>
+            <SmallText text={"Your videos will be private to you till you submit them"} />
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+              <MuiAlert elevation={6} variant="filled" onClose={handleCloseSnackbar} severity="error">
+                Invalid video metadata. Please upload a valid video. (Note that videos downloaded from Social Media are not supported)
+              </MuiAlert>
+            </Snackbar>
+          </>
+        )}
+
       </Box>
     </section>
   );

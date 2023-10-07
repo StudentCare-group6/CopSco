@@ -15,6 +15,10 @@ import useFormContext from "../../../hooks/useFormContext";
 import { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
+import createTheme from "@mui/material/styles/createTheme";
+import { ThemeProvider } from '@mui/material/styles';
+
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -22,6 +26,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
+  },
+  '& .MuiPaper-root': {
+    borderRadius: theme.spacing(3), // Adjust the value as needed
   },
 }));
 
@@ -167,8 +174,13 @@ export default function EditorDialog() {
     handleBack();
     setOpen(false);
   };
-
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    }
+  });
   return (
+    <ThemeProvider theme={darkTheme}>
     <div>
       <Button
         variant="outlined"
@@ -207,5 +219,6 @@ export default function EditorDialog() {
         </DialogActions>
       </BootstrapDialog>
     </div>
+    </ThemeProvider>
   );
 }

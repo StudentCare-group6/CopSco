@@ -15,14 +15,18 @@ import Dropzone from './Dropzone';
 import theme from '../theme';
 import { ThemeProvider } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import createTheme from "@mui/material/styles/createTheme";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
   },
   '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
+    padding: theme.spacing(3),
+  },
+  '& .MuiPaper-root': {
+    borderRadius: theme.spacing(3), // Adjust the value as needed
   },
 }));
 
@@ -59,8 +63,6 @@ BootstrapDialogTitle.propTypes = {
 
 export default function UploadDialog() {
 
-  const theme = useTheme();
-
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -70,27 +72,33 @@ export default function UploadDialog() {
     setOpen(false);
   };
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    }
+  });
   return (
-    <ThemeProvider theme={theme}>
-      <div>
+
+    <div>
       <Button
         startIcon={<CloudUploadIcon />}
         variant="contained"
         color="primary"
         onClick={handleClickOpen}
         className="rounded-full"
-        sx = {{boxShadow: 'none', textTransform: 'none'}}
+        sx={{ boxShadow: 'none', textTransform: 'none' }}
       >
         Upload Evidence
       </Button>
+      <ThemeProvider theme={darkTheme}>
         <BootstrapDialog
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
           open={open}
-          sx={{ width: '100%'}}
+          sx={{ width: '100%' }}
         >
           <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-            <center><b>Upload Evidence</b></center>
+            <center>Upload Evidence</center>
           </BootstrapDialogTitle>
           <DialogContent dividers>
             <Dropzone />
@@ -101,8 +109,9 @@ export default function UploadDialog() {
             </center>
           </DialogActions>
         </BootstrapDialog>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </div>
+
   );
 }
 

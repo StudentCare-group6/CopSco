@@ -40,7 +40,7 @@ export default function ResponsiveDialog(props) {
       const response = await axiosPrivate.delete(`upload/delete-video/${props.caseId}`, {
         data: data // Send data in the request body
       });
-      handleClose();
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
