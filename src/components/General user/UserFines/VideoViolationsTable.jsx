@@ -1,6 +1,6 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { videoFineData } from "../../../data/finesList2";
+// import { videoFineData } from "../../../data/finesList2";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import VideoCard from "../video_upload/VideoCard";
@@ -13,21 +13,27 @@ import ViewFineModal from "./VideoCardModal";
 import Typography from "@mui/material/Typography";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import useAuth from "../../../hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+
+function formatDate(inputDateString) {
+    const inputDate = new Date(inputDateString);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const formattedDate = inputDate.toLocaleDateString("en-US", options);
+    return formattedDate;
+}
+
 
 export default function VideoViolationsTable() {
 
-    const {auth} = useAuth();
-    const violationData = {
-        nic: auth.user,
-    }
     const axios = useAxiosPrivate();
+    const [details, setDetails] = useState([]);
     const getVideoViolations = async () => {
         try {
-            const response = await axios.get("fines/getFines",{params:violationData});
+            const response = await axios.get("upload/video-fines");
             console.log(response.data);
-        }catch(error){
+            setDetails(response.data);
+        } catch (error) {
             console.log(error);
         }
     };
@@ -35,7 +41,7 @@ export default function VideoViolationsTable() {
         getVideoViolations();
     }, []);
     const ButtonRenderer = ({ status }) => {
-        if (status === 'Settled') {
+        if (status === 1) {
             return (
                 <Button
                     startIcon={<CheckCircle />}
@@ -102,50 +108,66 @@ export default function VideoViolationsTable() {
         }
     }
 
-    const AppealRenderer = ({ appeal }) => {
-        if (appeal === 'Over Due') {
-            return (
-                <Stack direction="column" >
-                    <Typography variant="body2" color="text.secondary" className="text-gray-600">
-                        21 Jun 2023, 12:00 PM
-                    </Typography>
-                    <Button
-                        startIcon={<AccessTimeIcon />}
-                        className=" rounded-full"
-                        color="error"
-                        sx={{ boxShadow: 'none', textTransform: 'none' }}
-                    >
-                        Date passed
-                    </Button>
-                </Stack>
-            );
-        } else if (appeal === 'Settled') {
-            return (
-                <Stack direction="column" >
-                    <Typography variant="body2" color="text.secondary" className="text-gray-400">
-                        21 Jun 2023, 12:00 PM
-                    </Typography>
-                    <Button
-                        startIcon={<AccessTimeIcon />}
-                        className="text-gray-400 rounded-full"
-                        sx={{ boxShadow: 'none', textTransform: 'none' }}
-                    >
-                        --
-                    </Button>
-                </Stack>
-            );
+    const AppealRenderer = (props) => {
+
+        const dateString = props.dateString; //21 Jun 2023 format string
+        const time = props.time; //12:23 format string
+        const inputDate = new Date(dateString + ' ' + time);
+
+        // Calculate the date and time 48 hours from the given date and time
+        const resultDate = new Date(inputDate.getTime() + 48 * 60 * 60 * 1000); // 48 hours in milliseconds
+
+        // Calculate the hours remaining until the appeal
+        const currentDateTime = new Date();
+        const hoursRemaining = Math.round((resultDate - currentDateTime) / (60 * 60 * 1000));
+
+        // Format the result date and time
+        const resultDateString = resultDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+        const resultTimeString = resultDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        const status = props.status;
+
+        if (status === 0) {
+            if (hoursRemaining > 0) {
+                return (
+                    <Stack direction="column" >
+                        <Typography variant="body2" className="text-gray-600">
+                            {resultDateString}, {resultTimeString}
+                        </Typography>
+                        <Button
+                            startIcon={<AccessTimeIcon />}
+                            className="text-gray-600 rounded-full"
+                            sx={{ boxShadow: 'none', textTransform: 'none' }}
+                        >
+                            {hoursRemaining}h
+                        </Button>
+                    </Stack>
+                );
+            } else {
+                return (
+                    <Stack direction="column" >
+                        <Typography variant="body2" color="text.secondary" className="text-gray-600">
+                            {resultDateString}, {resultTimeString}
+                        </Typography>
+                        <Button
+                            startIcon={<AccessTimeIcon />}
+                            className=" rounded-full"
+                            color="error"
+                            sx={{ boxShadow: 'none', textTransform: 'none' }}
+                        >
+                            Date passed
+                        </Button>
+                    </Stack>
+                );
+            }
         } else {
             return (
                 <Stack direction="column" >
-                    <Typography variant="body2" className="text-gray-600">
-                        21 Jun 2023, 12:00 PM
-                    </Typography>
                     <Button
                         startIcon={<AccessTimeIcon />}
                         className="text-gray-600 rounded-full"
                         sx={{ boxShadow: 'none', textTransform: 'none' }}
                     >
-                        19h
+                        Paid
                     </Button>
                 </Stack>
             );
@@ -161,7 +183,7 @@ export default function VideoViolationsTable() {
             headerAlign: "center",
             align: "center",
             renderCell: (params) => (
-                <ViewFineModal />
+                <ViewFineModal thumbnail={params.value} />
             ),
             flex: 1,
         },
@@ -170,7 +192,7 @@ export default function VideoViolationsTable() {
             headerName: "Offence",
             flex: 1,
             headerAlign: "center",
-           
+
         }
         ,
         {
@@ -201,26 +223,29 @@ export default function VideoViolationsTable() {
             align: "center",
             renderCell: (params) => (
                 <AppealRenderer
-                    appeal={params.row.status}
+                    dateString={params.value[0]} time={params.value[1]} status={params.value[2]}
                 />
             )
         },
 
         {
-            field: "actions", headerName: "Actions", flex: 1, headerAlign: "center", align: "center", renderCell: (params) => (
+            field: "actions", headerName: "Actions", flex: 1, headerAlign: "center", align: "center",
+            renderCell: (params) => (
                 <ButtonRenderer status={params.row.status} />
             )
         }
     ];
 
-    const rows = videoFineData.map((item, index) => ({
+    const rows = details.map((item, index) => ({
         id: index + 1,
-        vidPreview: item.vidPreview,
-        offence: item.offence,
+        vidName: item.thumbnail,
+        offence: item.description,
         status: item.status,
-        location: item.location,
+        appealBefore: [formatDate(item.due_date), item.time, item.status],
+        location: item.city + ', ' + item.district,
         division: item.division,
-        dueDate: item.dueDate,
+        dueDate: formatDate(item.due_date),
+        actions: item.status,
     }));
     return (
 
@@ -234,7 +259,7 @@ export default function VideoViolationsTable() {
             className='rounded-2xl'
         >
             <DataGrid className='rounded-2xl border-none'
-                {...videoFineData}
+                {...details}
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
@@ -259,9 +284,9 @@ export default function VideoViolationsTable() {
                 rows={rows}
                 columns={columns}
                 initialState={{
-                    ...videoFineData.initialState,
+                    ...details.initialState,
                     sorting: {
-                        ...videoFineData.initialState?.sorting,
+                        ...details.initialState?.sorting,
                         sortModel: [
                             {
                                 field: "rating",
