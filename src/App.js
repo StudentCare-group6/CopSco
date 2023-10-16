@@ -160,7 +160,6 @@ export default function App() {
             </Route>
 
             {/* police operator routes */}
-            
               <Route element={<RequireAuth allowedRole="police-operator" />}>
               {/* <Route> */}
                   <Route path="police-operator/" element={<PoliceOperatorRoutes />} >
@@ -184,7 +183,7 @@ export default function App() {
                     <AddingOfficers />
                   </VideoProvider>
                 } />
-                <Route path="verifying-documents" element={<VerifyingDocuments />} />
+                <Route path="viewDocuments" element={<VerifyingDocuments />} />
 
                 <Route path="Home" element={
                   <VideoProvider>
