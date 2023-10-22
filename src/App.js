@@ -42,9 +42,7 @@ import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
 import { VideoProvider } from "./context/VideoContext";
 import VerifyingDocuments from "./pages/Police Division/VerifyingDocuments";
-import VerifyUserDocuments from "./pages/Police Division/VerifyUserDocuments";
 import DivisionHome from "./pages/Police Division/Home"
-import FineIssue from "./pages/Police Division/FineIssue"
 
 export default function App() {
   const THEME = createTheme({
@@ -188,12 +186,6 @@ export default function App() {
                 <Route path="Home" element={
                   <VideoProvider>
                     <DivisionHome />
-                  </VideoProvider>
-                } />
-                
-                <Route path="FineIssue" element={
-                  <VideoProvider>
-                    <FineIssue />
                   </VideoProvider>
                 } />
               </Route>
