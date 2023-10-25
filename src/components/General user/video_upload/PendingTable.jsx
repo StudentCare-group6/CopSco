@@ -154,33 +154,42 @@ export default function PendingTable() {
     }));
 
     return (
-      <Box
-        height="70vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {},
-          "& .name-column--cell": {
-            color: "#475569",
-            borderTop: "solid 1px #e0e0e0",
-
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            borderTop: "solid 1px #e0e0e0",
-            color: "#020617",
-            fontWeight: "extra-bold",
-            fontSize: "16px",
-          },
-          "& .MuiDataGrid-virtualScroller": {},
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            color: "white",
-          },
+      <div
+        style={{
+          height: "70vh",
+          width: "95%",
+          margin: "auto",
         }}
+        className="rounded-2xl"
       >
-        <DataGrid rows={rows} columns={columns} rowHeight={120} getRowSpacing={getRowSpacing} />
-      </Box>
+        <Box
+          height="70vh"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {},
+            "& .name-column--cell": {
+              color: "#475569",
+              borderTop: "solid 1px #e0e0e0",
+
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderTop: "solid 1px #e0e0e0",
+              color: "#020617",
+              fontWeight: "extra-bold",
+              fontSize: "16px",
+            },
+            "& .MuiDataGrid-virtualScroller": {},
+            "& .MuiDataGrid-footerContainer": {
+              borderTop: "none",
+              color: "white",
+            },
+          }}
+        >
+          <DataGrid rows={rows} columns={columns} rowHeight={120} getRowSpacing={getRowSpacing} />
+        </Box>
+      </div>
     );
   }
 }

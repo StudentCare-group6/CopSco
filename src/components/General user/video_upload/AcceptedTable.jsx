@@ -9,7 +9,7 @@ import image from "../../../images/box.png";
 import ResponsiveDialog from "./RemoveDialogBox";
 import WalletIcon from "@mui/icons-material/Wallet";
 import useGeneralUserContext from "../../../hooks/useGeneralUserContext";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -117,7 +117,7 @@ export default function AcceptedTable() {
       align: "center",
       flex: 1,
       renderCell: (params) => {
-        return <ResponsiveDialog caseId = {params.value}/>;
+        return <ResponsiveDialog caseId={params.value} />;
       },
     },
   ];
@@ -150,35 +150,44 @@ export default function AcceptedTable() {
       reward: "500",
       location: item.district + ", " + item.city,
       date: formatDate(item.reportdate),
-      actions : item.caseid
+      actions: item.caseid
     }));
 
     return (
-      <Box
-        height="70vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {},
-          "& .name-column--cell": {
-            color: "#475569",
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            borderTop: "solid 1px #e0e0e0",
-            color: "#020617",
-            fontWeight: "extra-bold",
-            fontSize: "16px",
-          },
-          "& .MuiDataGrid-virtualScroller": {},
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            color: "white",
-          },
+      <div
+        style={{
+          height: "70vh",
+          width: "95%",
+          margin: "auto",
         }}
+        className="rounded-2xl"
       >
-        <DataGrid rows={rows} columns={columns} rowHeight={120} getRowSpacing={getRowSpacing} />
-      </Box>
+        <Box
+          height="70vh"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {},
+            "& .name-column--cell": {
+              color: "#475569",
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderTop: "solid 1px #e0e0e0",
+              color: "#020617",
+              fontWeight: "extra-bold",
+              fontSize: "16px",
+            },
+            "& .MuiDataGrid-virtualScroller": {},
+            "& .MuiDataGrid-footerContainer": {
+              borderTop: "none",
+              color: "white",
+            },
+          }}
+        >
+          <DataGrid rows={rows} columns={columns} rowHeight={120} getRowSpacing={getRowSpacing} />
+        </Box>
+      </div>
     );
   }
 }

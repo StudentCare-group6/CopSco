@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import ModalButton from './ModalButton';
 import PwdForm from './PwdForm';
+import PasswordIcon from '@mui/icons-material/Password';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -35,8 +36,7 @@ function BootstrapDialogTitle(props) {
           sx={{
             position: 'absolute',
             right: 8,
-            top: 8,
-            color: (theme) => theme.palette.primary[200],
+            top: 8
           }}
         >
           <CloseIcon />
@@ -66,8 +66,11 @@ export default function ChangePassword() {
   return (
     <div>
       <Button
-        variant="text"
-        sx={{ color: theme.palette.buttonBlue[500], textTransform: 'none' }}
+        startIcon={<PasswordIcon />}
+        variant="outlined"  
+        size = 'large'
+        className='rounded-full'
+        sx={{textTransform: 'none' }}
         onClick={handleClickOpen}
       >
         Change Password

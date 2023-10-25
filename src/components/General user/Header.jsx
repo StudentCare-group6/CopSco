@@ -8,6 +8,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import InputAdornment from "@mui/material/InputAdornment";
 import useAuth from '../../hooks/useAuth';
 import useGeneralUserContext from '../../hooks/useGeneralUserContext';
+import CustomizedBreadcrumbs from "./CustomizedBreadCrumbs";
 
 export default function Header() {
   const { auth } = useAuth();
@@ -36,8 +37,9 @@ export default function Header() {
   }
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div className="flex justify-center ">
-        <MuiBreadcrumbs />
+      <div className="flex justify-center">
+        {/* <MuiBreadcrumbs /> */}
+        <CustomizedBreadcrumbs />
       </div>
       <div
         className="flex items-center "

@@ -11,6 +11,7 @@ export const FineProvider = ({children}) => {
     const [rejectedUploads, setRejectedUploads] = useState([]);
     const [pendingUploads, setPendingUploads] = useState([]);
 
+
     return (
         <userFinesContext.Provider value={{ spotFines, setSpotFines, uploadData, setUploadData, videoFines, setVideoFines, acceptedUploads, setAcceptedUploads, rejectedUploads, setRejectedUploads, pendingUploads, setPendingUploads }}>
             {children}

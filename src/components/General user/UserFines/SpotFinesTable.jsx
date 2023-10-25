@@ -49,7 +49,7 @@ export default function SpotFinesTable() {
       <div className="flex flex-col items-center  h-screen">
         <img src={image} alt="empty" className="w-10 h-10" />
         <Typography variant="h6" className="my-5">
-          Great News! You have no Spot Fines
+          Great News! You have no spot fines
         </Typography>
       </div>
     );

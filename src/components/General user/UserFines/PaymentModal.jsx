@@ -50,7 +50,7 @@ export default function ResponsiveDialog(props) {
         params: fineData,
       });
       console.log(response.data[0]);
-      Payhere.init(response.data[0].merchant_id,AccountCategory.SANDBOX);
+      Payhere.init(response.data[0].merchantID,AccountCategory.SANDBOX);
       const customer = new Customer({
         first_name: "Demo",
         last_name: "User",

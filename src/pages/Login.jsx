@@ -63,7 +63,7 @@ export default function Login() {
   }, []);
 
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-  const formWidth = isXsScreen ? '70%' : '50%';
+  const formWidth = isXsScreen ? '70%' : '40%';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -197,8 +197,8 @@ export default function Login() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-
+                sx={{ mt: 3, mb: 2, padding: '10px' }}
+                className = 'rounded-full bg-slate-900 hover:bg-sky-700'
               >
                 Sign In
               </Button>

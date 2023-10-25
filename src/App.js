@@ -43,8 +43,8 @@ import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
 import PaymentPage from "./pages/GeneralUser/PaymentPage";
 import { VideoProvider } from "./context/VideoContext";
-import DivisionHome from "./pages/Police Division/Home"
-import FineIssue from "./pages/Police Division/FineIssue"
+import DivisionHome from "./pages/Police Division/Home";
+import FineIssue from "./pages/Police Division/FineIssue";
 
 export default function App() {
   const THEME = createTheme({
@@ -79,7 +79,14 @@ export default function App() {
           <Route element={<PersistLogin />}>
             {/* general user routes */}
             <Route element={<RequireAuth allowedRole="general-user" />}>
-              <Route path="general-user/" element={<GeneralUserProvider><GeneralUserRoutes /></GeneralUserProvider>}>
+              <Route
+                path="general-user/"
+                element={
+                  <GeneralUserProvider>
+                    <GeneralUserRoutes />
+                  </GeneralUserProvider>
+                }
+              >
                 <Route
                   path=""
                   element={
@@ -94,18 +101,16 @@ export default function App() {
                   path="fines"
                   element={
                     <FineProvider>
-                      <UserFines />
+                      <FormProvider>
+                        <UserFines />
+                      </FormProvider>
                     </FineProvider>
                   }
                 />
                 <Route
                   path="profile"
-                  element={
-                    <ThemeProvider theme={theme}>
-                      <CssBaseline>
+                  element={             
                         <ProfilePage />
-                      </CssBaseline>
-                    </ThemeProvider>
                   }
                 />
                 <Route
@@ -122,7 +127,7 @@ export default function App() {
             </Route>
           </Route>
           <Route element={<PolicePersistLogin />}>
-             {/* traffic police routes */}
+            {/* traffic police routes */}
             <Route element={<RequireAuth allowedRole="traffic-police" />}>
               <Route path="traffic-police/" element={<TrafficPoliceRoutes />}>
                 <Route
@@ -170,37 +175,55 @@ export default function App() {
             </Route>
 
             {/* police operator routes */}
-            
-              <Route element={<RequireAuth allowedRole="police-operator" />}>
+
+            <Route element={<RequireAuth allowedRole="police-operator" />}>
               {/* <Route> */}
-                  <Route path="police-operator/" element={<VideoProvider><PoliceOperatorRoutes /></VideoProvider>} >
-                    <Route path="" element={
-                        <PoliceHome />
-                    } />
-                    <Route path="video-details" element={
-                        <FormProvider><VideoDetails /></FormProvider>
-                    } />
-                  </Route>
+              <Route
+                path="police-operator/"
+                element={
+                  <VideoProvider>
+                    <PoliceOperatorRoutes />
+                  </VideoProvider>
+                }
+              >
+                <Route path="" element={<PoliceHome />} />
+                <Route
+                  path="video-details"
+                  element={
+                    <FormProvider>
+                      <VideoDetails />
+                    </FormProvider>
+                  }
+                />
               </Route>
+            </Route>
             <Route element={<RequireAuth allowedRole="police-division" />}>
-            {/* <Route> */}
+              {/* <Route> */}
               <Route path="police-division/" element={<PoliceDivisionRoutes />}>
-                <Route path="" element={
-                  <VideoProvider>
-                    <AddingOfficers />
-                  </VideoProvider>
-                } />
-                <Route path="Home" element={
-                  <VideoProvider>
-                    <DivisionHome />
-                  </VideoProvider>
-                } />
-                <Route path="FineIssue" element={
-                  <VideoProvider>
-                    <FineIssue />
-                  </VideoProvider>
-                } />
-                
+                <Route
+                  path=""
+                  element={
+                    <VideoProvider>
+                      <AddingOfficers />
+                    </VideoProvider>
+                  }
+                />
+                <Route
+                  path="Home"
+                  element={
+                    <VideoProvider>
+                      <DivisionHome />
+                    </VideoProvider>
+                  }
+                />
+                <Route
+                  path="FineIssue"
+                  element={
+                    <VideoProvider>
+                      <FineIssue />
+                    </VideoProvider>
+                  }
+                />
               </Route>
             </Route>
             <Route element={<RequireAuth allowedRole="admin" />}>

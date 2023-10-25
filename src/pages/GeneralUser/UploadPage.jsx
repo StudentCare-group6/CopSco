@@ -84,7 +84,7 @@ export default function UploadPage() {
             value={value}
             onChange={handleChange}
             aria-label="lab API tabs example"
-            sx={{ borderBottom: 1, borderColor: "divider" }}
+            sx={{ borderColor: "divider" }}
             centered
           >
             <Tab
