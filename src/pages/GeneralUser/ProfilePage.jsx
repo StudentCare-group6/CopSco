@@ -30,7 +30,7 @@ function ProfilePage() {
     <Stack sx={{
       [theme.breakpoints.up('md')]: {
         justifyContent: 'center',
-        height: '90vh',
+       
       },
       [theme.breakpoints.down('md')]: {
         height: 'auto',
