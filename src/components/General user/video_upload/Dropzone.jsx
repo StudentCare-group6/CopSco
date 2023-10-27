@@ -44,7 +44,23 @@ export default function Dropzone(props) {
     setOpenSnackbar(false);
   };
 
-
+  useEffect(() => {
+    loadScript("http://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.2/dist/ffmpeg.min.js")
+      .then(() => {
+        if (typeof window !== "undefined") {
+          console.log("FFmpeg script loaded");
+          ffmpeg = window.FFmpeg.createFFmpeg({ log: true });
+          return ffmpeg.load();
+        }
+      })
+      .then(() => {
+        console.log("FFmpeg library loaded successfully");
+        setIsScriptLoaded(true);
+      })
+      .catch(error => {
+        console.error("Error loading FFmpeg library:", error);
+      });
+  }, []);
   const handleMetaData = async (videoFile) => {
     
     if (isScriptLoaded) {
