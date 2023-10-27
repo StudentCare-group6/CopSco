@@ -45,19 +45,21 @@ export default function Dropzone(props) {
   };
 
   useEffect(() => {
-    //Load the ffmpeg script
-    loadScript(
-      "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.2/dist/ffmpeg.min.js"
-    ).then(() => {
-      if (typeof window !== "undefined") {
-        // creates a ffmpeg instance.
-        ffmpeg = window.FFmpeg.createFFmpeg({ log: true });
-        //Load ffmpeg.wasm-core script
-        ffmpeg.load();
-        //Set true that the script is loaded
+    loadScript("https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.2/dist/ffmpeg.min.js")
+      .then(() => {
+        if (typeof window !== "undefined") {
+          console.log("FFmpeg script loaded");
+          ffmpeg = window.FFmpeg.createFFmpeg({ log: true });
+          return ffmpeg.load();
+        }
+      })
+      .then(() => {
+        console.log("FFmpeg library loaded successfully");
         setIsScriptLoaded(true);
-      }
-    });
+      })
+      .catch(error => {
+        console.error("Error loading FFmpeg library:", error);
+      });
   }, []);
   const handleMetaData = async (videoFile) => {
     
