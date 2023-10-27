@@ -45,7 +45,7 @@ export default function Dropzone(props) {
   };
 
   useEffect(() => {
-    loadScript("http://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.2/dist/ffmpeg.min.js")
+    loadScript("https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.2/dist/ffmpeg.min.js")
       .then(() => {
         if (typeof window !== "undefined") {
           console.log("FFmpeg script loaded");
