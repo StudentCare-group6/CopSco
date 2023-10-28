@@ -30,6 +30,7 @@ function ProfilePage() {
     <Stack sx={{
       [theme.breakpoints.up('md')]: {
         justifyContent: 'center',
+        height:'90vh'
        
       },
       [theme.breakpoints.down('md')]: {
@@ -40,9 +41,9 @@ function ProfilePage() {
       }
 
     }}>
-      <Grid container>
+      <Grid container sx = {{height:'90%'}}>
         <Grid item xs={12} md={3}>
-          <Paper variant="outlined" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2 }} className='rounded-tl-lg shadow-md'>
+          <Paper sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2 }} className='rounded-tl-lg shadow-md'>
             <SectionTitle titleText={"Your Profile"} />
             <Avatar sx={{ width: 200, height: 200 }} className='bg-green-800'>
               <PersonIcon sx={{ fontSize: 150 }} />
@@ -67,7 +68,7 @@ function ProfilePage() {
               Withdraw
             </Button>
           </Paper>
-          <Paper variant="outlined" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, boxShadow: 'none' }} className='rounded-bl-xl shadow-md'>
+          <Paper sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, boxShadow: 'none' }} className='rounded-bl-xl shadow-md'>
             <Stack justifyContent='center' alignItems='center' direction='row'>
               <QrCodeScannerIcon className='text-zinc-500 mr-2' />
               <SectionTitle titleText={"Your Secret QR"} />
@@ -97,7 +98,7 @@ function ProfilePage() {
           </Paper>
         </Grid>
         <Grid item xs={12} md={5} >
-          <Paper variant="outlined" sx={{ padding: 2, height: '100%' }} className='shadow-md'>
+          <Paper  sx={{ padding: 2, height: '100%' }} className='shadow-md'>
             <Stack justifyContent='center' alignItems='center' direction='row'>
               <AccountBalanceIcon className='text-zinc-500 mr-2' />
               <SectionTitle titleText={"Edit Your Banking Info"} />
@@ -107,7 +108,7 @@ function ProfilePage() {
           </Paper>
         </Grid>
         <Grid item xs={12} md={4} >
-          <Paper variant="outlined" sx={{ padding: 2, height: '100%' }} className='rounded-r-lg shadow-md'>
+          <Paper  sx={{ padding: 2, height: '100%' }} className='rounded-r-lg shadow-md'>
             <Stack justifyContent='center' alignItems='center' direction='row'>
               <DirectionsCarFilledIcon className='text-zinc-500 mr-2' />
               <SectionTitle titleText={"Your Vehicle Info"} />

@@ -98,7 +98,7 @@ export default function UploadPage() {
 
             <Tab
               label={
-                <Badge badgeContent={1} color="primary">
+                <Badge badgeContent={0} color="primary">
                   Pending Review
                 </Badge>
               }
@@ -107,7 +107,7 @@ export default function UploadPage() {
 
             <Tab
               label={
-                <Badge badgeContent={1} color="primary">
+                <Badge badgeContent={0} color="primary">
                   Rejected
                 </Badge>
               }

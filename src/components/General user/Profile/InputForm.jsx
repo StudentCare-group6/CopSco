@@ -56,7 +56,6 @@ const InputForm = () => {
           <TextField
             id="province"
             label="Branch"
-            margin="normal"
             fullWidth
             select
             defaultValue={provinces[0]}

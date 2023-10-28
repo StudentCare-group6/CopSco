@@ -9,6 +9,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import useAuth from '../../hooks/useAuth';
 import useGeneralUserContext from '../../hooks/useGeneralUserContext';
 import CustomizedBreadcrumbs from "./CustomizedBreadCrumbs";
+import Notifications from "./Notifications";
+import logo from "../../images/logo.png";
+import Stack from "@mui/material/Stack";
 
 export default function Header() {
   const { auth } = useAuth();
@@ -37,9 +40,8 @@ export default function Header() {
   }
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
-      <div className="flex justify-center">
-        {/* <MuiBreadcrumbs /> */}
-        <CustomizedBreadcrumbs />
+      <div className="flex items-center">
+        <img src={logo} alt="logo" style={{ height: "35px", width: "auto" }}/>
       </div>
       <div
         className="flex items-center "
