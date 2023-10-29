@@ -14,7 +14,7 @@ const usePoliceRefreshToken = () => {
             return {
                 ...prev,
                 role: response.data.userrole,
-                username: response.data.username,
+                user: response.data.username,
                 accessToken:response.data.accessToken}
         });
         return response.data.accessToken;

@@ -6,6 +6,9 @@ import { useState } from "react";
 import Popup from "../../components/General user/video_upload/Popup";
 import Stack from "@mui/material/Stack";
 import PendingReviews from "../../components/Police Division/DocumentsVerifying/PendingReviews";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAuth from "../../hooks/useAuth";
+import { useEffect } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -26,9 +29,33 @@ function TabPanel(props) {
 export default function VerifyingDocuments() {
   const [value, setValue] = useState(0);
 
+  const axiosPrivate = useAxiosPrivate();
+  const {auth} = useAuth();
+
+  
+  const userData = {
+    police_username: 43956,
+  };
+
+  console.log(auth.user);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const getDocuments = async () => {
+    try {
+      const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
+      console.log(response.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDocuments();
+  }, []);
 
   return (
     <div>
