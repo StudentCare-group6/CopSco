@@ -77,6 +77,14 @@ export default function CustomizedTables() {
     rows[i] = createData(officers.full_name, officers.officerID, 'Active', officers.NIC);
   }
 
+  // const rows = [
+  //   createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
+  //   createData('A.J.U. Dakshika', '7845596', 'Inactive', '14:56 PM'),
+  //   createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
+  //   createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
+  //   createData('A.J.U. Dakshika', '7845596', 'Inactive', '14:56 PM'),
+  // ];
+
   return (
     <TableContainer component={Paper} className='mt-10'>
       <Table aria-label="customized table">
