@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAuth from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,22 +35,48 @@ const columns = [
   { id: 'name', label: 'Police Officer Name'},
   { id: 'policeNumber', label: 'Police Number'},
   { id: 'ActiveStatus', label: 'Status'},
-  { id: 'lastLoginTime', label: 'Last Login Time'},
+  { id: 'NIC', label: 'NIC'},
 ];
 
 function createData(name, policeNumber, ActiveStatus, lastLoginTime) {
+
   return { name, policeNumber, ActiveStatus, lastLoginTime };
 }
 
-const rows = [
-  createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
-  createData('A.J.U. Dakshika', '7845596', 'Inactive', '14:56 PM'),
-  createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
-  createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
-  createData('A.J.U. Dakshika', '7845596', 'Inactive', '14:56 PM'),
-];
+
 
 export default function CustomizedTables() {
+  const axiosPrivate = useAxiosPrivate();
+  const {auth} = useAuth();
+
+  const [officers, setofficers] = useState({}); 
+  
+  const userData = {
+    stationid: 101,
+  };
+
+  const getOfficers = async () => {
+    try {
+      const response = await axiosPrivate.get("police-division/viewPoliceOfficers", { params: userData });
+      console.log(response.data);
+      setofficers(response.data.policeOfficer);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getOfficers();
+  }, []);
+
+  const rows = []; 
+
+  for(let i=0; i<officers.length; i++)
+  {
+    rows[i] = createData(officers.full_name, officers.officerID, 'Active', officers.NIC);
+  }
+
   return (
     <TableContainer component={Paper} className='mt-10'>
       <Table aria-label="customized table">
