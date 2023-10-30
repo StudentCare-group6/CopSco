@@ -13,7 +13,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { HomeIcon, UserCircleIcon, BellIcon, PresentationChartLineIcon, InformationCircleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, UserPlusIcon, VideoCameraIcon, BellIcon, PresentationChartLineIcon, InformationCircleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 
 const drawerWidth = 240;
 
@@ -109,12 +109,12 @@ export default function Sidebar() {
 
     const icons = [
         {
-            active: <HomeIcon className="h-6 w-6 text-slate-950" />,
-            inactive: <HomeIcon className="h-6 w-6 text-slate-400" />,
+            active: <VideoCameraIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <VideoCameraIcon className="h-6 w-6 text-slate-400" />,
         },
         {
-            active: <UserCircleIcon className="h-6 w-6 text-slate-950" />,
-            inactive: <UserCircleIcon className="h-6 w-6 text-slate-400" />,
+            active: <UserPlusIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <UserPlusIcon  className="h-6 w-6 text-slate-400" />,
         },
         {
             active: <BellIcon className="h-6 w-6 text-slate-950" />,
@@ -135,7 +135,7 @@ export default function Sidebar() {
 
     ];
 
-    const routes = ['/home', '/profile', '/notifications', '/statistics', '/information', '/logout'];
+    const routes = ['/police-division/', '/police-division/adding-officers', '/notifications', '/statistics', '/information', '/logout'];
 
     return (
 
@@ -152,7 +152,7 @@ export default function Sidebar() {
                 </DrawerHeader>
                 <Divider />
                 <List sx={{ height: '50%' }} className='flex flex-col justify-between'>
-                    {['Home', 'Profile', 'Notifications', 'Analytics', 'Information', 'Log out'].map((text, index) => {
+                    {['Issue Fines', 'Profile', 'Notifications', 'Analytics', 'Information', 'Log out'].map((text, index) => {
                         const route = routes[index];
                         const isActive = isActiveRoute(route);
 

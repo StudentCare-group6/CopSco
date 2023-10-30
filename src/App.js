@@ -176,14 +176,14 @@ export default function App() {
             <Route element={<RequireAuth allowedRole="police-division" />}>
             {/* <Route> */}
               <Route path="police-division/" element={<PoliceDivisionRoutes />}>
-                <Route path="" element={
+                <Route path="adding-officers" element={
                   <VideoProvider>
                     <AddingOfficers />
                   </VideoProvider>
                 } />
                 <Route path="viewDocuments" element={<VerifyingDocuments />} />
 
-                <Route path="Home" element={
+                <Route path="" element={
                   <VideoProvider>
                     <DivisionHome />
                   </VideoProvider>
