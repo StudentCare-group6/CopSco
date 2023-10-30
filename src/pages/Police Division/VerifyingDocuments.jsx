@@ -27,35 +27,6 @@ function TabPanel(props) {
 }
 
 export default function VerifyingDocuments() {
-  const [value, setValue] = useState(0);
-
-  const axiosPrivate = useAxiosPrivate();
-  const {auth} = useAuth();
-
-  
-  const userData = {
-    police_username: 43956,
-  };
-
-  console.log(auth.user);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const getDocuments = async () => {
-    try {
-      const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
-      console.log(response.data);
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getDocuments();
-  }, []);
 
   return (
     <div>
@@ -67,8 +38,7 @@ export default function VerifyingDocuments() {
           </Stack>
 
           <Tabs
-            value={value}
-            onChange={handleChange}
+            // value={value}
             aria-label="lab API tabs example"
             sx={{ borderBottom: 1, borderColor: "divider" }}
             centered
@@ -82,7 +52,7 @@ export default function VerifyingDocuments() {
               sx={{ fontWeight: "bold" }}
             />
           </Tabs>
-          <TabPanel value={value} index={0} className="py-10">
+          <TabPanel>
             <PendingReviews />
           </TabPanel>
         </Box>
