@@ -107,12 +107,7 @@ export default function App() {
                     </FineProvider>
                   }
                 />
-                <Route
-                  path="profile"
-                  element={             
-                        <ProfilePage />
-                  }
-                />
+                <Route path="profile" element={<ProfilePage />} />
                 <Route
                   path="payment"
                   element={
@@ -181,9 +176,11 @@ export default function App() {
               <Route
                 path="police-operator/"
                 element={
-                  <VideoProvider>
-                    <PoliceOperatorRoutes />
-                  </VideoProvider>
+                  <FineProvider>
+                    <VideoProvider>
+                      <PoliceOperatorRoutes />
+                    </VideoProvider>
+                  </FineProvider>
                 }
               >
                 <Route path="" element={<PoliceHome />} />
@@ -211,9 +208,11 @@ export default function App() {
                 <Route
                   path="Home"
                   element={
-                    <VideoProvider>
-                      <DivisionHome />
-                    </VideoProvider>
+                    <FineProvider>
+                      <VideoProvider>
+                        <DivisionHome />
+                      </VideoProvider>
+                    </FineProvider>
                   }
                 />
                 <Route
