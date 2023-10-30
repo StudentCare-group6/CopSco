@@ -122,85 +122,18 @@ export default function RegisterModal() {
                                 fullWidth
                                 id="id"
                                 label="Police ID"
-                                {...register("email", {
+                                {...register("policeId", {
                                     required: "field required",
                                     pattern: {
                                         value: /\S+@\S+\.\S+/,
-                                        message: "Invalid email address"
+                                        message: "Invalid id"
                                     }
                                 }
                                 )}
                             />
                             {errors.email?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.email?.message}</Alert> : ""}
                         </Grid>
-                        <Grid item xs={6} sx={{ mt: 3 }}>
-                            <TextField
-                                autoComplete="given-name"
-                                required
-                                fullWidth
-                                id="firstName"
-                                label="First Name"
-                                autoFocus
-                                {...register("fname", {
-                                    required: "field required",
-                                    pattern: {
-                                        value: /^[A-Za-z]+$/i,
-                                        message: "Invalid first name"
-                                    }
-                                })}
-                            />
-                            {errors.firstName?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.firstName?.message}</Alert> : ""}
-                        </Grid>
-                        <Grid item xs={6} sx={{ mt: 3 }}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                autoComplete="family-name"
-                                {...register("lname", {
-                                    required: "field required",
-                                    pattern: {
-                                        value: /^[A-Za-z]+$/i,
-                                        message: "Invalid last name"
-                                    }
-                                })}
-                            />
-                            {errors.lastName?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.lastName?.message}</Alert> : ""}
-                        </Grid>
-                        <Grid item xs={6} sx={{ mt: 3 }}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                autoComplete="email"
-                                {...register("email", {
-                                    required: "field required",
-                                    pattern: {
-                                        value: /\S+@\S+\.\S+/,
-                                        message: "Invalid email address"
-                                    }
-                                }
-                                )}
-                            />
-                            {errors.email?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.email?.message}</Alert> : ""}
-                        </Grid>
-                        <Grid item xs={6} sx={{ mt: 3 }}>
-                            <TextField
-                                fullWidth
-                                id="contact"
-                                label="Contact No."
-                                {...register("contact", {
-                                    required: "field required",
-                                    pattern: {
-                                        value: /^\d{10}$/,
-                                        message: "Contact number should have 10 digits"
-                                    }
-                                })}
-                            />
-                            {errors.contact?.message ? <Alert sx={{ mt: '10px' }} severity="error">{errors.contact?.message}</Alert> : ""}
-                        </Grid>
+  
                         <Grid item xs={12} sx={{ mt: 3 }}>
                             <TextField
                                 id="division"
