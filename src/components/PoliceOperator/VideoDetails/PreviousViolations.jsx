@@ -135,7 +135,7 @@ export default function AcceptedTable() {
 
     return (
       <Box
-        height="45vh"
+        height="100%"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",

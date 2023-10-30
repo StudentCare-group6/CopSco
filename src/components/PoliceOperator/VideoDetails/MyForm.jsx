@@ -114,12 +114,16 @@ const MyForm = ({ pausedTime, videoUrl }) => {
       formData.append("divisionCode", getValues("divisionCode"));
       formData.append("violationStatus", getValues("violationStatus"));
       formData.append("remarks", getValues("remarks"));
+      formData.append("deliveryTag", video.deleveryTag);
       const blob = getValues("thumbnail");
-      const file = new File([blob], "thumbnail", { type: "image/jpeg" });
+      const file = new File([blob], video.caseID, { type: "image/jpeg" });
       formData.append("priviewImage", file);
-      const response = await axios.post("violations/getPastViolations/verifyUploads", formData);
-      console.log(response);
-      showSuccessToast();
+      formData.forEach(function (value, key) {
+        console.log(key, value);
+      });
+      // const response = await axios.post("violations/getPastViolations/verifyUploads", formData);
+      // console.log(response);
+      // showSuccessToast();
     } catch (err) {
       console.log(err);
     }
@@ -399,7 +403,7 @@ const MyForm = ({ pausedTime, videoUrl }) => {
             <MenuItem key={0} value={'accepted'} sx={{ color: '#ef4444' }}>
               <Status text='Mark as a violation' />
             </MenuItem>
-            <MenuItem key={1} value={'Not a violation'} sx={{ color: '#22c55e' }}>
+            <MenuItem key={1} value={'rejected'} sx={{ color: '#22c55e' }}>
               <Status text='Not a violation' />
             </MenuItem>
             <MenuItem key={2} value={'rejected'} sx={{ color: '#6b7280' }}>

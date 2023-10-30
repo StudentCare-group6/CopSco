@@ -6,12 +6,10 @@ import { Typography, Button } from "@mui/material";
 import VideoCardModal from "./VideoCardModal";
 import useFineContext from "../../../hooks/useFineContext";
 import image from "../../../images/box.png";
-import ResponsiveDialog from "./RemoveDialogBox";
-import WalletIcon from "@mui/icons-material/Wallet";
 import useGeneralUserContext from "../../../hooks/useGeneralUserContext";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useVideoContext from "../../../hooks/useVideoContext";
+import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -40,7 +38,6 @@ export default function AcceptedTable() {
     navigate("/police-operator/video-details");
   };
 
-
   const columns = [
     {
       field: "video",
@@ -65,25 +62,6 @@ export default function AcceptedTable() {
           <Typography variant="body2" style={{ whiteSpace: "pre-wrap" }}>
             {params.value}
           </Typography>
-        );
-      },
-    },
-    {
-      field: "reward",
-      headerName: "Reward",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-      renderCell: (params) => {
-        return (
-          <Button
-            startIcon={<WalletIcon />}
-            variant="contained"
-            className="bg-green-800 rounded-full"
-            sx={{ boxShadow: "none", textTransform: "none" }}
-          >
-            Rs. {params.value}
-          </Button>
         );
       },
     },
@@ -137,6 +115,7 @@ export default function AcceptedTable() {
             onClick={() => directVideoDetails(params.value)}
             className="bg-slate-900 rounded-full"
             sx={{ boxShadow: 'none', textTransform: 'none' }}
+            startIcon={<AssignmentTurnedInOutlinedIcon />}
           >
             Verify
           </Button>
@@ -161,9 +140,8 @@ export default function AcceptedTable() {
       id: index + 1,
       video: [item.thumbnail, item.videokey],
       description: item.description,
-      reward: "500",
       location: item.district + ", " + item.city,
-      date: formatDate(item.reportdate),
+      date: formatDate(item.date),
       actions: item
     }));
 

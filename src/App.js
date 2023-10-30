@@ -45,6 +45,7 @@ import PaymentPage from "./pages/GeneralUser/PaymentPage";
 import { VideoProvider } from "./context/VideoContext";
 import DivisionHome from "./pages/Police Division/Home";
 import FineIssue from "./pages/Police Division/FineIssue";
+import Info from "./pages/PoliceOperator/Info";
 
 export default function App() {
   const THEME = createTheme({
@@ -184,6 +185,7 @@ export default function App() {
                 }
               >
                 <Route path="" element={<PoliceHome />} />
+                <Route path="info" element={<Info />} />
                 <Route
                   path="video-details"
                   element={
