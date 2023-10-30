@@ -21,6 +21,7 @@ export default function ViewFineModal(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    console.log(props.url);
     return (
         <div>
             <div class="relative flex justify-center items-center overflow-hidden bg-cover bg-no-repeat" style={{width: '100%', height: 'auto' }} onClick={handleOpen}>

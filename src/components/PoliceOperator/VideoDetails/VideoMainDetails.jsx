@@ -41,11 +41,11 @@ export default function CustomizedTables() {
     video = JSON.parse(localStorage.getItem('selectedVideo'));
   }
   const rows = [
-    createData('Vehicle Number', video.vehicleNo),
-    createData('Violation Type', 'Improper Turn'),
-    createData('Violation Date', '01.07.2023'),
-    createData('Violation Time', '14:56 PM'),
-    createData('Location', video.location),
+    createData('Vehicle Number', video.vehicleno),
+    createData('Violation Type', video.violationtype),
+    createData('Violation Date', video.violtionDate),
+    createData('Violation Time', video.violationTime),
+    createData('Location', video.district+', '+ video.city),
     createData('Severity', 'High'),
     createData('Remarks', 'Driver was drunk.'),
   ];

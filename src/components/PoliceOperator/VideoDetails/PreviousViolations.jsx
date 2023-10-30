@@ -127,9 +127,9 @@ export default function AcceptedTable() {
   } else {
     const rows = pastData.map((item, index) => ({
       id: index + 1,
-      thumbnail: item.thumbnail,
+      thumbnail: item.image,
       description: item.description,
-      location: item.location,
+      location: item.district + ', ' + item.city,
       date: formatDate(item.date)
     }))
 

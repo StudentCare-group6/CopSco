@@ -10,6 +10,8 @@ import ResponsiveDialog from "./RemoveDialogBox";
 import WalletIcon from "@mui/icons-material/Wallet";
 import useGeneralUserContext from "../../../hooks/useGeneralUserContext";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useVideoContext from "../../../hooks/useVideoContext";
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -17,6 +19,8 @@ function formatDate(inputDateString) {
   const formattedDate = inputDate.toLocaleDateString("en-US", options);
   return formattedDate;
 }
+
+
 
 export default function AcceptedTable() {
 
@@ -27,6 +31,16 @@ export default function AcceptedTable() {
       bottom: params.isLastVisible ? 0 : 5,
     };
   }, []);
+
+  const navigate = useNavigate();
+  const { setSelectedVideo } = useVideoContext();
+  const directVideoDetails = (video) => {
+    setSelectedVideo(video); // Set the selected video in the context
+    localStorage.setItem("selectedVideo", JSON.stringify(video)); // Set the selected video in the local storage
+    navigate("/police-operator/video-details");
+  };
+
+
   const columns = [
     {
       field: "video",
@@ -117,7 +131,16 @@ export default function AcceptedTable() {
       align: "center",
       flex: 1,
       renderCell: (params) => {
-        return <ResponsiveDialog caseId={params.value} />;
+        return (
+          <Button
+            variant='contained'
+            onClick={() => directVideoDetails(params.value)}
+            className="bg-slate-900 rounded-full"
+            sx={{ boxShadow: 'none', textTransform: 'none' }}
+          >
+            Verify
+          </Button>
+        );
       },
     },
   ];
@@ -141,7 +164,7 @@ export default function AcceptedTable() {
       reward: "500",
       location: item.district + ", " + item.city,
       date: formatDate(item.reportdate),
-      actions: item.caseid
+      actions: item
     }));
 
     return (
