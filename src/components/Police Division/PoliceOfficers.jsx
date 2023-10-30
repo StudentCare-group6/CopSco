@@ -32,25 +32,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const columns = [
-  { id: 'name', label: 'Police Officer Name'},
-  { id: 'policeNumber', label: 'Police Number'},
-  { id: 'ActiveStatus', label: 'Status'},
-  { id: 'NIC', label: 'NIC'},
+  { id: 'full_name', label: 'Police Officer Name' },
+  { id: 'officerID', label: 'Police Number' },
+  { id: 'ActiveStatus', label: 'Status' },
+  { id: 'NIC', label: 'NIC' },
 ];
 
-function createData(name, policeNumber, ActiveStatus, lastLoginTime) {
+function createData(full_name, officerID, ActiveStatus, NIC) {
 
-  return { name, policeNumber, ActiveStatus, lastLoginTime };
+  return { full_name, officerID, ActiveStatus, NIC };
 }
 
+// const rows = [];
 
 
 export default function CustomizedTables() {
   const axiosPrivate = useAxiosPrivate();
-  const {auth} = useAuth();
+  const { auth } = useAuth();
 
-  const [officers, setofficers] = useState({}); 
-  
+  const [officers, setofficers] = useState([]);
+
   const userData = {
     stationid: 101,
   };
@@ -58,9 +59,8 @@ export default function CustomizedTables() {
   const getOfficers = async () => {
     try {
       const response = await axiosPrivate.get("police-division/viewPoliceOfficers", { params: userData });
-      console.log(response.data);
-      setofficers(response.data.policeOfficer);
-
+      const newRows = response.data.policeOfficer.map((officer) => createData(officer.full_name, officer.officerID, 'Active', officer.NIC));
+      setofficers(newRows);
     } catch (error) {
       console.log(error);
     }
@@ -70,20 +70,9 @@ export default function CustomizedTables() {
     getOfficers();
   }, []);
 
-  const rows = []; 
-
-  for(let i=0; i<officers.length; i++)
-  {
-    rows[i] = createData(officers.full_name, officers.officerID, 'Active', officers.NIC);
-  }
-
-  // const rows = [
-  //   createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
-  //   createData('A.J.U. Dakshika', '7845596', 'Inactive', '14:56 PM'),
-  //   createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
-  //   createData('A.J.U. Dakshika', '7845596', 'Active', '14:56 PM'),
-  //   createData('A.J.U. Dakshika', '7845596', 'Inactive', '14:56 PM'),
-  // ];
+  useEffect(() => {
+    console.log(officers);
+  }, [officers]);
 
   return (
     <TableContainer component={Paper} className='mt-10'>
@@ -102,8 +91,8 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {officers.map((row) => (
+            <StyledTableRow key={row.full_name}>
               {columns.map((column) => (
                 <StyledTableCell
                   key={column.id}
@@ -120,11 +109,11 @@ export default function CustomizedTables() {
                       </button>
                     ) : (
                       <button className="flex items-center h-8 px-6 w-28 font-semibold border border-red-600 rounded-full text-red-500">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                      </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                        </svg>
                         Inactive
-                    </button>
+                      </button>
                     )
                   ) : (
                     row[column.id]
