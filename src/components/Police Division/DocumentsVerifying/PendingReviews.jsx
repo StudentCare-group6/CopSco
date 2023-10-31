@@ -17,8 +17,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import useAuth from "../../../hooks/useAuth";
 import { useEffect } from "react";
-
-// Import the Modal and Backdrop components
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Fade from '@mui/material/Fade';
@@ -39,12 +37,13 @@ function TabPanel(props) {
   );
 }
 
-function createData(name, NICfrontview, NICrearview, NIC, fullname, location) {
+function createData(name, NICfrontview, NICrearview, NIC, fullname) {
   return {
     name: name,
     NICfrontview: NICfrontview,
     NICrearview: NICrearview,
-    history: [{ NIC: NIC, fullname: fullname, location: location }],
+    NIC : NIC,
+    history: [{ NIC: NIC, fullname: fullname}],
     historyEntry: {
       NIC: '',
       fullname: '',
@@ -68,20 +67,13 @@ export default function CollapsibleTable() {
     try {
       const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
       console.log(response.data);
-      const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview));    
+      const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview, value.NIC, value.fullname));    
       setValue(newRows);
 
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const rows = [
-  //   createData('Uthpalani', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-  //   createData('Oshada', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-  //   createData('Tharindu', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-  //   createData('Vishal', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-  // ];
 
   useEffect(() => {
     getDocuments();
@@ -96,9 +88,20 @@ export default function CollapsibleTable() {
     const { row, onStatusChange, onUpdateHistory, openRow, setOpenRow } = props;
     const open = row === openRow;
 
-    const handleStatusChange = () => {
-      const newStatus = 'Verified';
-      onStatusChange(row, newStatus);
+    const handleStatusChange = async (NIC) => {
+      const verifyData = {
+        nic: NIC,
+        verified: true,
+        reason:" "
+      };
+
+      try {
+        const response = await axiosPrivate.post("police-division/verifyDocuments", verifyData);
+        window.location.reload();
+  
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const handleReject = () => {
@@ -135,9 +138,8 @@ export default function CollapsibleTable() {
   
   return (
     <React.Fragment>
-    <Table>
-    <TableBody>
-    {/* {value.map((row, index) => ( */}
+        <Table>
+          <TableBody>
             <TableRow>
               <TableCell>
                 <IconButton
@@ -156,7 +158,7 @@ export default function CollapsibleTable() {
                 {/* {row.status} */}
               </TableCell>
               <TableCell>
-                <Button variant="contained" color="primary" className="ml-[50%]" onClick={handleStatusChange}>
+                <Button variant="contained" color="primary" className="ml-[50%]" onClick={() => handleStatusChange(row.NIC)}>
                   Accept
                 </Button>
                 &nbsp;&nbsp;
@@ -164,13 +166,83 @@ export default function CollapsibleTable() {
                   Reject
                 </Button>
               </TableCell>
-
-              {/* Image Modal */}
             </TableRow>
-    {/* )) */}
-    {/* } */}
-    </TableBody>
-    </Table>
+              {/* Image Modal */}
+            
+              <TableCell colSpan={4}>
+                  <Collapse in={open} timeout="auto" unmountOnExit>
+                    <div style={{ paddingLeft: '16px' }}>
+                      <Box sx={{ margin: 1 }}>
+                        <Typography variant="subtitle2" gutterBottom component="div">
+                          Verify user documents
+                        </Typography>
+                              <div className="ml-5 mb-5 mt-5">
+                                <Button variant="outlined" onClick={() => openImageModal(`http://localhost:8000/images/img/${row.NICfrontview}`)}>
+                                  NIC Front View
+                                </Button>
+                                &nbsp;&nbsp;
+                                <Button variant="outlined" onClick={() => openImageModal(`http://localhost:8000/images/img/${row.NICreartview}`)}>
+                                  NIC Rear View
+                                </Button>
+                                &nbsp;&nbsp;
+                                <Button variant="outlined" onClick={() => openImageModal(`http://localhost:8000/images/img/${row.verificationImage}`)}>
+                                  User Picture
+                                </Button>
+                              </div>
+                        <Table size="small" aria-label="purchases">
+                          
+                            
+                            {/* Documents */}
+                            {row.history.map((historyRow, index) => (
+                              <TableRow key={index}>
+                                <TableCell>
+                                    <TextField
+                                      className=""
+                                      label="NIC number"
+                                      defaultValue={historyRow.NIC}
+                                      onChange={(e) => handleFieldChange('NIC', e.target.value)}
+                                    />
+                                </TableCell>
+
+                                <TableCell>
+                                  {row.isEditing ? (
+                                    <TextField
+                                      className=""
+                                      label="Full Name"
+                                      defaultValue={historyRow.fullname}
+                                      onChange={(e) => handleFieldChange('fullname', e.target.value)}
+                                    />
+                                  ) : (
+                                    historyRow.fullname
+                                  )}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          
+                        </Table>
+                      </Box>
+                    </div>
+                  </Collapse>
+              </TableCell>
+          </TableBody>
+        </Table>
+        {/* Image Modal */}
+      <Modal
+        open={isImageModalOpen}
+        onClose={closeImageModal}
+        aria-labelledby="image-modal-title"
+        aria-describedby="image-modal-description"
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}>
+        <Fade in={isImageModalOpen}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <img src={selectedImage} alt="Image" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+          </div>
+        </Fade>
+      </Modal>
     </React.Fragment>
   );
 }
