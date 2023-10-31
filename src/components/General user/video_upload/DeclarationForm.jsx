@@ -83,6 +83,8 @@ export default function DeclarationForm() {
             formData.append("district", getValues("district"));
             formData.append("city", getValues("city"));
             formData.append("description", getValues("description"));
+            formData.append("date", getValues("date"));
+            formData.append("time", getValues("time"));
             formData.append("user", auth.user_id);
             //handling thumbnail
             const blob = getValues("previewImage");
