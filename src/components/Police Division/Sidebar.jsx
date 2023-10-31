@@ -13,7 +13,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { HomeIcon, UserPlusIcon, VideoCameraIcon, BellIcon, PresentationChartLineIcon, InformationCircleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
+import { ClipboardDocumentIcon, UserPlusIcon, VideoCameraIcon, DocumentCheckIcon, PresentationChartLineIcon, InformationCircleIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 
 const drawerWidth = 240;
 
@@ -117,12 +117,12 @@ export default function Sidebar() {
             inactive: <UserPlusIcon  className="h-6 w-6 text-slate-400" />,
         },
         {
-            active: <BellIcon className="h-6 w-6 text-slate-950" />,
-            inactive: <BellIcon className="h-6 w-6 text-slate-400" />,
+            active: <DocumentCheckIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <DocumentCheckIcon className="h-6 w-6 text-slate-400" />,
         },
         {
-            active: <PresentationChartLineIcon className="h-6 w-6 text-slate-950" />,
-            inactive: <PresentationChartLineIcon className="h-6 w-6 text-slate-400" />,
+            active: <ClipboardDocumentIcon className="h-6 w-6 text-slate-950" />,
+            inactive: <ClipboardDocumentIcon className="h-6 w-6 text-slate-400" />,
         },
         {
             active: <InformationCircleIcon className="h-6 w-6 text-slate-950" />,
@@ -135,7 +135,7 @@ export default function Sidebar() {
 
     ];
 
-    const routes = ['/police-division/', '/police-division/adding-officers', '/police-division/viewDocuments', '/police-division/addAppeals', '/information', '/logout'];
+    const routes = ['/police-division/', '/police-division/adding-officers', '/police-division/viewDocuments', '/police-division/addAppeals', '/police-division/information', '/logout'];
 
     return (
 
@@ -152,7 +152,7 @@ export default function Sidebar() {
                 </DrawerHeader>
                 <Divider />
                 <List sx={{ height: '50%' }} className='flex flex-col justify-between'>
-                    {['Issue Fines', 'Profile', 'Notifications', 'Analytics', 'Information', 'Log out'].map((text, index) => {
+                    {['Issue Fines', 'Add officers', 'User Verification', 'Manage Appeals','FAQ', 'Log out'].map((text, index) => {
                         const route = routes[index];
                         const isActive = isActiveRoute(route);
 

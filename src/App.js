@@ -44,7 +44,8 @@ import { VideoProvider } from "./context/VideoContext";
 import VerifyingDocuments from "./pages/Police Division/VerifyingDocuments";
 import AddAppeals from "./pages/Police Division/AddAppeals";
 import DivisionHome from "./pages/Police Division/Home";
-import Appeal from "./components/Police Division/Appeals/Appeal"
+import Appeal from "./components/Police Division/Appeals/Appeal";
+import DivisionInformation from "./pages/Police Division/Information";
 
 export default function App() {
   const THEME = createTheme({
@@ -192,6 +193,7 @@ export default function App() {
                     </VideoProvider>
                   }
                 />
+                <Route path="information" element={<DivisionInformation />} />
                 <Route path="viewDocuments" element={<VerifyingDocuments />} />
                 <Route path="addAppeals" element={<AddAppeals />} />
 
