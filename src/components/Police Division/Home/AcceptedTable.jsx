@@ -36,13 +36,13 @@ export default function AcceptedTable() {
       flex: 1,
       renderCell: (params) => {
         return (
-          <VideoCardModal url={params.value[0]} videoKey={params.value[1]} />
+          <VideoCardModal thumbnail={params.value[0]} caseId={params.value[1]}/>
         );
       },
     },
     {
       field: "description",
-      headerName: "Description",
+      headerName: "Operator Remarks",
       headerAlign: "center",
       align: "center",
       flex: 1.5,
@@ -92,14 +92,21 @@ export default function AcceptedTable() {
       },
     },
     {
-      field: "actions",
-      headerName: "Actions",
+      field: "caseid",
+      headerName: "Case ID",
       headerAlign: "center",
       align: "center",
       flex: 1,
       renderCell: (params) => {
-        return <ResponsiveDialog caseId={params.value} />;
-      },
+        return (
+          <Stack direction="column" alignItems="center" className = 'bg-zinc-300 rounded-lg' sx = {{padding:2}}>
+            <Typography variant="body2" fontWeight="bold">
+              {params.value}
+            </Typography>
+          </Stack>
+        );
+      }
+
     },
   ];
   const { acceptedUploads } = useFineContext();
@@ -126,12 +133,12 @@ export default function AcceptedTable() {
   } else {
     const rows = acceptedUploads.map((item, index) => ({
       id: index + 1,
-      video: [item.thumbnail, item.videokey],
-      description: item.description,
+      video: [item.thumbnail, item.caseID],
+      description: item.remarks,
       reward: "500",
       location: item.district + ", " + item.city,
       date: formatDate(item.date),
-      actions: item.caseid
+      caseid: item.caseID
     }));
 
     return (
