@@ -68,25 +68,28 @@ export default function CollapsibleTable() {
     try {
       const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
       console.log(response.data);
-      const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview));    
-      setValue(newRows);
+      // const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview));    
+      // setValue(newRows);
 
     } catch (error) {
       console.log(error);
     }
   };
 
-  // rows = [
-  //   createData('hh', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-  // ];
+  const rows = [
+    createData('Uthpalani', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+    createData('Oshada', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+    createData('Tharindu', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+    createData('Vishal', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+  ];
 
-  useEffect(() => {
-    getDocuments();
-  }, []);
+  // useEffect(() => {
+  //   getDocuments();
+  // }, []);
 
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
+  // useEffect(() => {
+  //   console.log(value);
+  // }, [value]);
   
 
   function Row(props) {
@@ -131,10 +134,11 @@ export default function CollapsibleTable() {
 
   
   return (
+    <React.Fragment>
     <Table>
     <TableBody>
-    {value.map((row, index) => (
-            <TableRow key={index}>
+    {/* {value.map((row, index) => ( */}
+            <TableRow>
               <TableCell>
                 <IconButton
                   aria-label="expand row"
@@ -149,7 +153,7 @@ export default function CollapsibleTable() {
                 <Typography>{row.name}</Typography>
               </TableCell>
               <TableCell component="td" scope="row">
-                {/* {value.status} */}
+                {/* {row.status} */}
               </TableCell>
               <TableCell>
                 <Button variant="contained" color="primary" className="ml-[50%]" onClick={handleStatusChange}>
@@ -161,51 +165,53 @@ export default function CollapsibleTable() {
                 </Button>
               </TableCell>
             </TableRow>
-    ))}
+    {/* )) */}
+    {/* } */}
     </TableBody>
     </Table>
+    </React.Fragment>
   );
 }
 
-  // const [tableData, setTableData] = React.useState(rows);
-  // const [openRow, setOpenRow] = React.useState(null);
+  const [tableData, setTableData] = React.useState(rows);
+  const [openRow, setOpenRow] = React.useState(null);
 
-  // const handleStatusChange = (row, newStatus) => {
-  //   const updatedData = tableData.map((dataRow) => {
-  //     if (dataRow === row) {
-  //       return { ...dataRow, status: newStatus };
-  //     }
-  //     return dataRow;
-  //   });
-  //   setTableData(updatedData);
-  // };
+  const handleStatusChange = (row, newStatus) => {
+    const updatedData = tableData.map((dataRow) => {
+      if (dataRow === row) {
+        return { ...dataRow, status: newStatus };
+      }
+      return dataRow;
+    });
+    setTableData(updatedData);
+  };
 
-  // const handleUpdateHistory = (row, updatedHistory) => {
-  //   const updatedData = tableData.map((dataRow) => {
-  //     if (dataRow === row) {
-  //       return { ...dataRow, history: updatedHistory };
-  //     }
-  //     return dataRow;
-  //   });
-  //   setTableData(updatedData);
-  // };
+  const handleUpdateHistory = (row, updatedHistory) => {
+    const updatedData = tableData.map((dataRow) => {
+      if (dataRow === row) {
+        return { ...dataRow, history: updatedHistory };
+      }
+      return dataRow;
+    });
+    setTableData(updatedData);
+  };
 
-  // return (
-  //   <TableContainer component={Paper}>
-  //     <Table aria-label="collapsible table">
-  //       <TableBody>
-  //         {tableData.map((row, index) => (
-  //           <Row
-  //             key={index}
-  //             row={row}
-  //             onStatusChange={handleStatusChange}
-  //             onUpdateHistory={handleUpdateHistory}
-  //             openRow={openRow}
-  //             setOpenRow={setOpenRow}
-  //           />
-  //         ))}
-  //       </TableBody>
-  //     </Table>
-  //   </TableContainer>
-  // );
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="collapsible table">
+        <TableBody>
+          {tableData.map((row, index) => (
+            <Row
+              key={index}
+              row={row}
+              onStatusChange={handleStatusChange}
+              onUpdateHistory={handleUpdateHistory}
+              openRow={openRow}
+              setOpenRow={setOpenRow}
+            />
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
 }
