@@ -135,7 +135,7 @@ export default function Sidebar() {
 
     ];
 
-    const routes = ['/police-division/', '/police-division/adding-officers', '/notifications', '/statistics', '/information', '/logout'];
+    const routes = ['/police-division/', '/police-division/adding-officers', '/police-division/viewDocuments', '/statistics', '/information', '/logout'];
 
     return (
 

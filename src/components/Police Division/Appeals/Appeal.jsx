@@ -43,7 +43,7 @@ const theme = createTheme({
   },
 });
 
-export default MyForm = () => {
+export default ManualFine = () => {
   const [selectedColor, setSelectedColor] = useState("");
 
   const {
@@ -65,35 +65,64 @@ export default MyForm = () => {
   };
 
   const namePattern = /^[a-zA-Z]+$/;
-  // const policeNumber = /^[0-9]{3}$/;
+  const policeNumber = /^[0-9]{3}$/;
   // const phoneNumber = /^[0-9]{10}$/;
   // const email = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
   return (
     <div style={{ height: '500px', display: 'flex', flexDirection: 'column',}}>
       <form onSubmit={handleSubmit(onSubmit)} style={{ flex: 1 }}>
+
         {/* Violation type */}
         <div className="mb-5">
           <Controller className="mt-5"
-            name="policeOfficerName"
+            name="violation"
             control={control}
             defaultValue=""
             rules={{
               required: '*This field is required.',
               pattern: {
                 value: namePattern,
-                message: '*Name can not contain numbers or special characters.',
+                message: '*Violation can not contain numbers or special characters.',
               },
             }}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Police Officer Name"
-                placeholder="Police Officer Name"
+                label="Violation"
+                placeholder=""
                 variant="outlined"
                 fullWidth
-                error={!!errors.policeOfficerName}
-                helperText={errors.policeOfficerName?.message}
+                error={!!errors.violation}
+                helperText={errors.violation?.message}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
+              />
+            )}
+          />
+        </div>
+
+        {/* Amount */}
+        <div className="mb-5">
+          <Controller className="mt-5"
+            name="amount"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: '*This field is required.',
+              pattern: {
+                value: namePattern,
+                message: '*Amount can not contain letters.',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Amount"
+                placeholder=""
+                variant="outlined"
+                fullWidth
+                error={!!errors.amount}
+                helperText={errors.amount?.message}
                 sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
               />
             )}
@@ -105,7 +134,7 @@ export default MyForm = () => {
           <Controller className="mt-5"
             name="policeNumber"
             control={control}
-            defaultValue=""
+            defaultValue="43956"
             rules={{
               required: '*This field is required.',
               pattern: {
@@ -128,67 +157,11 @@ export default MyForm = () => {
           />
         </div>
 
-        {/* Email */}
-        <div className="mb-5">
-          <Controller className="mt-5"
-            name="email"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: email,
-                message: '*Invalid email address.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Email"
-                placeholder="Email"
-                variant="outlined"
-                fullWidth
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
-              />
-            )}
-          />
-        </div>
-        
-        {/* Phone Number */}
-        <div className="mb-5">
-          <Controller className="mt-5"
-            name="phoneNumber"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: phoneNumber,
-                message: '*Invalid phone number.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Phone Number"
-                placeholder="Phone Number"
-                variant="outlined"
-                fullWidth
-                error={!!errors.phoneNumber}
-                helperText={errors.phoneNumber?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px', marginBottom: '100px' }}
-              />
-            )}
-          />
-        </div>
-
         <div className="flex justify-center ml-24 mb-5" >
           <ThemeProvider theme={theme}>
             <Stack direction="row" spacing={2}>
               <Button variant="contained" type="submit">
-                Continue
+                Payment Done
               </Button>
               <Button variant="outlined" onClick={() => window.location.reload()}>
                 Cancel
