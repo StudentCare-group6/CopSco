@@ -55,25 +55,6 @@ export default function AcceptedTable() {
       },
     },
     {
-      field: "reward",
-      headerName: "Reward",
-      headerAlign: "center",
-      align: "center",
-      flex: 1,
-      renderCell: (params) => {
-        return (
-          <Button
-            startIcon={<WalletIcon />}
-            variant="contained"
-            className="bg-green-800 rounded-full"
-            sx={{ boxShadow: "none", textTransform: "none" }}
-          >
-            Rs. {params.value}
-          </Button>
-        );
-      },
-    },
-    {
       field: "location",
       headerName: "Location",
       headerAlign: "center",
@@ -149,7 +130,7 @@ export default function AcceptedTable() {
       description: item.description,
       reward: "500",
       location: item.district + ", " + item.city,
-      date: formatDate(item.reportdate),
+      date: formatDate(item.date),
       actions: item.caseid
     }));
 
