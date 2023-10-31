@@ -9,7 +9,9 @@ import TextField from '@mui/material/TextField';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAuth from "../../hooks/useAuth";
+import { useEffect } from "react";
 
 const theme = createTheme({
   components: {
@@ -52,56 +54,40 @@ const MyForm = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => {
-    
-      console.log("Submitted data:", data);
-      toast.success("Added Successfully!");
-  };
-  
+  const axiosPrivate = useAxiosPrivate();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+
+    const testing = {
+      nic: data.nic,
+      officerID: data.policeNumber,
+    };
+    console.log(testing);
+
+      try {
+        const response = await axiosPrivate.post("police-division/addPoliceOfficers", testing);
+        window.location.reload();
+        toast.success("Added Successfully!");
+      } catch (error) { 
+        console.log(error);
+      }
+};
 
   const handleViolationStatusChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedColor(selectedValue); 
   };
 
-  const namePattern = /^[a-zA-Z]+$/;
   const policeNumber = /^[0-9]{3}$/;
-  const phoneNumber = /^[0-9]{10}$/;
-  const email = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+  const nic = /^[0-9]{3}$/;
 
   return (
-    <div style={{ height: '500px', display: 'flex', flexDirection: 'column',}}>
+    <div style={{ height: '250px', display: 'flex', flexDirection: 'column',}}>
       <form onSubmit={handleSubmit(onSubmit)} style={{ flex: 1 }}>
-        {/* Police officer name */}
-        <div className="mb-5">
-          <Controller className="mt-5"
-            name="policeOfficerName"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: namePattern,
-                message: '*Name can not contain numbers or special characters.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Police Officer Name"
-                placeholder="Police Officer Name"
-                variant="outlined"
-                fullWidth
-                error={!!errors.policeOfficerName}
-                helperText={errors.policeOfficerName?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
-              />
-            )}
-          />
-        </div>
         
-        {/* Police number */}
-        <div className="mb-5">
+        {/* Police ID */}
+        <div className='mt-5'>
           <Controller className="mt-5"
             name="policeNumber"
             control={control}
@@ -110,7 +96,7 @@ const MyForm = () => {
               required: '*This field is required.',
               pattern: {
                 value: policeNumber,
-                message: '*Invalid number.',
+                message: '*Invalid police number. Please enter a correct number.',
               },
             }}
             render={({ field }) => (
@@ -127,66 +113,38 @@ const MyForm = () => {
             )}
           />
         </div>
-
-        {/* Email */}
-        <div className="mb-5">
-          <Controller className="mt-5"
-            name="email"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: email,
-                message: '*Invalid email address.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Email"
-                placeholder="Email"
-                variant="outlined"
-                fullWidth
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
-              />
-            )}
-          />
-        </div>
         
-        {/* Phone Number */}
-        <div className="mb-5">
+        {/* NIC */}
+        <div>
           <Controller className="mt-5"
-            name="phoneNumber"
+            name="nic"
             control={control}
             defaultValue=""
             rules={{
               required: '*This field is required.',
               pattern: {
-                value: phoneNumber,
-                message: '*Invalid phone number.',
+                value: nic,
+                message: '*Invalid NIC number. Please enter a valid NIC number.',
               },
             }}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Phone Number"
-                placeholder="Phone Number"
+                label="NIC"
+                placeholder="NIC"
                 variant="outlined"
                 fullWidth
-                error={!!errors.phoneNumber}
-                helperText={errors.phoneNumber?.message}
+                error={!!errors.nic}
+                helperText={errors.nic?.message}
                 sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px', marginBottom: '100px' }}
               />
             )}
           />
         </div>
 
-        <div className="flex justify-center ml-24 mb-5" >
+        <div>
           <ThemeProvider theme={theme}>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={2} sx={{ marginTop: '-60px', marginBottom: '20px'}}>
               <Button variant="contained" type="submit">
                 Continue
               </Button>
@@ -196,7 +154,6 @@ const MyForm = () => {
             </Stack>
           </ThemeProvider>
         </div>
-
       </form>
       <ToastContainer />
     </div>
