@@ -79,8 +79,8 @@ const MyForm = () => {
     setSelectedColor(selectedValue); 
   };
 
-  const policeNumber = /^[0-9]{3}$/;
-  const nic = /^[0-9]{3}$/;
+  const policeNumber = /^[0-9]{5}$/;
+  const nic = /^[0-9]{12}$/;
 
   return (
     <div style={{ height: '250px', display: 'flex', flexDirection: 'column',}}>
