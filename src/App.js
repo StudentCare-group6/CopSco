@@ -43,6 +43,7 @@ import FAQ from "./pages/Admin/FAQ";
 import { VideoProvider } from "./context/VideoContext";
 import VerifyingDocuments from "./pages/Police Division/VerifyingDocuments";
 import DivisionHome from "./pages/Police Division/Home";
+import Appeal from "./components/Police Division/Appeals/Appeal"
 
 export default function App() {
   const THEME = createTheme({
@@ -191,6 +192,8 @@ export default function App() {
                   }
                 />
                 <Route path="viewDocuments" element={<VerifyingDocuments />} />
+                <Route path="appeal" element={<Appeal />} />
+
 
                 <Route
                   path=""
