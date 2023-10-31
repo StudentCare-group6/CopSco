@@ -20,6 +20,11 @@ import { useEffect } from "react";
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Fade from '@mui/material/Fade';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import RejectionReason from './RejectionReason'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -104,16 +109,20 @@ export default function CollapsibleTable() {
       }
     };
 
-    const handleReject = () => {
-      const newStatus = 'Rejected';
-      onStatusChange(row, newStatus);
+    const [openn, setOpen] = React.useState(false);
+    const [nic, setNIC] = React.useState("");
+
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    const handleReject = (NIC) => {
+      setNIC(NIC);
+      setOpen(true);
     };
 
     row.isEditing = true;
-
-    const handleSave = () => {
-      onUpdateHistory(row, [...row.history]);
-    };
 
     const handleFieldChange = (field, value) => {
       row.historyEntry[field] = value;
@@ -162,7 +171,7 @@ export default function CollapsibleTable() {
                   Accept
                 </Button>
                 &nbsp;&nbsp;
-                <Button variant="outlined" onClick={handleReject}>
+                <Button variant="outlined" onClick={() => handleReject(row.NIC)}>
                   Reject
                 </Button>
               </TableCell>
@@ -226,6 +235,14 @@ export default function CollapsibleTable() {
               </TableCell>
           </TableBody>
         </Table>
+        <Dialog open={openn} onClose={handleClose}>
+          <DialogTitle>Rejection Reason</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <RejectionReason NIC={nic} />
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
         {/* Image Modal */}
       <Modal
         open={isImageModalOpen}

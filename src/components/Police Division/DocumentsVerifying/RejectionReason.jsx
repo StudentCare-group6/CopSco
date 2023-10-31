@@ -9,6 +9,9 @@ import TextField from '@mui/material/TextField';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAuth from "../../../hooks/useAuth";
+import { useEffect } from "react";
 
 
 const theme = createTheme({
@@ -43,7 +46,8 @@ const theme = createTheme({
   },
 });
 
-const Appeal = () => {
+const RejectionReason = (NIC) => {
+  const axiosPrivate = useAxiosPrivate();
   const [selectedColor, setSelectedColor] = useState("");
 
   const {
@@ -52,143 +56,66 @@ const Appeal = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => {
-    
-      console.log("Submitted data:", data);
-      toast.success("Added Successfully!");
-  };
+  const onSubmit = async (rejectionreason) => {
+    const testing = {
+      nic: NIC,
+      verified: false,
+      reason: rejectionreason, 
+    };
+
+    console.log(testing.nic.NIC, testing.verified, testing.reason.reason);
+
+    const verifyData = {
+      nic: testing.nic.NIC,
+      verified: testing.verified,
+      reason: testing.reason.reason
+    };
+
+    try {
+        const response = await axiosPrivate.post("police-division/verifyDocuments", verifyData);
+        window.location.reload();
+        toast.success("Notification Sent!");
   
+      } catch (error) { 
+        console.log(error);
+      }
+  };
 
   const handleViolationStatusChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedColor(selectedValue); 
   };
 
-  const appeals = /^[a-zA-Z]+$/;
-  const namePattern = /^[a-zA-Z]+$/;
-  const policeNumber = /^[0-9]{3}$/;
-  // const phoneNumber = /^[0-9]{10}$/;
-  // const email = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-
   return (
-    <div style={{ height: '500px', display: 'flex', flexDirection: 'column',}}>
+    <div style={{ height: '200px', display: 'flex', flexDirection: 'column',}}>
       <form onSubmit={handleSubmit(onSubmit)} style={{ flex: 1 }}>
 
       <div className="mb-5">
-          <Controller className="mt-5"
-            name="caseid"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: namePattern,
-                message: '*Appeal can not contain numbers or special characters.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Violation ID"
-                placeholder=""
-                variant="outlined"
-                fullWidth
-                error={!!errors.appeals}
-                helperText={errors.appeals?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
-              />
-            )}
-          />
-        </div>
-
-        <div className="mb-5">
           <Controller className="mt-5"
             name="reason"
             control={control}
             defaultValue=""
             rules={{
               required: '*This field is required.',
-              pattern: {
-                value: namePattern,
-                message: '*Appeal can not contain numbers or special characters.',
-              },
             }}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Reason"
-                placeholder="Add the reason"
-                variant="outlined"
-                fullWidth
-                error={!!errors.appeals}
-                helperText={errors.appeals?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
-              />
-            )}
-          />
-        </div>
-
-        {/* Amount
-        <div className="mb-5">
-          <Controller className="mt-5"
-            name="amount"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: namePattern,
-                message: '*Amount can not contain letters.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Amount"
+                label="Rejection reason"
                 placeholder=""
                 variant="outlined"
                 fullWidth
-                error={!!errors.amount}
-                helperText={errors.amount?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
-              />
-            )}
-          />
-        </div> */}
-        
-        {/* Police number */}
-        <div className="mb-5">
-          <Controller className="mt-5"
-            name="policeNumber"
-            control={control}
-            defaultValue="43956"
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: policeNumber,
-                message: '*Invalid number.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Police Number"
-                placeholder="Police Number"
-                variant="outlined"
-                fullWidth
-                error={!!errors.policeNumber}
-                helperText={errors.policeNumber?.message}
                 sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
               />
             )}
           />
         </div>
-
-        <div className="flex justify-center ml-24 mb-5" >
+        
+        <div className="flex justify-center ml-24 mt-10" >
           <ThemeProvider theme={theme}>
             <Stack direction="row" spacing={2}>
               <Button variant="contained" type="submit">
-                Save
+                Reject
               </Button>
               <Button variant="outlined" onClick={() => window.location.reload()}>
                 Cancel
@@ -201,7 +128,8 @@ const Appeal = () => {
       <ToastContainer />
     </div>
   );
+  
 }
 
-export default Appeal;
+export default RejectionReason;
 
