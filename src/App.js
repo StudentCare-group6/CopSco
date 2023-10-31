@@ -42,7 +42,7 @@ import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
 import { VideoProvider } from "./context/VideoContext";
 import VerifyingDocuments from "./pages/Police Division/VerifyingDocuments";
-import DivisionHome from "./pages/Police Division/Home"
+import DivisionHome from "./pages/Police Division/Home";
 
 export default function App() {
   const THEME = createTheme({
@@ -110,7 +110,7 @@ export default function App() {
             </Route>
           </Route>
           <Route element={<PolicePersistLogin />}>
-             {/* traffic police routes */}
+            {/* traffic police routes */}
             <Route element={<RequireAuth allowedRole="traffic-police" />}>
               <Route path="traffic-police/" element={<TrafficPoliceRoutes />}>
                 <Route
@@ -158,36 +158,50 @@ export default function App() {
             </Route>
 
             {/* police operator routes */}
-              <Route element={<RequireAuth allowedRole="police-operator" />}>
+            <Route element={<RequireAuth allowedRole="police-operator" />}>
               {/* <Route> */}
-                  <Route path="police-operator/" element={<PoliceOperatorRoutes />} >
-                    <Route path="" element={
-                      <VideoProvider>
-                        <PoliceHome />
-                      </VideoProvider>
-                    } />
-                    <Route path="video-details" element={
-                      <VideoProvider>
-                        <VideoDetails />
-                      </VideoProvider>
-                    } />
-                  </Route>
+              <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
+                <Route
+                  path=""
+                  element={
+                    <VideoProvider>
+                      <PoliceHome />
+                    </VideoProvider>
+                  }
+                />
+                <Route
+                  path="video-details"
+                  element={
+                    <VideoProvider>
+                      <VideoDetails />
+                    </VideoProvider>
+                  }
+                />
               </Route>
+            </Route>
             <Route element={<RequireAuth allowedRole="police-division" />}>
-            {/* <Route> */}
+              {/* <Route> */}
               <Route path="police-division/" element={<PoliceDivisionRoutes />}>
-                <Route path="adding-officers" element={
-                  <VideoProvider>
-                    <AddingOfficers />
-                  </VideoProvider>
-                } />
+                <Route
+                  path="adding-officers"
+                  element={
+                    <VideoProvider>
+                      <AddingOfficers />
+                    </VideoProvider>
+                  }
+                />
                 <Route path="viewDocuments" element={<VerifyingDocuments />} />
 
-                <Route path="" element={
-                  <VideoProvider>
-                    <DivisionHome />
-                  </VideoProvider>
-                } />
+                <Route
+                  path=""
+                  element={
+                    <VideoProvider>
+                      <FineProvider>
+                        <DivisionHome />
+                      </FineProvider>
+                    </VideoProvider>
+                  }
+                />
               </Route>
             </Route>
             <Route element={<RequireAuth allowedRole="admin" />}>
