@@ -43,7 +43,7 @@ const theme = createTheme({
   },
 });
 
-export default ManualFine = () => {
+const Appeal = () => {
   const [selectedColor, setSelectedColor] = useState("");
 
   const {
@@ -64,6 +64,7 @@ export default ManualFine = () => {
     setSelectedColor(selectedValue); 
   };
 
+  const appeals = /^[a-zA-Z]+$/;
   const namePattern = /^[a-zA-Z]+$/;
   const policeNumber = /^[0-9]{3}$/;
   // const phoneNumber = /^[0-9]{10}$/;
@@ -73,35 +74,61 @@ export default ManualFine = () => {
     <div style={{ height: '500px', display: 'flex', flexDirection: 'column',}}>
       <form onSubmit={handleSubmit(onSubmit)} style={{ flex: 1 }}>
 
-        {/* Violation type */}
-        <div className="mb-5">
+      <div className="mb-5">
           <Controller className="mt-5"
-            name="violation"
+            name="caseid"
             control={control}
             defaultValue=""
             rules={{
               required: '*This field is required.',
               pattern: {
                 value: namePattern,
-                message: '*Violation can not contain numbers or special characters.',
+                message: '*Appeal can not contain numbers or special characters.',
               },
             }}
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Violation"
+                label="Violation ID"
                 placeholder=""
                 variant="outlined"
                 fullWidth
-                error={!!errors.violation}
-                helperText={errors.violation?.message}
+                error={!!errors.appeals}
+                helperText={errors.appeals?.message}
                 sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
               />
             )}
           />
         </div>
 
-        {/* Amount */}
+        <div className="mb-5">
+          <Controller className="mt-5"
+            name="reason"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: '*This field is required.',
+              pattern: {
+                value: namePattern,
+                message: '*Appeal can not contain numbers or special characters.',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Reason"
+                placeholder="Add the reason"
+                variant="outlined"
+                fullWidth
+                error={!!errors.appeals}
+                helperText={errors.appeals?.message}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
+              />
+            )}
+          />
+        </div>
+
+        {/* Amount
         <div className="mb-5">
           <Controller className="mt-5"
             name="amount"
@@ -127,7 +154,7 @@ export default ManualFine = () => {
               />
             )}
           />
-        </div>
+        </div> */}
         
         {/* Police number */}
         <div className="mb-5">
@@ -161,7 +188,7 @@ export default ManualFine = () => {
           <ThemeProvider theme={theme}>
             <Stack direction="row" spacing={2}>
               <Button variant="contained" type="submit">
-                Payment Done
+                Save
               </Button>
               <Button variant="outlined" onClick={() => window.location.reload()}>
                 Cancel
@@ -175,3 +202,6 @@ export default ManualFine = () => {
     </div>
   );
 }
+
+export default Appeal;
+

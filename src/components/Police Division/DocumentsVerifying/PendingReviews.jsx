@@ -164,6 +164,8 @@ export default function CollapsibleTable() {
                   Reject
                 </Button>
               </TableCell>
+
+              {/* Image Modal */}
             </TableRow>
     {/* )) */}
     {/* } */}
