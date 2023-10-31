@@ -47,9 +47,9 @@ export default function UploadPage() {
         if (!isDuplicate) {
           if (upload.status === "Pending Review") {
             setPendingUploads((prevPendingUploads) => [...prevPendingUploads, upload]);
-          } else if (upload.status === "Accepted") {
+          } else if (upload.status === "accepted") {
             setAcceptedUploads((prevAcceptedUploads) => [...prevAcceptedUploads, upload]);
-          } else if (upload.status === "Rejected") {
+          } else if (upload.status === "rejected") {
             setRejectedUploads((prevRejectedUploads) => [...prevRejectedUploads, upload]);
           } else {
             console.log("Error in getting uploads");
