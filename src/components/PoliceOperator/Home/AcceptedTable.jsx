@@ -126,12 +126,12 @@ export default function AcceptedTable() {
   const { acceptedUploads } = useFineContext();
   console.log(acceptedUploads);
 
-  if (acceptedUploads.length === 0 || acceptedUploads.length === undefined) {
+  if (acceptedUploads === undefined || acceptedUploads.length === 0 || acceptedUploads.length === undefined ) {
     return (
       <div className="flex flex-col items-center mt-10">
         <img src={image} alt="empty" className="w-20 h-20" />
         <Typography variant="h6" className="my-5">
-          No accepted videos, Don't worry keep uploading !
+          No videos in queue ! Try again later
         </Typography>
       </div>
     );

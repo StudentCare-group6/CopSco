@@ -26,6 +26,8 @@ import { useEffect } from "react";
 import VideoThumbnail from 'react-video-thumbnail';
 import ThumbnailModal from "./ThumbnailModal";
 import axios from "../../../api/posts";
+import { useNavigate } from "react-router-dom";
+
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -90,7 +92,7 @@ const steps = ["Violation Details", "Previous Records", "Report violations"];
 
 
 const MyForm = ({ pausedTime, videoUrl }) => {
-
+  const navigate = useNavigate();
   const { selectedVideo, setSelectedVideo, thumbnail } = useVideoContext();
   const { register, errors, handleSubmit, getValues, setValue } = useFormContext();
   var video = selectedVideo;
@@ -107,6 +109,8 @@ const MyForm = ({ pausedTime, videoUrl }) => {
       progress: undefined,
     });
   const onSubmit = async (e) => {
+    
+ 
     try {
       let formData = new FormData();
       formData.append("caseID", video.caseID);
@@ -121,9 +125,13 @@ const MyForm = ({ pausedTime, videoUrl }) => {
       formData.forEach(function (value, key) {
         console.log(key, value);
       });
-      // const response = await axios.post("violations/getPastViolations/verifyUploads", formData);
-      // console.log(response);
-      // showSuccessToast();
+      const response = await axios.post("violations/getPastViolations/verifyUploads", formData);
+      showSuccessToast();
+      //set timeout
+      setTimeout(() => {
+        navigate("/police-operator/");
+      }, 2000);
+    
     } catch (err) {
       console.log(err);
     }

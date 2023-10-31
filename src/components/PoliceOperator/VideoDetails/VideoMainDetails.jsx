@@ -43,7 +43,7 @@ export default function CustomizedTables() {
   const rows = [
     createData('Vehicle Number', video.vehicleno),
     createData('Violation Type', video.violationtype),
-    createData('Violation Date', video.violtionDate),
+    createData('Violation Date', video.violationDate),
     createData('Violation Time', video.violationTime),
     createData('Location', video.district+', '+ video.city),
     createData('Severity', 'High'),
