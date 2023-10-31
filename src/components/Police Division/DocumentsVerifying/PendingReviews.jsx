@@ -68,28 +68,28 @@ export default function CollapsibleTable() {
     try {
       const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
       console.log(response.data);
-      // const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview));    
-      // setValue(newRows);
+      const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview));    
+      setValue(newRows);
 
     } catch (error) {
       console.log(error);
     }
   };
 
-  const rows = [
-    createData('Uthpalani', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-    createData('Oshada', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-    createData('Tharindu', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-    createData('Vishal', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-  ];
+  // const rows = [
+  //   createData('Uthpalani', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+  //   createData('Oshada', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+  //   createData('Tharindu', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+  //   createData('Vishal', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+  // ];
 
-  // useEffect(() => {
-  //   getDocuments();
-  // }, []);
+  useEffect(() => {
+    getDocuments();
+  }, []);
 
-  // useEffect(() => {
-  //   console.log(value);
-  // }, [value]);
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
   
 
   function Row(props) {
@@ -173,7 +173,7 @@ export default function CollapsibleTable() {
   );
 }
 
-  const [tableData, setTableData] = React.useState(rows);
+  const [tableData, setTableData] = React.useState(value);
   const [openRow, setOpenRow] = React.useState(null);
 
   const handleStatusChange = (row, newStatus) => {
@@ -200,7 +200,7 @@ export default function CollapsibleTable() {
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableBody>
-          {tableData.map((row, index) => (
+          {value.map((row, index) => (
             <Row
               key={index}
               row={row}
