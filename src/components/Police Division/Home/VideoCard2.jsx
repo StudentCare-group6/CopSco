@@ -1,13 +1,16 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { useEffect } from 'react';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
-import { Typography } from '@mui/material';
+import { useEffect } from "react";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import { CardActions, Typography } from "@mui/material";
 import createTheme from "@mui/material/styles/createTheme";
 import { ThemeProvider } from "@mui/material/styles";
+import { offences, demeritPoints } from "../../../data/Constants";
+import Button from "@mui/material/Button";
+import { Stack } from "@mui/system";
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -16,23 +19,28 @@ function formatDate(inputDateString) {
   return formattedDate;
 }
 
-
 export default function RecipeReviewCard(props) {
   const axiosPrivate = useAxiosPrivate();
   const values = props.data;
-  const [video, setVideo] = React.useState({}); // [video, setVideo
+  const [video, setVideo] = React.useState({}); // [video, setVideo]
+  var demeritPointsList = [];
+  var amountList = [];
+
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
-    }
+    },
   });
   const getVideo = async () => {
     const userData = {
       caseID: props.caseId,
     };
     try {
-      const response = await axiosPrivate.get(`police-division/viewVerifiedVideoDetails`, { params: userData });
-      console.log(response)
+      const response = await axiosPrivate.get(
+        `police-division/viewVerifiedVideoDetails`,
+        { params: userData }
+      );
+      console.log(response);
       setVideo(response.data);
     } catch (error) {
       console.log(error);
@@ -46,24 +54,49 @@ export default function RecipeReviewCard(props) {
     console.log(video); // Log the updated video value when it changes
   }, [video]);
 
-  console.log(props.data);
- 
-  const keyValuePairs = [
-    // { key: 'Due Date', value: formatDate(values.due_date) },
-    // { key: 'Vehicle No.', value: values.vehicle_number },
-    // { key: 'Police Division', value: values.location },
-    // { key: 'Amount', value: 'Rs.' + values.amount },
-    // { key: 'Demerit Points', value: values.demerit_points + ' points' }
-    { key: 'Due Date', value: 'Hello' },
-    { key: 'Vehicle No.', value: "Hello" },
-    { key: 'Police Division', value: "Hello"},
-    { key: 'Amount', value: "Hello"},
-    { key: 'Demerit Points', value: "Hello" }
+  var keyValuePairs = [
+    { key: "Due Date", value: formatDate(video.date) },
+    { key: "Vehicle No.", value: video.vehicleno },
+    { key: "Location", value: video.district + ", " + video.city },
   ];
+
+  if (video.violations != null) {
+    for (var i = 0; i < video.violations.length; i++) {
+      keyValuePairs.push({
+        key: "Violation " + (i + 1),
+        value: video.violations[i],
+      });
+      var violation = video.violations[i];
+      if (demeritPoints.has(violation) && offences.has(violation)) {
+        demeritPointsList.push(demeritPoints.get(violation));
+        amountList.push(offences.get(violation));
+      }
+    }
+    console.log(demeritPointsList);
+    console.log(amountList);
+  }
+  var totalDemeritPoints = 0;
+  var totalAmount = 0;
+  for (var i = 0; i < demeritPointsList.length; i++) {
+    totalDemeritPoints += demeritPointsList[i];
+    totalAmount += amountList[i];
+  }
+  keyValuePairs.push({
+    key: "Demerit Points",
+    value: totalDemeritPoints + " Points",
+  });
+  keyValuePairs.push({ key: "Total Amount", value: "Rs." + totalAmount });
+
+  const handleIssueFine = async (caseID,demerits, amounts, violations) => {
+    console.log(caseID);
+    console.log(demerits);
+    console.log(amounts);
+    console.log(violations);
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Card sx={{ maxWidth: '100%', boxShadow: 'none', borderRadius: '15px' }}>
+      <Card sx={{ maxWidth: "100%", boxShadow: "none", borderRadius: "15px" }}>
         <CardMedia
           component="video"
           height="194"
@@ -71,16 +104,21 @@ export default function RecipeReviewCard(props) {
           controls
         />
         <CardContent>
-          <Grid container spacing={2} alignItems='center' justifyContent='center'>
+          <Grid
+            container
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+          >
             {keyValuePairs.map((pair, index) => (
               <>
-                <Grid item xs={12} sm={6} key={index} >
-                  <Typography variant='subtitle1' sx = {{marginLeft:'30px'}}>
+                <Grid item xs={12} sm={4} key={index}>
+                  <Typography variant="body1" sx={{ marginLeft: "30px" }}>
                     {pair.key}:
                   </Typography>
                 </Grid>
-                <Grid item xs={12} sm={6} key={index}>
-                  <Typography variant='subtitle1' sx = {{marginLeft:'30px'}}>
+                <Grid item xs={12} sm={8} key={index}>
+                  <Typography variant="body1" sx={{ marginLeft: "30px" }}>
                     {pair.value}
                   </Typography>
                 </Grid>
@@ -88,6 +126,26 @@ export default function RecipeReviewCard(props) {
             ))}
           </Grid>
         </CardContent>
+        <CardActions>
+          <Stack direction="row" spacing={2} justifyContent={'space-evenly'} sx = {{width:'100%', padding:'10px'}}>
+            <Button
+              variant="text"
+              className="rounded-full"
+              sx={{  textTransform: "none" }}
+              onClick = {() => {handleIssueFine(props.caseId,demeritPointsList,amountList,video.violations)}}
+            >
+              Issue Fine
+            </Button>
+            <Button
+              variant="text"
+              className="bg-red-500 rounded-full"
+              sx={{ textTransform: "none" }}
+              color = 'error'
+            >
+              Reject Fine
+            </Button>
+          </Stack>
+        </CardActions>
       </Card>
     </ThemeProvider>
   );
