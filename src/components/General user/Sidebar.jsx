@@ -161,7 +161,7 @@ export default function Sidebar() {
         <Divider />
         <List sx={{ height: "50%" }} className="flex flex-col justify-between">
           {[
-            "Home",
+            "Video Violations",
             "Fine Managment",
             "Profile",
             "FAQ",

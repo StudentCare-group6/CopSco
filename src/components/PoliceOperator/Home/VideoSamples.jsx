@@ -12,6 +12,7 @@ import { Typography } from "@mui/material";
 import { Image } from "@mui/icons-material";
 import image from "../../../images/box.png";
 
+
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   textAlign: "center",
@@ -24,6 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function VideoSamples() {
   const { auth } = useAuth();
   const [videoData1, setVideoData] = useState([]);
+
   const operatorData = {
     id: auth.user,
   };
@@ -40,6 +42,7 @@ export default function VideoSamples() {
   useEffect(() => {
     getvideos();
   }, []);
+
 
   if (videoData1.length === 0 || videoData1.length === undefined || videoData1.length === null) {
     return (

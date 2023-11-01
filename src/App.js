@@ -43,10 +43,15 @@ import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
 import PaymentPage from "./pages/GeneralUser/PaymentPage";
 import { VideoProvider } from "./context/VideoContext";
+import VerifyingDocuments from "./pages/Police Division/VerifyingDocuments";
+import AddAppeals from "./pages/Police Division/AddAppeals";
 import DivisionHome from "./pages/Police Division/Home";
+import Appeal from "./components/Police Division/Appeals/Appeal";
+import DivisionInformation from "./pages/Police Division/Information";
 import FineIssue from "./pages/Police Division/FineIssue";
 import Info from "./pages/PoliceOperator/Info";
 import UserFAQ from "./pages/GeneralUser/Information";
+
 
 export default function App() {
   const THEME = createTheme({
@@ -164,6 +169,7 @@ export default function App() {
 
             {/* police operator routes */}
 
+
             <Route element={<RequireAuth allowedRole="police-operator" />}>
               {/* <Route> */}
               <Route
@@ -192,28 +198,24 @@ export default function App() {
               {/* <Route> */}
               <Route path="police-division/" element={<PoliceDivisionRoutes />}>
                 <Route
-                  path=""
+                  path="adding-officers"
                   element={
                     <VideoProvider>
                       <AddingOfficers />
                     </VideoProvider>
                   }
                 />
+
+                <Route path="information" element={<DivisionInformation />} />
+                <Route path="viewDocuments" element={<VerifyingDocuments />} />
+                <Route path="addAppeals" element={<AddAppeals />} />
                 <Route
-                  path="Home"
-                  element={
-                    <FineProvider>
-                      <VideoProvider>
-                        <DivisionHome />
-                      </VideoProvider>
-                    </FineProvider>
-                  }
-                />
-                <Route
-                  path="FineIssue"
+                  path=""
                   element={
                     <VideoProvider>
-                      <FineIssue />
+                      <FineProvider>
+                        <DivisionHome />
+                      </FineProvider>
                     </VideoProvider>
                   }
                 />

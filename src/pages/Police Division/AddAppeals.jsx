@@ -5,7 +5,7 @@ import Badge from "@mui/material/Badge";
 import { useState } from "react";
 import Popup from "../../components/General user/video_upload/Popup";
 import Stack from "@mui/material/Stack";
-import PendingReviews from "../../components/Police Division/DocumentsVerifying/PendingReviews";
+import addingAppeals from "../../components/Police Division/Appeals/addingAppeals";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 import { useEffect } from "react";
@@ -26,14 +26,13 @@ function TabPanel(props) {
   );
 }
 
-export default function VerifyingDocuments() {
-
+export default function AddAppeals() {
   return (
     <div>
       <Box component="main" sx={{ flexGrow: 1, p: 3, height: "100vh" }}>
         <Box className="py-6">
           <Stack direction="row" justifyContent="space-between">
-            <h2 className="text-3xl font-bold">Verify User Documents</h2>
+            <h2 className="text-3xl font-bold">Add Appeals</h2>
             <Popup />
           </Stack>
 
@@ -46,14 +45,14 @@ export default function VerifyingDocuments() {
             <Tab
               label={
                 <Badge badgeContent={0} color="primary">
-                  Pending Review
+                  Violation Appeals
                 </Badge>
               }
               sx={{ fontWeight: "bold" }}
             />
           </Tabs>
           <TabPanel>
-            <PendingReviews />
+            <addingAppeals />
           </TabPanel>
         </Box>
       </Box>

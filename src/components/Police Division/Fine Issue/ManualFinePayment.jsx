@@ -9,9 +9,7 @@ import TextField from '@mui/material/TextField';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import useAuth from "../../hooks/useAuth";
-import { useEffect } from "react";
+
 
 const theme = createTheme({
   components: {
@@ -45,7 +43,7 @@ const theme = createTheme({
   },
 });
 
-const MyForm = () => {
+export default ManualFine = () => {
   const [selectedColor, setSelectedColor] = useState("");
 
   const {
@@ -54,49 +52,94 @@ const MyForm = () => {
     formState: { errors },
   } = useForm()
 
-  const axiosPrivate = useAxiosPrivate();
-
-  const onSubmit = async (data) => {
-    console.log(data);
-
-    const testing = {
-      nic: data.nic,
-      officerID: data.policeNumber,
-    };
-    console.log(testing);
-
-      try {
-        const response = await axiosPrivate.post("police-division/addPoliceOfficers", testing);
-        window.location.reload();
-        toast.success("Added Successfully!");
-      } catch (error) { 
-        console.log(error);
-      }
-};
+  const onSubmit = (data) => {
+    
+      console.log("Submitted data:", data);
+      toast.success("Added Successfully!");
+  };
+  
 
   const handleViolationStatusChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedColor(selectedValue); 
   };
 
-  const policeNumber = /^[0-9]{5}$/;
-  const nic = /^[0-9]{12}$/;
+  const namePattern = /^[a-zA-Z]+$/;
+  const policeNumber = /^[0-9]{3}$/;
+  // const phoneNumber = /^[0-9]{10}$/;
+  // const email = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
   return (
-    <div style={{ height: '250px', display: 'flex', flexDirection: 'column',}}>
+    <div style={{ height: '500px', display: 'flex', flexDirection: 'column',}}>
       <form onSubmit={handleSubmit(onSubmit)} style={{ flex: 1 }}>
-        
-        {/* Police ID */}
-        <div className='mt-5'>
+
+        {/* Violation type */}
+        <div className="mb-5">
           <Controller className="mt-5"
-            name="policeNumber"
+            name="violation"
             control={control}
             defaultValue=""
             rules={{
               required: '*This field is required.',
               pattern: {
+                value: namePattern,
+                message: '*Violation can not contain numbers or special characters.',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Violation"
+                placeholder=""
+                variant="outlined"
+                fullWidth
+                error={!!errors.violation}
+                helperText={errors.violation?.message}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
+              />
+            )}
+          />
+        </div>
+
+        {/* Amount */}
+        <div className="mb-5">
+          <Controller className="mt-5"
+            name="amount"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: '*This field is required.',
+              pattern: {
+                value: namePattern,
+                message: '*Amount can not contain letters.',
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Amount"
+                placeholder=""
+                variant="outlined"
+                fullWidth
+                error={!!errors.amount}
+                helperText={errors.amount?.message}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
+              />
+            )}
+          />
+        </div>
+        
+        {/* Police number */}
+        <div className="mb-5">
+          <Controller className="mt-5"
+            name="policeNumber"
+            control={control}
+            defaultValue="43956"
+            rules={{
+              required: '*This field is required.',
+              pattern: {
                 value: policeNumber,
-                message: '*Invalid police number. Please enter a correct number.',
+                message: '*Invalid number.',
               },
             }}
             render={({ field }) => (
@@ -113,40 +156,12 @@ const MyForm = () => {
             )}
           />
         </div>
-        
-        {/* NIC */}
-        <div>
-          <Controller className="mt-5"
-            name="nic"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: nic,
-                message: '*Invalid NIC number. Please enter a valid NIC number.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="NIC"
-                placeholder="NIC"
-                variant="outlined"
-                fullWidth
-                error={!!errors.nic}
-                helperText={errors.nic?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px', marginBottom: '100px' }}
-              />
-            )}
-          />
-        </div>
 
-        <div>
+        <div className="flex justify-center ml-24 mb-5" >
           <ThemeProvider theme={theme}>
-            <Stack direction="row" spacing={2} sx={{ marginTop: '-60px', marginBottom: '20px'}}>
+            <Stack direction="row" spacing={2}>
               <Button variant="contained" type="submit">
-                Continue
+                Payment Done
               </Button>
               <Button variant="outlined" onClick={() => window.location.reload()}>
                 Cancel
@@ -154,10 +169,9 @@ const MyForm = () => {
             </Stack>
           </ThemeProvider>
         </div>
+
       </form>
       <ToastContainer />
     </div>
   );
 }
-
-export default MyForm;
