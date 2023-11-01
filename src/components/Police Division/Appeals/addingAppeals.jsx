@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -7,192 +7,123 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import useAuth from "../../../hooks/useAuth";
-import { useEffect } from "react";
 
-// Import the Modal and Backdrop components
-import Modal from '@mui/material/Modal';
-import Backdrop from '@mui/material/Backdrop';
-import Fade from '@mui/material/Fade';
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
+function createData(name, calories) {
+  return {
+    name,
+    calories,
+    history: [
+      {
+        date: '2020-01-05',
+        customerId: '11091700',
+        amount: 3,
+      },
+      {
+        date: '2020-01-02',
+        customerId: 'Anonymous',
+        amount: 1,
+      },
+    ],
+  };
 }
 
-  function createData(caseid, violation, appealhistory, history) {
-    return {
-      caseid: caseid,
-      violation: violation,
-      appealhistory: appealhistory,
-      history: history,
-    };
-  }
+function Row(props) {
+  const { row } = props;
+  const [open, setOpen] = React.useState(false);
 
-
-export default function CollapsibleTable() {
-  const [value, setValue] = useState([]);
-
-  const axiosPrivate = useAxiosPrivate();
-  const {auth} = useAuth();
-  
-  const userData = {
-    police_username: 43956,
-  };
-
-  // const getDocuments = async () => {
-  //   try {
-  //     const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
-  //     console.log(response.data);
-  //     const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview));    
-  //     setValue(newRows);
-
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  const rows = [
-    createData('C123','Reckless Driving', ''),
-    createData('C345','High Speed', ''),
-  ];
-
-  // useEffect(() => {
-  //   getDocuments();
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(value);
-  // }, [value]);
-  
-
-  function Row(props) {
-    const { row, openRow, setOpenRow } = props;
-    const open = row === openRow;
-
-    const handleStatusChange = () => {
-      // Add appeal button content
-
-    };
-
-    const handleFieldChange = (field, value) => {
-      row.historyEntry[field] = value;
-    };
-  
   return (
     <React.Fragment>
-    <Table>
-      <TableBody>
-            <TableRow>
-              <TableCell>
-                <IconButton
-                  aria-label="expand row"
-                  size="small"
-                  onClick={() => setOpenRow(open ? null : row)}
-                >
-                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                </IconButton>
-              </TableCell>
-              {/* Case ID */}
-              <TableCell component="th" scope="row">
-                <Typography>{row.caseid}</Typography>
-              </TableCell>
-              {/* Violation */}
-              <TableCell component="th" scope="row">
-
-              </TableCell>
-
-              {/* Add Appeal button */}
-              <TableCell>
-                <Button variant="contained" color="primary" className="ml-[50%]" onClick={() => handleStatusChange(row.caseid)}>
-                  Add Appeal
-                </Button>
-              </TableCell>
-            </TableRow>
-
-            {/* Collapsible part */}
-            <TableCell colSpan={4}>
-                  <Collapse in={open} timeout="auto" unmountOnExit>
-                    <div style={{ paddingLeft: '16px' }}>
-                      <Box sx={{ margin: 1 }}>
-                        <Table size="small" aria-label="purchases">
-                            {/* Documents */}
-                            {row.history.map((historyRow, index) => (
-                              <TableRow key={index}>
-                                <TableCell>
-                                    <TextField
-                                      className=""
-                                      label="NIC number"
-                                      defaultValue={historyRow.NIC}
-                                      onChange={(e) => handleFieldChange('NIC', e.target.value)}
-                                    />
-                                </TableCell>
-
-                                <TableCell>
-                                    <TextField
-                                      className=""
-                                      label="Full Name"
-                                      defaultValue={historyRow.fullname}
-                                      onChange={(e) => handleFieldChange('fullname', e.target.value)}
-                                    />
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                        </Table>
-                      </Box>
-                    </div>
-                  </Collapse>
-              </TableCell>
-      </TableBody>
-    </Table>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.name}
+        </TableCell>
+        <TableCell align="right">{row.calories}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Appeals
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Violation</TableCell>
+                    <TableCell align="right">Reason</TableCell>
+                    <TableCell align="right">Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {row.history.map((historyRow) => (
+                    <TableRow key={historyRow.date}>
+                      <TableCell component="th" scope="row">
+                        {historyRow.date}
+                      </TableCell>
+                      <TableCell>{historyRow.customerId}</TableCell>
+                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell align="right">
+                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
     </React.Fragment>
   );
 }
 
-  const [tableData, setTableData] = React.useState(rows);
-  const [openRow, setOpenRow] = React.useState(null);
+Row.propTypes = {
+  row: PropTypes.shape({
+    calories: PropTypes.number.isRequired,
+    carbs: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    history: PropTypes.arrayOf(
+      PropTypes.shape({
+        amount: PropTypes.number.isRequired,
+        customerId: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    protein: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
-  const handleStatusChange = (row, newStatus) => {
-    const updatedData = tableData.map((dataRow) => {
-      if (dataRow === row) {
-        return { ...dataRow, status: newStatus };
-      }
-      return dataRow;
-    });
-    setTableData(updatedData);
-  };
+const rows = [
+  createData('C123', 'Reckless Driving', 6.0, 24, 4.0, 3.99),
+  createData('C234', 'Speed Driving', 9.0, 37, 4.3, 4.99),
+  createData('C345', 'Ignoring traffic lights', 16.0, 24, 6.0, 3.79),
+];
 
+export default function CollapsibleTable() {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableBody>
-          {tableData.map((row, index) => (
-            <Row
-              key={index}
-              row={row}
-              onStatusChange={handleStatusChange}
-              openRow={openRow}
-              setOpenRow={setOpenRow}
-            />
+          {rows.map((row) => (
+            <Row key={row.name} row={row} />
           ))}
         </TableBody>
       </Table>

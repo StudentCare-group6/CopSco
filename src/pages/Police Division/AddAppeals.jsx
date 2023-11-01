@@ -5,10 +5,10 @@ import Badge from "@mui/material/Badge";
 import { useState } from "react";
 import Popup from "../../components/General user/video_upload/Popup";
 import Stack from "@mui/material/Stack";
-import addingAppeals from "../../components/Police Division/Appeals/addingAppeals";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 import { useEffect } from "react";
+import AddingAppeals from "../../components/Police Division/Appeals/AddingAppeals"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,7 +52,7 @@ export default function AddAppeals() {
             />
           </Tabs>
           <TabPanel>
-            <addingAppeals />
+            <AddingAppeals />
           </TabPanel>
         </Box>
       </Box>

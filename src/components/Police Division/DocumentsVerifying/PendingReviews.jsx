@@ -42,11 +42,12 @@ function TabPanel(props) {
   );
 }
 
-function createData(name, NICfrontview, NICrearview, NIC, fullname) {
+function createData(name, NICfrontview, NICrearview, verificationImage, NIC, fullname) {
   return {
     name: name,
     NICfrontview: NICfrontview,
     NICrearview: NICrearview,
+    verificationImage:verificationImage,
     NIC : NIC,
     history: [{ NIC: NIC, fullname: fullname}],
     historyEntry: {
@@ -72,7 +73,7 @@ export default function CollapsibleTable() {
     try {
       const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
       console.log(response.data);
-      const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview, value.NIC, value.fullname));    
+      const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview, value.verificationImage, value.NIC, value.fullname));    
       setValue(newRows);
 
     } catch (error) {
@@ -190,7 +191,7 @@ export default function CollapsibleTable() {
                                   NIC Front View
                                 </Button>
                                 &nbsp;&nbsp;
-                                <Button variant="outlined" onClick={() => openImageModal(`http://localhost:8000/images/img/${row.NICreartview}`)}>
+                                <Button variant="outlined" onClick={() => openImageModal(`http://localhost:8000/images/img/${row.NICrearview}`)}>
                                   NIC Rear View
                                 </Button>
                                 &nbsp;&nbsp;
