@@ -167,7 +167,7 @@ export default function CollapsibleTable() {
               <TableCell component="td" scope="row">
                 {/* {row.status} */}
               </TableCell>
-              <TableCell>
+              <TableCell align="right">
                 <Button variant="contained" color="primary" className="ml-[50%]" onClick={() => handleStatusChange(row.NIC)}>
                   Accept
                 </Button>
@@ -240,22 +240,26 @@ export default function CollapsibleTable() {
           </DialogContent>
         </Dialog>
         {/* Image Modal */}
-      <Modal
-        open={isImageModalOpen}
-        onClose={closeImageModal}
-        aria-labelledby="image-modal-title"
-        aria-describedby="image-modal-description"
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}>
-        <Fade in={isImageModalOpen}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <img src={selectedImage} alt="Image" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-          </div>
-        </Fade>
-      </Modal>
+        <Modal
+          open={isImageModalOpen}
+          onClose={closeImageModal}
+          aria-labelledby="image-modal-title"
+          aria-describedby="image-modal-description"
+          closeAfterTransition
+          BackdropComponent={(props) => (
+            <Backdrop {...props} style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} />
+          )}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={isImageModalOpen}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              <img src={selectedImage} alt="Image" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+            </div>
+          </Fade>
+        </Modal>
+
     </React.Fragment>
   );
 }

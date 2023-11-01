@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Button from '@mui/material/Button';
 
 function createData(name, calories) {
   return {
@@ -53,6 +54,11 @@ function Row(props) {
           {row.name}
         </TableCell>
         <TableCell align="right">{row.calories}</TableCell>
+        <TableCell align="right">
+          <Button variant="contained" color="primary">
+            View Appeals
+          </Button>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
