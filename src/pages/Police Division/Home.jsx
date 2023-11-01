@@ -48,11 +48,11 @@ export default function UploadPage() {
         console.log(upload);
         const isDuplicate = pendingUploads.some((item) => item.id === upload.id) || acceptedUploads.some((item) => item.id === upload.id) || rejectedUploads.some((item) => item.id === upload.id);
         if (!isDuplicate) {
-          if (upload.divisionStatus === "Pending") {
+          if (upload.divisionStatus === "pending") {
             setPendingUploads((prevPendingUploads) => [...prevPendingUploads, upload]);
-          } else if (upload.status === "Accepted") {
+          } else if (upload.status === "accepted") {
             setAcceptedUploads((prevAcceptedUploads) => [...prevAcceptedUploads, upload]);
-          } else if (upload.status === "Rejected") {
+          } else if (upload.status === "rejected") {
             setRejectedUploads((prevRejectedUploads) => [...prevRejectedUploads, upload]);
           } else {
             console.log("Error in getting uploads");
