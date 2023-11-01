@@ -67,8 +67,6 @@ const Appeal = () => {
   const appeals = /^[a-zA-Z]+$/;
   const namePattern = /^[a-zA-Z]+$/;
   const policeNumber = /^[0-9]{3}$/;
-  // const phoneNumber = /^[0-9]{10}$/;
-  // const email = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
   return (
     <div style={{ height: '500px', display: 'flex', flexDirection: 'column',}}>
@@ -127,34 +125,6 @@ const Appeal = () => {
             )}
           />
         </div>
-
-        {/* Amount
-        <div className="mb-5">
-          <Controller className="mt-5"
-            name="amount"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: '*This field is required.',
-              pattern: {
-                value: namePattern,
-                message: '*Amount can not contain letters.',
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Amount"
-                placeholder=""
-                variant="outlined"
-                fullWidth
-                error={!!errors.amount}
-                helperText={errors.amount?.message}
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
-              />
-            )}
-          />
-        </div> */}
         
         {/* Police number */}
         <div className="mb-5">
@@ -188,7 +158,7 @@ const Appeal = () => {
           <ThemeProvider theme={theme}>
             <Stack direction="row" spacing={2}>
               <Button variant="contained" type="submit">
-                Save
+                Add Appeal
               </Button>
               <Button variant="outlined" onClick={() => window.location.reload()}>
                 Cancel

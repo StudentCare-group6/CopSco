@@ -87,7 +87,7 @@ const RejectionReason = (NIC) => {
   };
 
   return (
-    <div style={{ height: '200px', display: 'flex', flexDirection: 'column',}}>
+    <div style={{ height: '150px', display: 'flex', flexDirection: 'column',}}>
       <form onSubmit={handleSubmit(onSubmit)} style={{ flex: 1 }}>
 
       <div className="mb-5">
@@ -105,7 +105,7 @@ const RejectionReason = (NIC) => {
                 placeholder=""
                 variant="outlined"
                 fullWidth
-                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px' }}
+                sx={{ marginLeft: '35px', marginTop: '25px',width: '80%', marginRight: '25px',marginBottom: '30px'}}
               />
             )}
           />

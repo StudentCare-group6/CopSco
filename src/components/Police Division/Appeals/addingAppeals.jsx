@@ -39,20 +39,15 @@ function TabPanel(props) {
   );
 }
 
-function createData(name, NICfrontview, NICrearview, NIC, fullname, location) {
-  return {
-    name: name,
-    NICfrontview: NICfrontview,
-    NICrearview: NICrearview,
-    history: [{ NIC: NIC, fullname: fullname, location: location }],
-    historyEntry: {
-      NIC: '',
-      fullname: '',
-      location: '',
-      status: '',
-    },
-  };
-}
+  function createData(caseid, violation, appealhistory, history) {
+    return {
+      caseid: caseid,
+      violation: violation,
+      appealhistory: appealhistory,
+      history: history,
+    };
+  }
+
 
 export default function CollapsibleTable() {
   const [value, setValue] = useState([]);
@@ -64,23 +59,21 @@ export default function CollapsibleTable() {
     police_username: 43956,
   };
 
-  const getDocuments = async () => {
-    try {
-      const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
-      console.log(response.data);
-      // const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview));    
-      // setValue(newRows);
+  // const getDocuments = async () => {
+  //   try {
+  //     const response = await axiosPrivate.get("police-division/viewDocuments", { params: userData });
+  //     console.log(response.data);
+  //     const newRows = response.data.documents.map((value) => createData(value.name, value.NICfrontview, value.NICreartview));    
+  //     setValue(newRows);
 
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const rows = [
-    createData('Uthpalani', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-    createData('Oshada', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-    createData('Tharindu', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
-    createData('Vishal', '', '', '200079300637', 'Uthpalani Jayasinghe', 'Galle'),
+    createData('C123','Reckless Driving', ''),
+    createData('C345','High Speed', ''),
   ];
 
   // useEffect(() => {
@@ -93,51 +86,22 @@ export default function CollapsibleTable() {
   
 
   function Row(props) {
-    const { row, onStatusChange, onUpdateHistory, openRow, setOpenRow } = props;
+    const { row, openRow, setOpenRow } = props;
     const open = row === openRow;
 
     const handleStatusChange = () => {
-      const newStatus = 'Verified';
-      onStatusChange(row, newStatus);
-    };
+      // Add appeal button content
 
-    const handleReject = () => {
-      const newStatus = 'Rejected';
-      onStatusChange(row, newStatus);
-    };
-
-    row.isEditing = true;
-
-    const handleSave = () => {
-      onUpdateHistory(row, [...row.history]);
     };
 
     const handleFieldChange = (field, value) => {
       row.historyEntry[field] = value;
     };
-
-    // State for the image modal
-    const [isImageModalOpen, setImageModalOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState('');
-
-  // Function to open the image modal
-  const openImageModal = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setImageModalOpen(true);
-  };
-
-  // Function to close the image modal
-  const closeImageModal = () => {
-    setSelectedImage('');
-    setImageModalOpen(false);
-  };
-
   
   return (
     <React.Fragment>
     <Table>
-    <TableBody>
-    {/* {value.map((row, index) => ( */}
+      <TableBody>
             <TableRow>
               <TableCell>
                 <IconButton
@@ -148,26 +112,57 @@ export default function CollapsibleTable() {
                   {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                 </IconButton>
               </TableCell>
-              
+              {/* Case ID */}
               <TableCell component="th" scope="row">
-                <Typography>{row.name}</Typography>
+                <Typography>{row.caseid}</Typography>
               </TableCell>
-              <TableCell component="td" scope="row">
-                {/* {row.status} */}
+              {/* Violation */}
+              <TableCell component="th" scope="row">
+
               </TableCell>
+
+              {/* Add Appeal button */}
               <TableCell>
-                <Button variant="contained" color="primary" className="ml-[50%]" onClick={handleStatusChange}>
-                  Accept
-                </Button>
-                &nbsp;&nbsp;
-                <Button variant="outlined" onClick={handleReject}>
-                  Reject
+                <Button variant="contained" color="primary" className="ml-[50%]" onClick={() => handleStatusChange(row.caseid)}>
+                  Add Appeal
                 </Button>
               </TableCell>
             </TableRow>
-    {/* )) */}
-    {/* } */}
-    </TableBody>
+
+            {/* Collapsible part */}
+            <TableCell colSpan={4}>
+                  <Collapse in={open} timeout="auto" unmountOnExit>
+                    <div style={{ paddingLeft: '16px' }}>
+                      <Box sx={{ margin: 1 }}>
+                        <Table size="small" aria-label="purchases">
+                            {/* Documents */}
+                            {row.history.map((historyRow, index) => (
+                              <TableRow key={index}>
+                                <TableCell>
+                                    <TextField
+                                      className=""
+                                      label="NIC number"
+                                      defaultValue={historyRow.NIC}
+                                      onChange={(e) => handleFieldChange('NIC', e.target.value)}
+                                    />
+                                </TableCell>
+
+                                <TableCell>
+                                    <TextField
+                                      className=""
+                                      label="Full Name"
+                                      defaultValue={historyRow.fullname}
+                                      onChange={(e) => handleFieldChange('fullname', e.target.value)}
+                                    />
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                        </Table>
+                      </Box>
+                    </div>
+                  </Collapse>
+              </TableCell>
+      </TableBody>
     </Table>
     </React.Fragment>
   );
@@ -186,16 +181,6 @@ export default function CollapsibleTable() {
     setTableData(updatedData);
   };
 
-  const handleUpdateHistory = (row, updatedHistory) => {
-    const updatedData = tableData.map((dataRow) => {
-      if (dataRow === row) {
-        return { ...dataRow, history: updatedHistory };
-      }
-      return dataRow;
-    });
-    setTableData(updatedData);
-  };
-
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -205,7 +190,6 @@ export default function CollapsibleTable() {
               key={index}
               row={row}
               onStatusChange={handleStatusChange}
-              onUpdateHistory={handleUpdateHistory}
               openRow={openRow}
               setOpenRow={setOpenRow}
             />

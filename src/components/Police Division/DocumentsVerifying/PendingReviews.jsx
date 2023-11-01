@@ -214,20 +214,15 @@ export default function CollapsibleTable() {
                                 </TableCell>
 
                                 <TableCell>
-                                  {row.isEditing ? (
                                     <TextField
                                       className=""
                                       label="Full Name"
                                       defaultValue={historyRow.fullname}
                                       onChange={(e) => handleFieldChange('fullname', e.target.value)}
                                     />
-                                  ) : (
-                                    historyRow.fullname
-                                  )}
                                 </TableCell>
                               </TableRow>
                             ))}
-                          
                         </Table>
                       </Box>
                     </div>
