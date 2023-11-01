@@ -11,6 +11,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { offences, demeritPoints } from "../../../data/Constants";
 import Button from "@mui/material/Button";
 import { Stack } from "@mui/system";
+import DeleteDialogBox from "./DeleteDialogBox";
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -128,14 +129,7 @@ export default function RecipeReviewCard(props) {
         </CardContent>
         <CardActions>
           <Stack direction="row" spacing={2} justifyContent={'space-evenly'} sx = {{width:'100%', padding:'10px'}}>
-            <Button
-              variant="text"
-              className="rounded-full"
-              sx={{  textTransform: "none" }}
-              onClick = {() => {handleIssueFine(props.caseId,demeritPointsList,amountList,video.violations)}}
-            >
-              Issue Fine
-            </Button>
+            <DeleteDialogBox caseId = {props.caseId} violations = {video.violations} demeritPoints = {demeritPointsList} amounts = {amountList} />
             <Button
               variant="text"
               className="bg-red-500 rounded-full"

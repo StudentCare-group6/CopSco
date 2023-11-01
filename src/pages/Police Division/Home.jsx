@@ -45,20 +45,20 @@ export default function UploadPage() {
       console.log(response.data);
       for (let i = 0; i < response.data.videos.length; i++) {
         const upload = response.data.videos[i];
-        // console.log(upload);
-        // const isDuplicate = pendingUploads.some((item) => item.id === upload.id) || acceptedUploads.some((item) => item.id === upload.id) || rejectedUploads.some((item) => item.id === upload.id);
-        // if (!isDuplicate) {
-        //   if (upload.status === "Pending Review") {
-        //     setPendingUploads((prevPendingUploads) => [...prevPendingUploads, upload]);
-        //   } else if (upload.status === "Accepted") {
-        //     setAcceptedUploads((prevAcceptedUploads) => [...prevAcceptedUploads, upload]);
-        //   } else if (upload.status === "Rejected") {
-        //     setRejectedUploads((prevRejectedUploads) => [...prevRejectedUploads, upload]);
-        //   } else {
-        //     console.log("Error in getting uploads");
-        //   }
-        // }
-        setAcceptedUploads((prevAcceptedUploads) => [...prevAcceptedUploads, upload]);
+        console.log(upload);
+        const isDuplicate = pendingUploads.some((item) => item.id === upload.id) || acceptedUploads.some((item) => item.id === upload.id) || rejectedUploads.some((item) => item.id === upload.id);
+        if (!isDuplicate) {
+          if (upload.divisionStatus === "Pending") {
+            setPendingUploads((prevPendingUploads) => [...prevPendingUploads, upload]);
+          } else if (upload.status === "Accepted") {
+            setAcceptedUploads((prevAcceptedUploads) => [...prevAcceptedUploads, upload]);
+          } else if (upload.status === "Rejected") {
+            setRejectedUploads((prevRejectedUploads) => [...prevRejectedUploads, upload]);
+          } else {
+            console.log("Error in getting uploads");
+          }
+        }
+        
       }
 
     } catch (error) {
@@ -94,7 +94,7 @@ export default function UploadPage() {
             <Tab
               label={
                 <Badge badgeContent={0} color="primary">
-                  Accepted
+                  Pending Fines
                 </Badge>
               }
               sx={{ fontWeight: "bold" }}
@@ -103,7 +103,7 @@ export default function UploadPage() {
             <Tab
               label={
                 <Badge badgeContent={0} color="primary">
-                  Pending Review
+                  Issued Fines
                 </Badge>
               }
               sx={{ fontWeight: "bold" }}
@@ -112,7 +112,7 @@ export default function UploadPage() {
             <Tab
               label={
                 <Badge badgeContent={0} color="primary">
-                  Rejected
+                  Rejected Fines
                 </Badge>
               }
               sx={{ fontWeight: "bold" }}
@@ -122,10 +122,10 @@ export default function UploadPage() {
             <AcceptedTable />
           </TabPanel>
           <TabPanel value={value} index={1} style={{ overflowY: "auto", height: "80vh" }}>
-            {/* <PendingTable /> */}
+            <PendingTable />
           </TabPanel>
           <TabPanel value={value} index={2} style={{ overflowY: "auto", height: "80vh" }}>
-            {/* <RejectedTable /> */}
+            <RejectedTable />
           </TabPanel>
         </Box>
       </Box>

@@ -10,7 +10,7 @@ import { useTheme } from "@mui/material/styles";
 import DeleteIcon from '@mui/icons-material/Delete';
 import createTheme from "@mui/material/styles/createTheme";
 import { ThemeProvider } from "@mui/material/styles";
-import Img from "../../../images/clear.png";
+import Img from "../../../images/fine.png";
 import Stack from "@mui/material/Stack";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
@@ -32,32 +32,29 @@ export default function ResponsiveDialog(props) {
     setOpen(false);
   };
 
-  const deleteVideo = async () => {
-    const data = {
-      key: props.videoKey
-    };
-    try {
-      const response = await axiosPrivate.delete(`upload/delete-video/${props.caseId}`, {
-        data: data // Send data in the request body
-      });
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+  const deleteVideo = async (props) => {
+    console.log(props);
+    // const data = {
+    //   key: props.videoKey
+    // };
+    // try {
+    //   const response = await axiosPrivate.delete(`upload/delete-video/${props.caseId}`, {
+    //     data: data // Send data in the request body
+    //   });
+    //   window.location.reload();
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
     <ThemeProvider theme={darkTheme}>
       <div>
         <Button
-          startIcon={<DeleteIcon />}
-          variant="contained"
-          color="error"
+          variant="text"
           onClick={handleClickOpen}
-          className="bg-red-700 rounded-full"
           sx={{ boxShadow: 'none', textTransform: 'none' }}
-        >
-          Delete Video
+        >Issued Fines
         </Button>
         <Dialog
           fullScreen={fullScreen}
@@ -67,7 +64,7 @@ export default function ResponsiveDialog(props) {
         >
           <Stack justifyContent="center" alignItems="center">
             <DialogTitle id="responsive-dialog-title">
-              Delete Video Permanently ?
+              Issue Fine ?
             </DialogTitle>
           </Stack>
           <DialogContent>
@@ -79,8 +76,8 @@ export default function ResponsiveDialog(props) {
               />
             </Stack>
             <DialogContentText sx={{ marginTop: "5%", textAlign: "center" }}>
-              This video hasn't been verified yet. <br />
-              Deleting it will remove it from your view permanently. <br />
+              Please make sure that the details are correct. <br />
+              Once Issued this action is irreversible. <br />
               Do you wish to continue ?
             </DialogContentText>
           </DialogContent>
@@ -94,7 +91,7 @@ export default function ResponsiveDialog(props) {
               <Button autoFocus onClick={handleClose} >
                 Back
               </Button>
-              <Button onClick={deleteVideo} autoFocus color='error' >
+              <Button onClick={()=>deleteVideo(props)} autoFocus color='error' >
                 Yes
               </Button>
             </Stack>

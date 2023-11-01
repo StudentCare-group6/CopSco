@@ -122,29 +122,29 @@ export default function PendingTable() {
       },
     },
   ];
-  const { pendingUploads } = useFineContext();
-  const [filteredRows, setFilteredRows] = useState([]);
-  useEffect(() => {
-    // Filter rows based on the search key
-    const newFilteredRows = pendingUploads.filter((item) => {
-      const description = item.description.toLowerCase();
-      return description.includes(searchKey.toLowerCase());
-    });
+  const { acceptedUploads } = useFineContext();
+  // const [filteredRows, setFilteredRows] = useState([]);
+  // useEffect(() => {
+  //   // Filter rows based on the search key
+  //   const newFilteredRows = pendingUploads.filter((item) => {
+  //     const description = item.description.toLowerCase();
+  //     return description.includes(searchKey.toLowerCase());
+  //   });
 
-    setFilteredRows(newFilteredRows);
-  }, [searchKey, pendingUploads]);
+  //   setFilteredRows(newFilteredRows);
+  // }, [searchKey, pendingUploads]);
 
-  if (pendingUploads.length === 0 || pendingUploads.length === undefined) {
+  if (acceptedUploads === undefined || acceptedUploads.length === 0 || acceptedUploads.length === undefined) {
     return (
       <div className="flex flex-col items-center mt-10">
         <img src={image} alt="empty" className="w-20 h-20" />
         <Typography variant="h6" className="my-5">
-          No pending videos, Click on the upload button to upload a video
+          No issued video fines to display !
         </Typography>
       </div>
     );
   } else {
-    const rows = filteredRows.map((item, index) => ({
+    const rows = acceptedUploads.map((item, index) => ({
       id: index + 1,
       video: [item.thumbnail, item.videokey],
       description: item.description,

@@ -109,7 +109,7 @@ export default function AcceptedTable() {
 
     },
   ];
-  const { acceptedUploads } = useFineContext();
+  const { pendingUploads } = useFineContext();
 //   const [filteredRows, setFilteredRows] = useState([]);
 //   useEffect(() => {
 //     // Filter rows based on the search key
@@ -121,7 +121,7 @@ export default function AcceptedTable() {
 //     setFilteredRows(newFilteredRows);
 //   }, [searchKey, acceptedUploads]);
 
-  if (acceptedUploads.length === 0 || acceptedUploads.length === undefined) {
+  if (pendingUploads.length === 0 || pendingUploads.length === undefined) {
     return (
       <div className="flex flex-col items-center mt-10">
         <img src={image} alt="empty" className="w-20 h-20" />
@@ -131,7 +131,7 @@ export default function AcceptedTable() {
       </div>
     );
   } else {
-    const rows = acceptedUploads.map((item, index) => ({
+    const rows = pendingUploads.map((item, index) => ({
       id: index + 1,
       video: [item.thumbnail, item.caseID],
       description: item.remarks,
