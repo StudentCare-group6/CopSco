@@ -6,7 +6,6 @@ function ModalButton({buttonText,type}) {
   
   const { page, setPage } = useFormContext();
   const handleNext = () => setPage(page + 1);
-  const handleBack = () => setPage(page - 1);
 
   let buttonClass = 'rounded px-12 py-3 font-bold';
 

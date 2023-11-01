@@ -124,10 +124,6 @@ export default function Sidebar() {
             inactive: <HomeIcon className="h-6 w-6 text-slate-400" />,
         },
         {
-            active: <UserCircleIcon className="h-6 w-6 text-slate-950" />,
-            inactive: <UserCircleIcon className="h-6 w-6 text-slate-400" />,
-        },
-        {
             active: <InformationCircleIcon className="h-6 w-6 text-slate-950" />,
             inactive: <InformationCircleIcon className="h-6 w-6 text-slate-400" />,
         },
@@ -138,7 +134,7 @@ export default function Sidebar() {
 
     ];
 
-    const routes = ['/police-operator/', '/traffic-police/profile', '/traffic-police/information'];
+    const routes = ['/police-operator', '/police-operator/info', '/police-operator/'];
 
     return (
 
@@ -154,11 +150,11 @@ export default function Sidebar() {
 
                 </DrawerHeader>
                 <Divider />
-                <List sx={{ height: '50%' }} className='flex flex-col justify-between'>
-                    {['Home', 'Profile', 'Information', 'Log out'].map((text, index) => {
+                <List sx={{ height: '35%' }} className='flex flex-col justify-between'>
+                    {['Home', 'FAQ', 'Log out'].map((text, index) => {
                         const route = routes[index];
                         const isActive = isActiveRoute(route);
-                        if (index === 3) {
+                        if (index === 2) {
                             return (
                                 <ListItem key={text} disablePadding sx={{ display: 'block' }} className={isActive ? 'text-slate-950 bg-slate-400 rounded-lg' : ' text-slate-400 hover:bg-slate-600 rounded-lg'}>
                                     <ListItemButton

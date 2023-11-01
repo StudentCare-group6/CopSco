@@ -381,268 +381,52 @@ export const mockLineData = [
     color: "#020617",
     data: [
       {
-        x: "plane",
+        x: "January",
         y: 191,
       },
       {
-        x: "helicopter",
+        x: "February",
         y: 75,
       },
       {
-        x: "boat",
+        x: "March",
         y: 163,
       },
       {
-        x: "train",
+        x: "April",
         y: 87,
       },
       {
-        x: "subway",
+        x: "May",
         y: 126,
       },
       {
-        x: "bus",
+        x: "June",
         y: 38,
       },
       {
-        x: "car",
+        x: "July",
         y: 58,
       },
       {
-        x: "moto",
+        x: "August",
         y: 170,
       },
       {
-        x: "bicycle",
+        x: "September",
         y: 264,
       },
       {
-        x: "horse",
+        x: "October",
         y: 136,
       },
       {
-        x: "skateboard",
+        x: "November",
         y: 224,
       },
       {
-        x: "others",
+        x: "December",
         y: 5,
-      },
-    ],
-  },
-  {
-    id: "france",
-    color: "#1e293b",
-    data: [
-      {
-        x: "plane",
-        y: 34,
-      },
-      {
-        x: "helicopter",
-        y: 190,
-      },
-      {
-        x: "boat",
-        y: 107,
-      },
-      {
-        x: "train",
-        y: 156,
-      },
-      {
-        x: "subway",
-        y: 268,
-      },
-      {
-        x: "bus",
-        y: 200,
-      },
-      {
-        x: "car",
-        y: 117,
-      },
-      {
-        x: "moto",
-        y: 113,
-      },
-      {
-        x: "bicycle",
-        y: 207,
-      },
-      {
-        x: "horse",
-        y: 79,
-      },
-      {
-        x: "skateboard",
-        y: 275,
-      },
-      {
-        x: "others",
-        y: 37,
-      },
-    ],
-  },
-  {
-    id: "us",
-    color: "#475569",
-    data: [
-      {
-        x: "plane",
-        y: 132,
-      },
-      {
-        x: "helicopter",
-        y: 284,
-      },
-      {
-        x: "boat",
-        y: 288,
-      },
-      {
-        x: "train",
-        y: 259,
-      },
-      {
-        x: "subway",
-        y: 238,
-      },
-      {
-        x: "bus",
-        y: 129,
-      },
-      {
-        x: "car",
-        y: 277,
-      },
-      {
-        x: "moto",
-        y: 97,
-      },
-      {
-        x: "bicycle",
-        y: 120,
-      },
-      {
-        x: "horse",
-        y: 241,
-      },
-      {
-        x: "skateboard",
-        y: 24,
-      },
-      {
-        x: "others",
-        y: 218,
-      },
-    ],
-  },
-  {
-    id: "germany",
-    color: "#94a3b8",
-    data: [
-      {
-        x: "plane",
-        y: 95,
-      },
-      {
-        x: "helicopter",
-        y: 168,
-      },
-      {
-        x: "boat",
-        y: 185,
-      },
-      {
-        x: "train",
-        y: 172,
-      },
-      {
-        x: "subway",
-        y: 141,
-      },
-      {
-        x: "bus",
-        y: 99,
-      },
-      {
-        x: "car",
-        y: 44,
-      },
-      {
-        x: "moto",
-        y: 243,
-      },
-      {
-        x: "bicycle",
-        y: 101,
-      },
-      {
-        x: "horse",
-        y: 195,
-      },
-      {
-        x: "skateboard",
-        y: 117,
-      },
-      {
-        x: "others",
-        y: 90,
-      },
-    ],
-  },
-  {
-    id: "norway",
-    color: "#cbd5e1",
-    data: [
-      {
-        x: "plane",
-        y: 225,
-      },
-      {
-        x: "helicopter",
-        y: 77,
-      },
-      {
-        x: "boat",
-        y: 232,
-      },
-      {
-        x: "train",
-        y: 214,
-      },
-      {
-        x: "subway",
-        y: 163,
-      },
-      {
-        x: "bus",
-        y: 81,
-      },
-      {
-        x: "car",
-        y: 29,
-      },
-      {
-        x: "moto",
-        y: 274,
-      },
-      {
-        x: "bicycle",
-        y: 201,
-      },
-      {
-        x: "horse",
-        y: 285,
-      },
-      {
-        x: "skateboard",
-        y: 109,
-      },
-      {
-        x: "others",
-        y: 9,
       },
     ],
   },

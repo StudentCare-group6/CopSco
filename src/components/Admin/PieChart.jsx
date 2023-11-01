@@ -2,10 +2,10 @@ import { ResponsivePie } from '@nivo/pie';
 import { mockPieData as data } from '../../data/mockData';
 
 
-export default function PieChart({ isDashboard = false }) {
+export default function PieChart({ isDashboard = false, pieData }) {
     return (
         <ResponsivePie
-            data={data}
+            data={pieData}
             theme={{
                 axis: {
                     domain: {

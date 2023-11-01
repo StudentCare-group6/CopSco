@@ -8,12 +8,11 @@ import Steppers from '../../components/GeneralUserRegistration/Steppers';
 
 export default function UserImage() {
 
-    const { data, handleChange, form, register, control, errors, setValue } = useFormContext();
+    const { register, setValue } = useFormContext();
 
     const videoRef = useRef(null);
     const photoRef = useRef(null);
     const [hasPhoto, setHasPhoto] = useState(false);
-    const [photoURL, setPhotoURL] = useState('');
     
     const takePhoto = (event) => {
         event.preventDefault();
@@ -29,9 +28,7 @@ export default function UserImage() {
         ctx.drawImage(video, 0, 0, width, height);
         photo.toBlob((blob) => {
             // Store the Blob in local storage
-            localStorage.setItem('takenPhoto', blob);
-            setPhotoURL(URL.createObjectURL(blob));
-            setValue('verificationPIC', URL.createObjectURL(blob));
+            setValue('verificationPIC', blob);
             setHasPhoto(true);
         });
 
