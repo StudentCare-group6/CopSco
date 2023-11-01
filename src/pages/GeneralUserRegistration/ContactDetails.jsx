@@ -10,14 +10,14 @@ import Steppers from '../../components/GeneralUserRegistration/Steppers';
 
 export default function ContactDetails() {
 
-    const { data, handleChange, form, register, control, errors } = useFormContext();
+    const { register, errors } = useFormContext();
 
     return (
 
         <Grid container spacing={2} sx={{ marginTop: '8%' }}>
             <Steppers step={2} />
             <Stack sx={{ width: '100%' }} alignItems='center'>
-                <img src={otpImg} className='w-52' />
+                <img src={otpImg} alt = "otp" className='w-52' />
             </Stack>
             <Grid item xs={12} sx={{ mt: 1 }}>
                 <Typography component="h1" variant="subtitle1" className='mt-10 mb-5 font-light text-neutral-500' >

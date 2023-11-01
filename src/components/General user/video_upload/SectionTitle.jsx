@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, colors } from '@mui/material'
+import { Typography } from '@mui/material'
 
 function SectionTitle({titleText}) {
   return (

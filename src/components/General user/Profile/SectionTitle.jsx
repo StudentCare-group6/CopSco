@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 
 function SectionTitle({ titleText }) {
   return (
-    <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#6B7280', fontSize: '18px', marginTop: 2, marginBottom: 2 }}>
+    <Typography variant="h6" className = 'text-zinc-500' sx={{ fontWeight: 'bold', marginTop: 2, marginBottom: 2 }}>
       {titleText}
     </Typography>
   );

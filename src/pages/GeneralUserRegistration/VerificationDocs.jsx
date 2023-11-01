@@ -1,7 +1,6 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Steppers from "../../components/GeneralUserRegistration/Steppers";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import useFormContext from "../../hooks/useFormContext";
@@ -10,7 +9,7 @@ import FormLabel from "@mui/material/FormLabel";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
-import { useState } from "react";
+
 
 export default function VerificationDocs() {
   const {register, errors,watch } =
@@ -18,7 +17,7 @@ export default function VerificationDocs() {
   return (
       <Grid container spacing={2}>
         <Stack sx={{ width: "100%" }} alignItems="center">
-          <img src={docImg} className="w-32" />
+          <img src={docImg} alt="document" className="w-32" />
         </Stack>
         <Grid item xs={12}>
         <FormLabel id="demo-row-radio-buttons-group-label" sx = {{fontSize:'large'}}>Verification method : </FormLabel>

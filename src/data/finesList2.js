@@ -81,7 +81,6 @@ export const videoFineData = [
   },
 ];
 
-
 export const spotFineData = [
   {
     offence:
@@ -145,70 +144,71 @@ export const spotFineData = [
   },
 ];
 
+export const uploadData = [
+  {
+    vidPreview: "violation.jpg",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    reward: "Rs. 500.50",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    reward: "Rs. 500.50",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    reward: "Rs. 500.50",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    reward: "Rs. 500.50",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    reward: "Rs. 500.50",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    reward: "Rs. 500.50",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    reward: "Rs. 500.50",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+  {
+    vidPreview: "violation.jpg",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
+    reward: "Rs. 500.50",
+    location: "Colombo",
+    date: "Jun 24, 2023",
+  },
+];
 
-export const uploadData  = [
-    {
-      vidPreview: "violation.jpg",
-      vidName:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-      status: "Pending Review",
-      location: "Colombo",
-      date: "Jun 24, 2023",
-    },
-    {
-      vidPreview: "violation.jpg",
-      vidName:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-      status: "Pending Review",
-      location: "Colombo",
-      date: "Jun 24, 2023",
-    },
-    {
-      vidPreview: "violation.jpg",
-      vidName:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-      status: "Pending Review",
-      location: "Colombo",
-      date: "Jun 24, 2023",
-    },
-    {
-      vidPreview: "violation.jpg",
-      vidName:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-      status: "Pending Review",
-      location: "Colombo",
-      date: "Jun 24, 2023",
-    },
-    {
-      vidPreview: "violation.jpg",
-      vidName:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-      status: "Pending Review",
-      location: "Colombo",
-      date: "Jun 24, 2023",
-    },
-    {
-      vidPreview: "violation.jpg",
-      vidName:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-      status: "Pending Review",
-      location: "Colombo",
-      date: "Jun 24, 2023",
-    },
-    {
-      vidPreview: "violation.jpg",
-      vidName:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-      status: "Pending Review",
-      location: "Colombo",
-      date: "Jun 24, 2023",
-    },
-    {
-      vidPreview: "violation.jpg",
-      vidName:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, nobis!",
-      status: "Pending Review",
-      location: "Colombo",
-      date: "Jun 24, 2023",
-    },
-  ];
+

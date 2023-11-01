@@ -15,7 +15,8 @@ import { useState } from 'react';
 import { policeDivisions } from "../../components/Traffic police/Constants";
 import useAuth from '../../hooks/useAuth';
 import axios from '../../api/posts'
-import { set } from 'lodash';
+
+
 
 
 const style = {
