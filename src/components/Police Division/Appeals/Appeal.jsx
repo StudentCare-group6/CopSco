@@ -157,7 +157,8 @@ const Appeal = () => {
         <div className="flex justify-center ml-24 mb-5" >
           <ThemeProvider theme={theme}>
             <Stack direction="row" spacing={2}>
-              <Button variant="contained" type="submit">
+              <Button variant="contained" type="submit" >
+                {/* onClick={() => addNewAppeal(row.caseid)}> */}
                 Add Appeal
               </Button>
               <Button variant="outlined" onClick={() => window.location.reload()}>

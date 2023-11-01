@@ -72,17 +72,17 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell align="right">Violation</TableCell>
+                    <TableCell align="left" >Date</TableCell>
+                    <TableCell align="left">Violation</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {row.history.map((historyRow) => (
                     <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
+                      <TableCell component="th" scope="row" align="left">
                         {historyRow.date}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="left">
                         {historyRow.case}
                       </TableCell>
                     </TableRow>
