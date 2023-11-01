@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { CssBaseline, useMediaQuery } from "@mui/material";
-import Header from "../../components/General user/Header";
+import Header from "../../components/Police Division/Header";
 import DrawerComponent from "../../components/Traffic police/Appbar";
 import Sidebar from "../../components/Admin/Sidebar";
 import Box from "@mui/material/Box";
