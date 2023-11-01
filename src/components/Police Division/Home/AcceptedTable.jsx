@@ -126,7 +126,7 @@ export default function AcceptedTable() {
       <div className="flex flex-col items-center mt-10">
         <img src={image} alt="empty" className="w-20 h-20" />
         <Typography variant="h6" className="my-5">
-          No accepted videos, Don't worry keep uploading !
+          No Operator verified videos, Try again later !
         </Typography>
       </div>
     );

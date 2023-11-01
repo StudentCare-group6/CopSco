@@ -42,7 +42,7 @@ export default function CustomizedTables() {
   }
   const rows = [
     createData('Vehicle Number', video.vehicleno),
-    createData('Violation Type', video.violationtype),
+    createData('Violation Type', 'Traffic Violation'),
     createData('Violation Date', video.violationDate),
     createData('Violation Time', video.violationTime),
     createData('Location', video.district+', '+ video.city),
@@ -58,7 +58,7 @@ export default function CustomizedTables() {
         </TableHead>
         <TableBody >
           {rows.map((row) => (
-            <StyledTableRow style={{ height: '50%' }} key={row.name}>
+            <StyledTableRow style={{ height: '60%' }} key={row.name}>
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>

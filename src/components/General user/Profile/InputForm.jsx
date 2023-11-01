@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Grid } from '@mui/material';
 import ChangePassword from './ChangePassword';
 import DeleteProfile from './DeleteProfile';
-import { provinces } from "../../../data/Constants";
+import {banks, branches } from "../../../data/Constants";
 import MenuItem from '@mui/material/MenuItem';
 import UpdateIcon from '@mui/icons-material/Update';
 import Stack from '@mui/material/Stack';
@@ -43,9 +43,9 @@ const InputForm = (props) => {
             margin="normal"
             fullWidth
             select
-            defaultValue={provinces[0]}
+            defaultValue={props.bank.bank}
           >
-            {provinces.map((value) => (
+            {banks.map((value) => (
               <MenuItem key={value} value={value}>
                 {value}
               </MenuItem>
@@ -58,9 +58,9 @@ const InputForm = (props) => {
             label="Branch"
             fullWidth
             select
-            defaultValue={provinces[0]}
+            defaultValue={props.bank.branch}
           >
-            {provinces.map((value) => (
+            {branches.map((value) => (
               <MenuItem key={value} value={value}>
                 {value}
               </MenuItem>
@@ -73,7 +73,7 @@ const InputForm = (props) => {
             label="Account Number"
             variant="outlined"
             fullWidth
-            value={formData.username}
+            value={props.bank.accountno}
             onChange={handleChange}
           />
         </Grid>
@@ -84,7 +84,7 @@ const InputForm = (props) => {
             variant="outlined"
             fullWidth
             type='email'
-            value={formData.email}
+            value={props.bank.acc_holder}
             onChange={handleChange}
           />
         </Grid>

@@ -21,8 +21,8 @@ export default function BasicPopover() {
 
     return (
         <div>
-            <Badge color="secondary" badgeContent={50} max={999}>
-                <Button onClick = {handleClick} startIcon = {<MailIcon/>}/>
+            <Badge color="error" badgeContent={1} max={999}>
+                <Button onClick = {handleClick} startIcon = {<MailIcon/>} size = 'large' className = 'text-slate-900'/>
             </Badge>
             <Popover
                 id={id}
@@ -34,7 +34,7 @@ export default function BasicPopover() {
                     horizontal: 'left',
                 }}
             >
-                <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+                <Typography sx={{ p: 2 }}>Your fine was verified</Typography>
             </Popover>
         </div>
     );

@@ -72,3 +72,40 @@ export const provinces = [
     "North Central Province",
     "Uva Province",
 ]
+
+export const banks = [
+    "Bank of Ceylon",
+    "People's Bank",
+    "Commercial Bank of Ceylon",
+    "Hatton National Bank",
+    "Nations Trust Bank",
+    "Sampath Bank",
+    "DFCC Bank",
+    "Pan Asia Banking Corporation",
+    "Seylan Bank",
+    "Union Bank of Colombo",
+    "Habib Bank",
+    "National Development Bank",
+    "Standard Chartered Bank",
+    "HSBC Sri Lanka",
+    "Cargills Bank",
+    "Sri Lanka Savings Bank",
+    "NDB Bank",
+    "Commercial Credit and Finance PLC",
+    "Sri Lanka Export Development Board",
+    "Regional Development Bank",
+    "Sanasa Development Bank",
+    "Lanka ORIX Finance",
+    "LOLC Finance",
+    "Sri Lanka Savings Bank",
+    "Central Finance Company",
+    "Sampath Leasing",
+  ];
+
+  export const branches = [
+    "Colombo Main Branch",
+    "Kandy Branch",
+    "Galle Branch",
+    "Jaffna Branch",
+    "Batticaloa Branch",
+  ]

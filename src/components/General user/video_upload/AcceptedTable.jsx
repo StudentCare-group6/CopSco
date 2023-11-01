@@ -147,7 +147,7 @@ export default function AcceptedTable() {
       id: index + 1,
       video: [item.thumbnail, item.videokey],
       description: item.description,
-      reward: "500",
+      reward: item.reward,
       location: item.district + ", " + item.city,
       date: formatDate(item.reportdate),
       actions: item.caseid

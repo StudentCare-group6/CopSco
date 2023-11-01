@@ -40,6 +40,9 @@ function ProfilePage() {
       console.log(error);
     }
   };
+  const data = {
+    qrImageName: auth.user+'_qr'
+  }
   useEffect(() => {
     getProfile();
   }, []);
@@ -120,7 +123,7 @@ function ProfilePage() {
                 <CardMedia
                   component="img"
                   height="50"
-                  image="https://www.bdc.ca/globalassets/digizuite/40415-bdc-qr-code.jpg?v=498d76"
+                  image={`http://localhost:8000/images/qr/${auth.user}_qr.png`}
                   alt="qr_code"
                   sx={{ height: 200, width: 200, marginBottom: 1 }}
                 />
@@ -132,8 +135,8 @@ function ProfilePage() {
                     sx={{ boxShadow: "none", textTransform: "none" }}
                   >
                     <a
-                      href="https://www.bdc.ca/globalassets/digizuite/40415-bdc-qr-code.jpg?v=498d76"
-                      download="image.jpg"
+                      href={`http://localhost:8000/images/qr/${auth.user}_qr.png`}
+                      download="QR.jpg"
                     >
                       Download Image
                     </a>
@@ -152,7 +155,7 @@ function ProfilePage() {
             <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
            
             {profile.user && profile.user.length > 0 ? (
-               <InputForm secret = {profile.user[0].secret}/>
+               <InputForm secret = {profile.user[0].secret} bank = {profile.bank[0]}/>
             ) : (
               <Typography sx={{ marginTop: 2 }}>Loading...</Typography>
             )}
