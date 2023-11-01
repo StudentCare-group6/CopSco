@@ -1,79 +1,83 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link2 from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ImageSlideShow from '../components/Login/ImageCarousel';
-import { Stack, useMediaQuery } from '@mui/material';
-import GoogleButton from 'react-google-button';
-import Divider from '@mui/material/Divider';
-import { useRef, useState, useEffect } from 'react';
-import useAuth from '../hooks/useAuth';
-import axios from '../api/posts'
-import { useNavigate } from 'react-router-dom';
-import { Snackbar, Alert } from '@mui/material';
-import useInput from '../hooks/useInput';
-import useToggle from '../hooks/useToggle';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link2 from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ImageSlideShow from "../components/Login/ImageCarousel";
+import { Stack, useMediaQuery } from "@mui/material";
+import GoogleButton from "react-google-button";
+import Divider from "@mui/material/Divider";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+import axios from "../api/posts";
+import { useNavigate } from "react-router-dom";
+import { Snackbar, Alert } from "@mui/material";
+import useInput from "../hooks/useInput";
+import useToggle from "../hooks/useToggle";
 import jwt_decode from "jwt-decode";
-import image from '../images/logo.png';
+import image from "../images/logo.png";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link2 color="inherit" href="https://mui.com/">
         CopSco
-      </Link2>{' '}
+      </Link2>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
-
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function Login() {
-
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const userRef = useRef();
 
-  const [user, resetUser, userAttributes] = useInput('user', '');
-  const [pwd, setPwd] = useState('');
-  const [errMsg, setErrMsg] = useState('');
-  const [check, toggleCheck] = useToggle('persist', false);
+  const [user, resetUser, userAttributes] = useInput("user", "");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [check, toggleCheck] = useToggle("persist", false);
 
   const handleClose = () => {
-    setErrMsg('');
+    setErrMsg("");
   };
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
-  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-  const formWidth = isXsScreen ? '70%' : '40%';
+  const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const formWidth = isXsScreen ? "70%" : "40%";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('auth/login',
+      const response = await axios.post(
+        "auth/login",
         JSON.stringify({ username: user, pass: pwd }),
         {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true
-        },
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       const accessToken = response.data.accessToken;
       const role = response.data.userrole;
@@ -82,24 +86,23 @@ export default function Login() {
       const user_id = decoded.userid;
       setAuth({ user, pwd, role, fname, accessToken, user_id });
       resetUser();
-      setPwd('');
+      setPwd("");
 
-      if (role === 'general-user') {
-        navigate('/general-user');
-      } else if (role === 'police-operator') {
-        alert('invalid role');
+      if (role === "general-user") {
+        navigate("/general-user");
+      } else if (role === "police-operator") {
+        alert("invalid role");
       }
     } catch (err) {
       if (!err?.response) {
-        setErrMsg('Network error');
+        setErrMsg("Network error");
       } else if (err.response?.status === 400) {
-        setErrMsg('Missing username or password');
+        setErrMsg("Missing username or password");
       } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized');
+        setErrMsg("Unauthorized");
       } else {
-        setErrMsg('Login failed, try again');
+        setErrMsg("Login failed, try again");
       }
-
     }
   };
 
@@ -110,8 +113,8 @@ export default function Login() {
         autoHideDuration={6000} // Adjust the duration as needed
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
       >
         <Alert
@@ -123,45 +126,54 @@ export default function Login() {
           {errMsg}
         </Alert>
       </Snackbar>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-
+      <Grid container component="main" sx={{ height: "100vh" }}>
         <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
-          <Typography sx={{ margin: '20px', fontFamily: 'inter' }} component="h1" variant="h5" className='font-extrabold text-black' >
+          <Typography
+            sx={{ margin: "20px", fontFamily: "inter" }}
+            component="h1"
+            variant="h5"
+            className="font-extrabold text-black"
+          >
             CopSco
           </Typography>
           <Box
             sx={{
-              height: '90%',
+              height: "90%",
               mx: 5,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-
             <Stack justifyContent="center" alignItems="center" spacing={3}>
-              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{ fontFamily: 'inter' }} >
+              <Typography
+                component="h1"
+                variant="h4"
+                className="font-extrabold text-neutral-500"
+                sx={{ fontFamily: "inter" }}
+              >
                 Login to your account
               </Typography>
-              <Typography component="h1" variant="h5" className='font-light text-neutral-500' >
+              <Typography
+                component="h1"
+                variant="h5"
+                className="font-light text-neutral-500"
+              >
                 Welcome back !
               </Typography>
 
-              {/* <GoogleButton
-                onClick={() => { console.log('Google button clicked') }}
-              /> */}
+              <Stack sx={{ width: "100%" }} alignItems="center">
+                <img src={image} alt="otp" className="w-52" />
+              </Stack>
             </Stack>
 
-            {/* <Stack sx={{ width: formWidth, margin: '50px' }}>
-              <Divider>OR</Divider>
-            </Stack> */}
-            <Stack sx={{ width: '100%' }} alignItems='center'>
-              <img src={image} alt="otp" className='w-52' />
-            </Stack>
-
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: formWidth }} >
-
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1, width: formWidth }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -170,7 +182,7 @@ export default function Login() {
                 id="username"
                 ref={userRef}
                 label="Username"
-                autoComplete='on'
+                autoComplete="on"
                 {...userAttributes}
               />
               <TextField
@@ -190,15 +202,16 @@ export default function Login() {
                     id="remember"
                     onChange={toggleCheck}
                     checked={check}
-                  />}
+                  />
+                }
                 label="Remember me"
               />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, padding: '10px' }}
-                className = 'rounded-full bg-slate-900 hover:bg-sky-700'
+                sx={{ mt: 3, mb: 2, padding: "10px" }}
+                className="rounded-full bg-slate-900 hover:bg-sky-700"
               >
                 Sign In
               </Button>
