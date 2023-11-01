@@ -46,6 +46,7 @@ import { VideoProvider } from "./context/VideoContext";
 import DivisionHome from "./pages/Police Division/Home";
 import FineIssue from "./pages/Police Division/FineIssue";
 import Info from "./pages/PoliceOperator/Info";
+import UserFAQ from "./pages/GeneralUser/Information";
 
 export default function App() {
   const THEME = createTheme({
@@ -109,16 +110,7 @@ export default function App() {
                   }
                 />
                 <Route path="profile" element={<ProfilePage />} />
-                <Route
-                  path="payment"
-                  element={
-                    <ThemeProvider theme={theme}>
-                      <CssBaseline>
-                        <PaymentPage />
-                      </CssBaseline>
-                    </ThemeProvider>
-                  }
-                />
+                <Route path="information" element={<UserFAQ />} />
               </Route>
             </Route>
           </Route>
