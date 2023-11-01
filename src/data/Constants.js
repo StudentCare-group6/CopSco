@@ -28,7 +28,6 @@ export const policeDivisions = new Map([
     ["Boralesgamuwa Police Division",126],
     ["Kaduwela Police Division",127],
     ["Kottawa Police Division",128],
-
 ]);
 export const policeStations = [
     "Pettah",

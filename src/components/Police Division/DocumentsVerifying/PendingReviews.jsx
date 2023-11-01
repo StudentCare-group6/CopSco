@@ -190,7 +190,7 @@ export default function CollapsibleTable() {
                                   NIC Front View
                                 </Button>
                                 &nbsp;&nbsp;
-                                <Button variant="outlined" onClick={() => openImageModal(`http://localhost:8000/images/img/${row.NICreartview}`)}>
+                                <Button variant="outlined" onClick={() => openImageModal(`http://localhost:8000/images/img/${row.NICrearview}`)}>
                                   NIC Rear View
                                 </Button>
                                 &nbsp;&nbsp;

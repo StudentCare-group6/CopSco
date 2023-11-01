@@ -211,7 +211,7 @@ const MyForm = ({ pausedTime, videoUrl }) => {
         <div>
           <TextField
             label="Vehicle Number"
-            defaultValue={video.vehicleNo}
+            defaultValue={video.vehicleno}
             variant="outlined"
             sx={{ marginLeft: "10%", marginTop: "3%", width: "80%" }}
             {...register("vehicleNo", {
