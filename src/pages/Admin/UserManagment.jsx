@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Admin/Topbar";
@@ -91,7 +91,6 @@ export default function UserManagment() {
                         color: '#475569',
                         borderBottom: 'none',
                         backgroundColor: '#cbd5e1',
-                        color: '#020617',
                     },
                     "& .MuiDataGrid-virtualScroller": {
                         backgroundColor: '#e2e8f0'

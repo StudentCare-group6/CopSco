@@ -1,12 +1,10 @@
 import React from 'react'
 import { Typography } from '@mui/material'
 
-function SmallText({text}) {
+export default function SmallText({text}) {
   return (
-    <Typography className='text-gray-400 text-[12px] font-normal'>
+    <Typography color= 'gray' variant='caption'>
         {text}
     </Typography>
-  )
+  );
 }
-
-export default SmallText

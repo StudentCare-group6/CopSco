@@ -1,103 +1,38 @@
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Stack } from "@mui/material";
-import PaidIcon from "@mui/icons-material/Paid";
-import StarIcon from "@mui/icons-material/Star";
-import Button from "@mui/material/Button";
-import VideoThumbnail from 'react-video-thumbnail';
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useEffect } from 'react';
 
+export default function RecipeReviewCard(props) {
+  const axiosPrivate = useAxiosPrivate();
+  const [video, setVideo] = React.useState(null); // [video, setVideo
+  const getVideo = async () => {
+    try {
+      const response = await axiosPrivate.get(`upload/view-video/${props.access}`);
+      setVideo(response.data.url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getVideo();
+  }, []);
 
-function Reward(props) {
-  return (
-    <Stack direction="row" alignItems="center" spacing={1}>
-      <PaidIcon sx={{ fontSize: 26 }} className="text-green-500" />
-      <Typography component="div" className="text-2xl text-green-500">
-        Reward: Rs. {props.text}
-      </Typography>
-    </Stack>
-  );
-}
-
-
-export default function MediaControlCard(props) {
+  useEffect(() => {
+    console.log(video); // Log the updated video value when it changes
+  }, [video]);
 
   return (
-    <Card
-      sx={{ display: "flex", boxShadow: "none" }}
-      className="shadow-sm rounded-lg mb-5 "
-    >
+    <Card sx={{ maxWidth: 700, borderStyle: 'none', borderRadius: '10px' }}>
+
       <CardMedia
-        component="image"
-        controls // This adds play/pause controls to the video
-        loop // This makes the video loop
-        muted // This mutes the video (remove if not needed)
-        sx={{ width: 400, height: "auto" }}
-      >
-        {/* <source src={props.url} type="video/mp4" /> */}
-        <VideoThumbnail
-          videoUrl={props.url}
-          width= {480}
-          height= {320}
-        />
-        {/* Your browser does not support the video tag. */}
-      </CardMedia>
-      <Box sx={{ display: "flex", flexDirection: "column", width: "70%" }}>
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h6" className="font-bold">
-            {props.title}
-          </Typography>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ width: "100%" }}
-          >
-            <Stack gap={1}>
-              <Typography
-                variant="subtitle1"
-                color="text.secondary"
-                component="div"
-              >
-                Date : 2021-10-10
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                color="text.secondary"
-                component="div"
-              >
-                Time : 12:30 PM
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                color="text.secondary"
-                component="div"
-              >
-                Police Division : Bambalapitiya
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                color="text.secondary"
-                component="div"
-              >
-                Reviewed by : Mr. G.M.L Perera
-              </Typography>
-            </Stack>
-            <Box>
-              <Stack gap={3}>
-                <Reward text={props.reward} />
-                <Button variant="outlined" color="error" className="rounded-full">
-                  Delete
-                </Button>
-              </Stack>
-            </Box>
-          </Stack>
-        </CardContent>
-        <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}></Box>
-      </Box>
+        component="video"
+        height="auto"
+        src={video}
+        autoPlay
+        controls
+      />
     </Card>
   );
 }

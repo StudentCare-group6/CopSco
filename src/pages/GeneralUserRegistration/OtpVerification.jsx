@@ -10,14 +10,14 @@ import Alert from '@mui/material/Alert';
 
 export default function OtpVerification() {
 
-    const { data, handleChange, form, register, control, errors } = useFormContext();
+    const { register, errors } = useFormContext();
 
     return (
         <div>
             <Steppers step={2} />
             <Grid container spacing={2} sx={{ marginTop: '8%' }}>
                 <Stack sx={{ width: '100%' }} alignItems='center'>
-                    <img src={otpImg} className='w-52' />
+                    <img src={otpImg} alt="otp" className='w-52' />
                 </Stack>
 
                 <Grid item xs={12} sx={{ mt: 3 }}>

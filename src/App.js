@@ -27,6 +27,7 @@ import PersistLogin from "./components/PersistLogin";
 import PolicePersistLogin from "./components/PolicePersistLogin";
 import { DetailsProvider } from "./context/userDetailsContext";
 import { FineProvider } from "./context/userFinesContext";
+import { GeneralUserProvider } from "./context/GeneralUserContext";
 import LandingPage from "./pages/LandingPage";
 import UserFines from "./pages/GeneralUser/UserFines";
 import PoliceHome from "./pages/PoliceOperator/Home";
@@ -40,12 +41,17 @@ import AdminRoutes from "./setup/routes/AdminRoutes";
 import Team from "./pages/Admin/Team";
 import UserManagment from "./pages/Admin/UserManagment";
 import FAQ from "./pages/Admin/FAQ";
+import PaymentPage from "./pages/GeneralUser/PaymentPage";
 import { VideoProvider } from "./context/VideoContext";
 import VerifyingDocuments from "./pages/Police Division/VerifyingDocuments";
 import AddAppeals from "./pages/Police Division/AddAppeals";
 import DivisionHome from "./pages/Police Division/Home";
 import Appeal from "./components/Police Division/Appeals/Appeal";
 import DivisionInformation from "./pages/Police Division/Information";
+import FineIssue from "./pages/Police Division/FineIssue";
+import Info from "./pages/PoliceOperator/Info";
+import UserFAQ from "./pages/GeneralUser/Information";
+
 
 export default function App() {
   const THEME = createTheme({
@@ -80,7 +86,14 @@ export default function App() {
           <Route element={<PersistLogin />}>
             {/* general user routes */}
             <Route element={<RequireAuth allowedRole="general-user" />}>
-              <Route path="general-user/" element={<GeneralUserRoutes />}>
+              <Route
+                path="general-user/"
+                element={
+                  <GeneralUserProvider>
+                    <GeneralUserRoutes />
+                  </GeneralUserProvider>
+                }
+              >
                 <Route
                   path=""
                   element={
@@ -95,20 +108,14 @@ export default function App() {
                   path="fines"
                   element={
                     <FineProvider>
-                      <UserFines />
+                      <FormProvider>
+                        <UserFines />
+                      </FormProvider>
                     </FineProvider>
                   }
                 />
-                <Route
-                  path="profile"
-                  element={
-                    <ThemeProvider theme={theme}>
-                      <CssBaseline>
-                        <ProfilePage />
-                      </CssBaseline>
-                    </ThemeProvider>
-                  }
-                />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="information" element={<UserFAQ />} />
               </Route>
             </Route>
           </Route>
@@ -161,23 +168,28 @@ export default function App() {
             </Route>
 
             {/* police operator routes */}
+
+
             <Route element={<RequireAuth allowedRole="police-operator" />}>
               {/* <Route> */}
-              <Route path="police-operator/" element={<PoliceOperatorRoutes />}>
-                <Route
-                  path=""
-                  element={
+              <Route
+                path="police-operator/"
+                element={
+                  <FineProvider>
                     <VideoProvider>
-                      <PoliceHome />
+                      <PoliceOperatorRoutes />
                     </VideoProvider>
-                  }
-                />
+                  </FineProvider>
+                }
+              >
+                <Route path="" element={<PoliceHome />} />
+                <Route path="info" element={<Info />} />
                 <Route
                   path="video-details"
                   element={
-                    <VideoProvider>
+                    <FormProvider>
                       <VideoDetails />
-                    </VideoProvider>
+                    </FormProvider>
                   }
                 />
               </Route>
@@ -193,11 +205,10 @@ export default function App() {
                     </VideoProvider>
                   }
                 />
+
                 <Route path="information" element={<DivisionInformation />} />
                 <Route path="viewDocuments" element={<VerifyingDocuments />} />
                 <Route path="addAppeals" element={<AddAppeals />} />
-
-
                 <Route
                   path=""
                   element={

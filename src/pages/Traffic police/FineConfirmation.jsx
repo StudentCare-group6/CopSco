@@ -28,7 +28,7 @@ function Text(props) {
 export default function FineConfirmation() {
   const navigate = useNavigate();
   const theme = useTheme();
-  const { register, errors, handleSubmit, getValues, setValue } =
+  const { handleSubmit, getValues } =
     useFormContext();
   const FineDetails = [
     "Driver License",

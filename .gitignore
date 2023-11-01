@@ -173,5 +173,5 @@ sketch
 # Ignore all local history of files
 .history
 .ionide
-
+build
 # End of https://www.toptal.com/developers/gitignore/api/react,node,visualstudiocode

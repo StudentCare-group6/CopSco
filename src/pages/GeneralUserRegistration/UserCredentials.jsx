@@ -3,13 +3,12 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import passImg from "../../images/password.png";
 import useFormContext from "../../hooks/useFormContext";
 import Steppers from "../../components/GeneralUserRegistration/Steppers";
 
 export default function ContactDetails() {
-  const { data, handleChange, form, register, control, errors, watch } =
+  const { register, errors, watch } =
     useFormContext();
   const password = useRef({});
   password.current = watch("pass", "");

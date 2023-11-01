@@ -10,9 +10,10 @@ import { useEffect } from "react";
 
 export default function UserFines() {
 
-  const { spotFines, setSpotFines } = useFineContext();
+  const { setSpotFines } = useFineContext();
+  const { auth } = useAuth();
   const violationData = {
-    nic: '200012702905'
+    nic: auth.user
   };
   const getSpotFines = async () => {
     try {
@@ -27,11 +28,8 @@ export default function UserFines() {
 
   useEffect(() => {
     getSpotFines(); // Fetch data when the component mounts
+    // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    console.log(spotFines); // Log the updated state whenever spotFines changes
-  }, [spotFines]);
 
   const [value, setValue] = useState(0);
 
@@ -65,6 +63,14 @@ export default function UserFines() {
           }
           sx={{ fontWeight: "bold" }} />
 
+        <Tab
+          label={
+            <Badge badgeContent={1} color="primary">
+              Appealed violations
+            </Badge>
+          }
+          sx={{ fontWeight: "bold" }} />
+
       </Tabs>
       <TabPanel value={value} index={0} className="py-10">
         <VideoViolationsTable />
@@ -72,6 +78,9 @@ export default function UserFines() {
 
       <TabPanel value={value} index={1} className="py-10">
         <SpotFinesTable />
+      </TabPanel>
+      <TabPanel value={value} index={1} className="py-10">
+        
       </TabPanel>
     </Box>
   );

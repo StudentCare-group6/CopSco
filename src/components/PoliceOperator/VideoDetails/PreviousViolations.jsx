@@ -1,158 +1,164 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import FirstPageIcon from '@mui/icons-material/FirstPage';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import LastPageIcon from '@mui/icons-material/LastPage';
+import React from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import { Typography, Button } from "@mui/material";
+import VideoCardModal from "./VideoCardModal";
+import axios from "../../../api/posts";
+import { useEffect, useState } from "react";
+import useFormContext from "../../../hooks/useFormContext";
+import image from "../../../images/box.png";
 
-function TablePaginationActions(props) {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
-
-  const handleFirstPageButtonClick = (event) => {
-    onPageChange(event, 0);
-  };
-
-  const handleBackButtonClick = (event) => {
-    onPageChange(event, page - 1);
-  };
-
-  const handleNextButtonClick = (event) => {
-    onPageChange(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = (event) => {
-    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </Box>
-  );
+function formatDate(inputDateString) {
+  const inputDate = new Date(inputDateString);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = inputDate.toLocaleDateString("en-US", options);
+  return formattedDate;
 }
 
-TablePaginationActions.propTypes = {
-  count: PropTypes.number.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-};
+export default function AcceptedTable() {
 
-function createData(violation, time, location, date) {
-  return { violation, time, location, date };
-}
+  const { getValues } = useFormContext();
+  const [pastData, setPastData] = useState([]);
 
-const rows = [
-  createData('Over speeding', '14:58 PM', 'Piliyandala', '09/09/2023'),
-  createData('Over speeding', '14:58 PM', 'Piliyandala', '09/09/2023'),
-  createData('Over speeding', '14:58 PM', 'Piliyandala', '09/09/2023'),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
-export default function CustomPaginationActionsTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const violationData = {
+    violations: getValues("offences"),
+    vehicle_no: getValues("vehicleNo")
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+  const getPastViolations = async () => {
+    try {
+      const response = await axios.get("violations/getPastViolations", {
+        params: violationData
+      });
+      setPastData(response.data.pastViolations);
+      console.log(response.data.pastViolations);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  return (
-    <TableContainer component={Paper} sx={{ background: 'transparent' }}>
-      <Table sx={{ minWidth: 300 }} aria-label="custom pagination table">
-        <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell style={{ width: 100 }} align="left">
-                {row.violation}
-              </TableCell>
-              <TableCell style={{ width: 50 }} align="right">
-                {row.time}
-              </TableCell>
-              <TableCell style={{ width: 80 }} align="right">
-                {row.location}
-              </TableCell>
-              <TableCell style={{ width: 80 }} align="right">
-                {row.date}
-              </TableCell>
-            </TableRow>
-          ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={4} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={4}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
-  );
+  useEffect(() => {
+    getPastViolations(); // Fetch data when the component mounts
+  }, []);
+
+  const getRowSpacing = React.useCallback((params) => {
+    return {
+      top: params.isFirstVisible ? 0 : 5,
+      bottom: params.isLastVisible ? 0 : 5,
+    };
+  }, []);
+
+  const columns = [
+    {
+      field: "thumbnail",
+      headerName: "Image",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <VideoCardModal url={params.value} />
+        );
+      },
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      headerAlign: "center",
+      align: "center",
+      flex: 1.5,
+      renderCell: (params) => {
+        return (
+          <Typography variant="body2" style={{ whiteSpace: "pre-wrap" }}>
+            {params.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "location",
+      headerName: "Location",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <Typography variant="body2" fontWeight="bold">
+            {params.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "date",
+      headerName: "Date",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <Stack direction="column" alignItems="center">
+            <Typography variant="body2" fontWeight="bold">
+              {params.value}
+            </Typography>
+            <Typography
+              variant="body2"
+              fontWeight="bold"
+              color="text.secondary"
+            >
+              Submitted
+            </Typography>
+          </Stack>
+        );
+      },
+    },
+  ];
+
+  if (pastData == undefined ) {
+    return (
+      <div className="flex flex-col items-center mt-10">
+        <img src={image} alt="empty" className="w-20 h-20" />
+        <Typography variant="subtitle1" className="my-5">
+          No past uploads related to this vehicle
+        </Typography>
+      </div>
+    );
+  } else {
+    const rows = pastData.map((item, index) => ({
+      id: index + 1,
+      thumbnail: item.image,
+      description: item.description,
+      location: item.district + ', ' + item.city,
+      date: formatDate(item.date)
+    }))
+
+    return (
+      <Box
+        height="100%"
+        sx={{
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-cell": {},
+          "& .name-column--cell": {
+            color: "#475569",
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            borderTop: "solid 1px #e0e0e0",
+            fontWeight: "bold",
+            fontSize: "16px",
+          },
+          "& .MuiDataGrid-virtualScroller": {},
+          "& .MuiDataGrid-footerContainer": {
+            borderTop: "none",
+            color: "white",
+          },
+        }}
+      >
+        <DataGrid rows={rows} columns={columns} rowHeight={100} getRowSpacing={getRowSpacing} />
+      </Box>
+    );
+  }
+
 }

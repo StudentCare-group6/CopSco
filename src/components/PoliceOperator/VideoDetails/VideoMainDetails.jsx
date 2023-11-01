@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import useVideoContext from '../../../hooks/useVideoContext';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -14,7 +15,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 12,
+    fontSize: '80%',
+   // Adjust the percentage as needed
+    verticalAlign: 'middle', // Center content vertically in the cell
   },
 }));
 
@@ -29,34 +32,37 @@ function createData(name, detail) {
   return { name, detail };
 }
 
-const rows = [
-  createData('Vehicle Number', 'CAD 4589'),
-  createData('Violation Type', 'Improper Turn'),
-  createData('Violation Date', '01.07.2023'),
-  createData('Violation Time', '14:56 PM'),
-  createData('Location', 'Thummulla'),
-  createData('Severity', 'High'),
-  createData('Remarks', 'Driver was drunk.'),
-  createData('Status', 'Pending'),
-];
 
 export default function CustomizedTables() {
+  const { selectedVideo } = useVideoContext();
+  var video = selectedVideo;
+
+  if(video === null || video === undefined){
+    video = JSON.parse(localStorage.getItem('selectedVideo'));
+  }
+  const rows = [
+    createData('Vehicle Number', video.vehicleno),
+    createData('Violation Type', video.violationtype),
+    createData('Violation Date', video.violationDate),
+    createData('Violation Time', video.violationTime),
+    createData('Location', video.district+', '+ video.city),
+    createData('Severity', 'High'),
+    createData('Remarks', 'Driver was drunk.'),
+  ];
   return (
-    <TableContainer component={Paper}>
-      <Table  className='mt-10' sx={{ minWidth: 500 }} aria-label="customized table">
+    <TableContainer component={Paper} sx = {{ boxShadow:'none'}}>
+      <Table sx={{ minWidth: '100%' }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Reference Number #458958</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody >
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow style={{ height: '50%' }} key={row.name}>
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.detail}</StyledTableCell>
+              <StyledTableCell className='text-gray-500'>{row.detail}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

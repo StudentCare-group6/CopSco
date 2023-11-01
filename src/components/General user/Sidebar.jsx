@@ -23,6 +23,7 @@ import {
 } from "@heroicons/react/24/outline";
 import useLogout from "../../hooks/useLogout";
 
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -123,10 +124,7 @@ export default function Sidebar() {
         <ClipboardDocumentListIcon className="h-6 w-6 text-slate-400" />
       ),
     },
-    {
-      active: <BellIcon className="h-6 w-6 text-slate-950" />,
-      inactive: <BellIcon className="h-6 w-6 text-slate-400" />,
-    },
+
     {
       active: <UserCircleIcon className="h-6 w-6 text-slate-950" />,
       inactive: <UserCircleIcon className="h-6 w-6 text-slate-400" />,
@@ -144,9 +142,8 @@ export default function Sidebar() {
   const routes = [
     "/general-user/",
     "/general-user/fines",
-    "/notifications",
     "/general-user/profile",
-    "/information",
+    "/general-user/information",
     "/logout",
   ];
 
@@ -154,10 +151,8 @@ export default function Sidebar() {
     <ThemeProvider theme={darkTheme}>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <Box p={3} width="250px" textAlign="center" role="presentation">
-            <Typography variant="h6" component="div">
-              CopSco
-            </Typography>
+          <Box p={3} width="250px"height = "80px" textAlign="center" role="presentation">
+            
           </Box>
           <IconButton onClick={handleDrawerOpen}>
             <MenuIcon className=" text-slate-400" />
@@ -168,15 +163,14 @@ export default function Sidebar() {
           {[
             "Video Violations",
             "Fine Managment",
-            "Notifications",
-            "Analytics",
-            "Information",
+            "Profile",
+            "FAQ",
             "Log out",
           ].map((text, index) => {
             const route = routes[index];
             const isActive = isActiveRoute(route);
 
-            if (index === 5) {
+            if (index === 4) {
               return (
                 <ListItem
                   key={text}

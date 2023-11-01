@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Header from '../../components/General user/Header';
 import Grid from '@mui/material/Grid';
 import qr from '../../images/qr.png'
 import license from '../../images/license.png'
