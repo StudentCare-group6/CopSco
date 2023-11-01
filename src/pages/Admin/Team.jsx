@@ -9,6 +9,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import RegisterModal from "../../components/Admin/RegisterModal";
 import Stack from "@mui/system/Stack";
+import UserroleUpdater from "../../components/Admin/UserroleUpdateModal";
 
 function getRowId(row) {
   return row.officerid;
@@ -19,7 +20,7 @@ export default function Team() {
   const [data, setData] = useState({});
   const getUsers = async () => {
     try {
-      const response = await axios.get("admin/getUsers");
+      const response = await axios.get("admin/getPoliceUsers");
       console.log(response.data);
       setData(response.data);
     } catch (error) {
@@ -69,36 +70,10 @@ export default function Team() {
       field: "userrole",
       headerName: "Role",
       flex: 1,
-      renderCell: ({ row: { userrole } }) => {
+      align: "center",
+      renderCell: ({ row: { userrole }, row:{officerid} }) => {
         return (
-          <Box
-            width="100%"
-            justifyContent="center"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            gap={2}
-            backgroundColor={
-              userrole === "admin" ? "primary.main" : "success.main"
-            }
-            borderRadius="4px"
-          >
-            {/* {userrole === "admin" && (
-              <AdminPanelSettingsOutlinedIcon
-                fontSize="sm"
-                className="text-slate-100"
-              />
-            )}
-            {userrole === "general-user" && (
-              <LockOpenOutlinedIcon fontSize="sm" className="text-slate-100" />
-            )}
-            {userrole === "traffic-police" && (
-              <SecurityOutlinedIcon fontSize="sm" className="text-slate-100" />
-            )} */}
-            <Typography variant="subtitle1" className="text-slate-100">
-              {userrole}
-            </Typography>
-          </Box>
+         <UserroleUpdater role = {userrole} officerId = {officerid}/>
         );
       },
     },

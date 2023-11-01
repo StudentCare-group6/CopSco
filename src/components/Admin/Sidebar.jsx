@@ -127,10 +127,6 @@ export default function Sidebar() {
       inactive: <UserPlusIcon className="h-6 w-6 text-slate-400" />,
     },
     {
-      active: <UserCircleIcon className="h-6 w-6 text-slate-950" />,
-      inactive: <UserCircleIcon className="h-6 w-6 text-slate-400" />,
-    },
-    {
       active: <QuestionMarkCircleIcon className="h-6 w-6 text-slate-950" />,
       inactive: <QuestionMarkCircleIcon className="h-6 w-6 text-slate-400" />,
     },
@@ -144,7 +140,6 @@ export default function Sidebar() {
     "/admin/",
     "/admin/team",
     "/admin/user-managment",
-    "/general-user/profile",
     "/admin/faq",
     "/logout",
   ];
@@ -168,14 +163,13 @@ export default function Sidebar() {
             "Home",
             "Manage Roles",
             "Manage Users",
-            "Profile",
             "FAQ",
             "Log out",
           ].map((text, index) => {
             const route = routes[index];
             const isActive = isActiveRoute(route);
 
-            if (index === 5) {
+            if (index === 4) {
               return (
                 <ListItem
                   key={text}

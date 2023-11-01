@@ -2,10 +2,13 @@ import { ResponsiveLine } from '@nivo/line'
 import { mockLineData as data } from '../../data/mockData'
 
 
-export default function LineChart({ isDashboard = false }) {
+
+export default function LineChart({ isDashboard = false, lineData }) {
     return (
+
+
         <ResponsiveLine
-            data={data}
+            data={[lineData]}
             theme = {{
                 axis: {
                     domain: {

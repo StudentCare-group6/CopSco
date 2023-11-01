@@ -211,9 +211,6 @@ export default function RegisterModal() {
                         <Grid item xs={12} sx={{ mt: 3 }}>
                             <ChildModal />
                         </Grid>
-                        <Button type='submit'>
-                            Submit
-                        </Button>
                     </Grid>
 
                 </Box>
