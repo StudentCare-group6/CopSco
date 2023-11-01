@@ -8,6 +8,14 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState } from "react";
 import UserStatusUpdater from "../../components/Admin/UserStatusUpdateModal";
 
+
+function formatDate(inputDateString) {
+    const inputDate = new Date(inputDateString);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const formattedDate = inputDate.toLocaleDateString("en-US", options);
+    return formattedDate;
+  }
+  
 function getRowId(row) {
   return row.userid;
 }
@@ -24,6 +32,7 @@ export default function UserManagment() {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     getUsers();
@@ -63,7 +72,7 @@ export default function UserManagment() {
       flex: 1,
     },
     {
-      field: "lastLogin",
+      field: "last_login",
       headerName: "Last Login",
       flex: 1,
     },
