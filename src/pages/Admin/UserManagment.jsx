@@ -62,7 +62,7 @@ export default function UserManagment() {
       flex: 1,
     },
     {
-      field: "lastLogin",
+      field: "last_login",
       headerName: "Last Login",
       flex: 1,
     },

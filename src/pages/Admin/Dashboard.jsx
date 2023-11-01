@@ -17,6 +17,8 @@ import { Pie } from "@nivo/pie";
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import axios from "../..//api/posts";
+import PaymentsIcon from '@mui/icons-material/Payments';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 
 function formatDate(inputDateString) {
   const inputDate = new Date(inputDateString);
@@ -121,7 +123,7 @@ const Dashboard = () => {
             subtitle="User Count"
             progress="0.75"
             increase="+14%"
-            icon={<EmailIcon sx={{ color: "#334155", fontSize: "26px" }} />}
+            icon={<PersonAddIcon sx={{ color: "#334155", fontSize: "26px" }} />}
           />
         </Box>
         <Box
@@ -143,7 +145,7 @@ const Dashboard = () => {
             progress="0.50"
             increase="+21%"
             icon={
-              <PointOfSaleIcon sx={{ color: "#334155", fontSize: "26px" }} />
+              <PaymentsIcon sx={{ color: "#334155", fontSize: "26px" }} />
             }
           />
         </Box>
@@ -165,7 +167,7 @@ const Dashboard = () => {
             subtitle="Videos Uploaded"
             progress="0.30"
             increase="+5%"
-            icon={<PersonAddIcon sx={{ color: "#334155", fontSize: "26px" }} />}
+            icon={<OndemandVideoIcon sx={{ color: "#334155", fontSize: "26px" }} />}
           />
         </Box>
         <Box
@@ -205,7 +207,7 @@ const Dashboard = () => {
                 fontWeight="600"
                 className="text-slate-600"
               >
-                Violations
+                Violations By Month
               </Typography>
             </Box>
             <Box>
@@ -280,7 +282,7 @@ const Dashboard = () => {
           p="30px"
         >
           <Typography variant="h5" fontWeight="600" className="text-slate-700">
-            Campaign
+            Video Storage
           </Typography>
           <Box
             display="flex"
@@ -290,9 +292,8 @@ const Dashboard = () => {
           >
             <ProgressCircle size="125" />
             <Typography variant="h5" color="#334155" sx={{ mt: "15px" }}>
-              Rs. 48,352 revenue generated
+              251.7 GB free of 300 GB
             </Typography>
-            <Typography>Includes extra misc expenditures and costs</Typography>
           </Box>
         </Box>
         <Box gridColumn="span 4" gridRow="span 2" className="bg-slate-300">
@@ -302,7 +303,7 @@ const Dashboard = () => {
             sx={{ padding: "30px 30px 0 30px" }}
             className="text-slate-700"
           >
-            Sales Quantity
+            Violations By Province
           </Typography>
           <Box height="250px" mt="-20px">
             <BarChart isDashboard={true} districtData={districtData} />
@@ -320,7 +321,7 @@ const Dashboard = () => {
             className="text-slate-700"
             sx={{ marginBottom: "15px" }}
           >
-            Geography Based Traffic
+            Video Status Breakdown
           </Typography>
           <Box height="200px">
             <PieChart isDashboard={true} pieData={transformedData} />

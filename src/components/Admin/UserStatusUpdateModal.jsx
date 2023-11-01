@@ -15,6 +15,8 @@ import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/posts";
 
+
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -54,7 +56,7 @@ export default function UserroleUpdateModal(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(props.userid)
+    console.log(props.userid);
     console.log(getValues("userrole"));
     try {
       const response = axios.post(
@@ -81,6 +83,8 @@ export default function UserroleUpdateModal(props) {
       <Button onClick={handleOpen} variant="contained" sx={{ width: "150px" }}>
         {props.userrole}
       </Button>
+   
+
       <Modal
         open={open}
         onClose={handleClose}
