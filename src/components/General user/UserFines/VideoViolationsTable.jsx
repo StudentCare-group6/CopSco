@@ -263,7 +263,7 @@ export default function VideoViolationsTable() {
             vidName: [item.thumbnail, item, hasDatePassed(item.due_date)],
             offence: item.description,
             status: [item.status, item.due_date],
-            appealBefore: [formatDate(item.due_date), item.time, item.status],
+            appealBefore: [formatDate(item.date), item.time, item.status],
             location: item.city + ', ' + item.district,
             division: item.division,
             dueDate: formatDate(item.due_date),

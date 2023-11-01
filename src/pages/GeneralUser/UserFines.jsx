@@ -7,6 +7,7 @@ import useFineContext from "../../hooks/useFineContext";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/posts";
 import { useEffect } from "react";
+import AppealedViolations from "../../components/General user/UserFines/AppealedViolations";
 
 export default function UserFines() {
 
@@ -71,8 +72,8 @@ export default function UserFines() {
       <TabPanel value={value} index={1} className="py-10">
         <SpotFinesTable />
       </TabPanel>
-      <TabPanel value={value} index={1} className="py-10">
-        
+      <TabPanel value={value} index={2} className="py-10">
+        <AppealedViolations/>
       </TabPanel>
     </Box>
   );
