@@ -5,7 +5,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -95,7 +94,7 @@ export default function SearchBar() {
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
-          inputProps={{ 'aria-label': 'search' }} // Corrected attribute name
+          inputProps={{ 'aria-label': 'search' }}
         />
       </Search>
 

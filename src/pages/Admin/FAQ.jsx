@@ -1,10 +1,6 @@
 import React from 'react';
-import { Box, useTheme, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from '../../components/Admin/Topbar';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FaqAccordion from '../../components/Admin/Accordion';
 
 export default function FAQ() {

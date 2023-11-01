@@ -1,9 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Header from "../../components/General user/Header";
 import Stack from "@mui/material/Stack";
 import CustomizedSteppers from "../../components/Traffic police/Steppers.jsx";
-import ViolationForm from "../../components/Traffic police/IssueFine/ViolationForm";
 import { TextField, Button } from "@mui/material";
 import "@fontsource/inter";
 import { Typography } from "@mui/material";
@@ -24,12 +22,11 @@ import {
   offences,
   provinces,
   demeritPoints,
-} from "../../components/Traffic police/Constants";
+} from "../../data/Constants";
 import useFormContext from "../../hooks/useFormContext";
 import { Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Watch } from "@mui/icons-material";
 import useDetailsContext from "../../hooks/useDetailsContext";
 
 function DateText() {
@@ -88,7 +85,7 @@ export default function IssueFine() {
 
   const navigate = useNavigate();
 
-  const { register, errors, handleSubmit, getValues, setValue, watch } =
+  const { register, errors, handleSubmit, getValues, setValue } =
     useFormContext();
   const handleOffencesChange = (event) => {
     const selectedValues = event.target.value;
@@ -120,7 +117,7 @@ export default function IssueFine() {
   const onSubmit = async (e) => {
     setValue("prices", selectedPrices);
     setValue("demeritPoint", selectedDemerit);
-    setValue("policeDivisonID", 112);
+    setValue("policeDivisonID", selectedDivisionCode);
     setValue("date", date);
     setValue("time", time);
     setValue("licenseNumber", licenseNo);

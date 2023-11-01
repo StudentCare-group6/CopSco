@@ -17,11 +17,12 @@ import Divider from '@mui/material/Divider';
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/posts'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Snackbar, Alert } from '@mui/material';
 import useInput from '../hooks/useInput';
 import useToggle from '../hooks/useToggle';
-
+import jwt_decode from "jwt-decode";
+import image from '../images/logo.png';
 
 function Copyright(props) {
   return (
@@ -46,8 +47,6 @@ export default function Login() {
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
   const userRef = useRef();
 
   const [user, resetUser, userAttributes] = useInput('user', '');
@@ -64,7 +63,7 @@ export default function Login() {
   }, []);
 
   const isXsScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-  const formWidth = isXsScreen ? '70%' : '50%';
+  const formWidth = isXsScreen ? '70%' : '40%';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,9 +77,13 @@ export default function Login() {
       );
       const accessToken = response.data.accessToken;
       const role = response.data.userrole;
-      setAuth({ user, pwd, role, accessToken });
+      const fname = response.data.fname;
+      const decoded = jwt_decode(accessToken);
+      const user_id = decoded.userid;
+      setAuth({ user, pwd, role, fname, accessToken, user_id });
       resetUser();
       setPwd('');
+
       if (role === 'general-user') {
         navigate('/general-user');
       } else if (role === 'police-operator') {
@@ -123,41 +126,41 @@ export default function Login() {
       <Grid container component="main" sx={{ height: '100vh' }}>
 
         <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
-          <Typography sx={{ margin: '20px' , fontFamily:'inter'}} component="h1" variant="h5" className='font-extrabold text-black' >
+          <Typography sx={{ margin: '20px', fontFamily: 'inter' }} component="h1" variant="h5" className='font-extrabold text-black' >
             CopSco
           </Typography>
           <Box
             sx={{
-              my: 8,
-              mx: 4,
+              height: '90%',
+              mx: 5,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
 
             <Stack justifyContent="center" alignItems="center" spacing={3}>
-              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{fontFamily:'inter'}} >
+              <Typography component="h1" variant="h4" className='font-extrabold text-neutral-500' sx={{ fontFamily: 'inter' }} >
                 Login to your account
               </Typography>
-              <Typography component="h1" variant="h6" className='font-light text-neutral-500' >
-                Welcome back! Select a method to login
+              <Typography component="h1" variant="h5" className='font-light text-neutral-500' >
+                Welcome back !
               </Typography>
 
-              <GoogleButton
+              {/* <GoogleButton
                 onClick={() => { console.log('Google button clicked') }}
-              />
+              /> */}
             </Stack>
 
-            <Stack sx={{ width: formWidth, margin: '50px' }}>
+            {/* <Stack sx={{ width: formWidth, margin: '50px' }}>
               <Divider>OR</Divider>
+            </Stack> */}
+            <Stack sx={{ width: '100%' }} alignItems='center'>
+              <img src={image} alt="otp" className='w-52' />
             </Stack>
 
-
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: formWidth }}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: formWidth }} >
 
               <TextField
                 margin="normal"
@@ -194,8 +197,8 @@ export default function Login() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-
+                sx={{ mt: 3, mb: 2, padding: '10px' }}
+                className = 'rounded-full bg-slate-900 hover:bg-sky-700'
               >
                 Sign In
               </Button>

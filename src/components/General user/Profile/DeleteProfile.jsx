@@ -65,11 +65,13 @@ export default function DeleteProfile() {
   return (
     <div>
       <Button
-        variant="text"
+        variant="outlined"
         startIcon={<DeleteIcon />}
         color="error"
         onClick={handleClickOpen}
         sx={{ textTransform: 'none' }}
+        size = 'large'
+        className='rounded-full'
       >
         Delete Account
       </Button>

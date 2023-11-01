@@ -32,8 +32,6 @@ export default function UserManagment() {
       console.log(error);
     }
   };
-
-
   useEffect(() => {
     getUsers();
   }, []);
@@ -134,3 +132,4 @@ export default function UserManagment() {
     </Box>
   );
 }
+

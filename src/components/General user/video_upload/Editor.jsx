@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import { Grid } from '@mui/material';
@@ -42,8 +42,8 @@ const Editor = ({ open, onClose }) => {
 
 
   return (
-    <div className='px-10 py-3 gap-10' style={{ height: '55vh' }}>
-      <Stack direction='column' gap={5}>
+    <div className='px-10 py-3 ' style={{ height: '50vh' }}>
+      <Stack direction='column' gap={7}>
         <video ref={videoRef} controls width="100%" height="auto">
           <source src={videoUrl} type="video/mp4" />
           Your browser does not support the video tag.
@@ -71,6 +71,7 @@ const Editor = ({ open, onClose }) => {
               />
             </Grid>
           </Grid>
+
           <Slider
             getAriaLabel={() => 'Minimum distance'}
             disableSwap
@@ -80,7 +81,6 @@ const Editor = ({ open, onClose }) => {
             max={videoDuration} // Set this based on the duration of your video
             valueLabelDisplay="auto"
             valueLabelFormat={(value) => `${value} sec`}
-            className='my-3'
             // Customize the track and thumb styles using the sx prop
             sx={{
               '& .MuiSlider-rail': {
@@ -89,13 +89,13 @@ const Editor = ({ open, onClose }) => {
               },
               '& .MuiSlider-track': {
                 height: 40, // Change the track height here
-                backgroundColor: '#a1eeff', // Change the track color
+                backgroundColor: 'white', // Change the track color
                 border: 'none',
               },
               '& .MuiSlider-thumb': {
                 width: 10, // Change the thumb width
                 height: 45, // Change the thumb height
-                backgroundColor: '#2196f3', // Change the thumb color
+                backgroundColor: '#8E8E8E', // Change the thumb color
                 borderRadius: '0',
               },
               '& .MuiSlider-mark': {
@@ -104,6 +104,8 @@ const Editor = ({ open, onClose }) => {
               '& .MuiSlider-markActive': {
                 backgroundColor: '#ff5722', // Change the active marker color
               },
+              width : '93%',
+              margin : 'auto'
             }}
           />
         </Stack>
