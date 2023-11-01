@@ -48,7 +48,6 @@ import AddAppeals from "./pages/Police Division/AddAppeals";
 import DivisionHome from "./pages/Police Division/Home";
 import Appeal from "./components/Police Division/Appeals/Appeal";
 import DivisionInformation from "./pages/Police Division/Information";
-import FineIssue from "./pages/Police Division/FineIssue";
 import Info from "./pages/PoliceOperator/Info";
 import UserFAQ from "./pages/GeneralUser/Information";
 

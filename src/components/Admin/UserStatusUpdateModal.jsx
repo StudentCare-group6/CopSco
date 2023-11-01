@@ -12,7 +12,6 @@ import MenuItem from "@mui/material/MenuItem";
 import image from "../../images/security.png";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
-import { policeDivisions } from "../Traffic police/Constants";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/posts";
 
