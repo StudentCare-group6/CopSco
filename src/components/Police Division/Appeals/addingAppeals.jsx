@@ -15,20 +15,18 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Button from '@mui/material/Button';
 
-function createData(name, calories) {
+function createData(caseid, violation) {
   return {
-    name,
-    calories,
+    caseid,
+    violation,
     history: [
       {
         date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
+        case: 'He was not the driver',
       },
       {
         date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
+        case: 'Wrong Vehicle number',
       },
     ],
   };
@@ -51,12 +49,16 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.caseid}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
+        <TableCell align="right">{row.violation}</TableCell>
         <TableCell align="right">
+          <Button variant="contained" color="primary" className="mr-5">
+          {/* onClick={() => handleStatusChange(row.caseid)} */}
+            Add Appeal
+          </Button>
           <Button variant="contained" color="primary">
-            View Appeals
+            Settle Appeal
           </Button>
         </TableCell>
       </TableRow>
@@ -71,9 +73,7 @@ function Row(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
-                    <TableCell>Violation</TableCell>
-                    <TableCell align="right">Reason</TableCell>
-                    <TableCell align="right">Action</TableCell>
+                    <TableCell align="right">Violation</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -82,10 +82,8 @@ function Row(props) {
                       <TableCell component="th" scope="row">
                         {historyRow.date}
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
                       <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                        {historyRow.case}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -118,9 +116,9 @@ Row.propTypes = {
 };
 
 const rows = [
-  createData('C123', 'Reckless Driving', 6.0, 24, 4.0, 3.99),
-  createData('C234', 'Speed Driving', 9.0, 37, 4.3, 4.99),
-  createData('C345', 'Ignoring traffic lights', 16.0, 24, 6.0, 3.79),
+  createData('C123', 'Reckless Driving'),
+  createData('C234', 'Speed Driving'),
+  createData('C345', 'Ignoring traffic lights'),
 ];
 
 export default function CollapsibleTable() {
