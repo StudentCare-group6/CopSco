@@ -4,39 +4,39 @@ const provincesData = {
   provinces: [
     {
       name: "Western Province",
-      districts: ["Colombo", "Gampaha", "Kalutara"],
+      districts: ["Colombo District", "Gampaha District", "Kalutara District"],
     },
     {
       name: "Central Province",
-      districts: ["Kandy", "Nuwara Eliya", "Matale"],
+      districts: ["Kandy District", "Nuwara Eliya District", "Matale District"],
     },
     {
       name: "Southern Province",
-      districts: ["Galle", "Matara", "Hambantota"],
+      districts: ["Galle District", "Matara District", "Hambantota District"],
     },
     {
       name: "Eastern Province",
-      districts: ["Batticaloa", "Trincomalee", "Ampara"],
+      districts: ["Batticaloa District", "Trincomalee District", "Ampara District"],
     },
     {
       name: "Northern Province",
-      districts: ["Jaffna", "Kilinochchi", "Mannar"],
+      districts: ["Jaffna District", "Kilinochchi District", "Mannar District"],
     },
     {
       name: "North Western Province",
-      districts: ["Kurunegala", "Puttalam"],
+      districts: ["Kurunegala District", "Puttalam District"],
     },
     {
       name: "North Central Province",
-      districts: ["Anuradhapura", "Polonnaruwa"],
+      districts: ["Anuradhapura District", "Polonnaruwa District"],
     },
     {
       name: "Uva Province",
-      districts: ["Badulla", "Monaragala"],
+      districts: ["Badulla District", "Monaragala District"],
     },
     {
       name: "Sabaragamuwa Province",
-      districts: ["Ratnapura", "Kegalle"],
+      districts: ["Ratnapura District", "Kegalle District"],
     },
   ],
 };

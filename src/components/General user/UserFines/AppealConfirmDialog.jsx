@@ -35,20 +35,23 @@ export default function ResponsiveDialog(props) {
   };
 
   console.log(getValues());
+  console.log(props.caseId);
 
   const sendAppeal = async () => {
-    window.location.reload();
-    // const data = {
-    //   key: props.videoKey
-    // };
-    // try {
-    //   const response = await axiosPrivate.delete(`upload/delete-video/${props.caseId}`, {
-    //     data: data // Send data in the request body
-    //   });
-    //   window.location.reload();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+
+    const data = {
+      caseId: props.caseId,
+      reason: getValues('appealReason'),
+      description: getValues('description')
+    };
+    try {
+      const response = await axiosPrivate.post(`admin/makeAppeal`, 
+      data // Send data in the request body
+      );
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

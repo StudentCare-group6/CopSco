@@ -56,19 +56,11 @@ export default function UserFines() {
           sx={{ fontWeight: "bold" }} />
 
         <Tab
-          label={
-            <Badge badgeContent={1} color="primary">
-              On-spot violations
-            </Badge>
-          }
+          label='On-spot violations'
           sx={{ fontWeight: "bold" }} />
 
         <Tab
-          label={
-            <Badge badgeContent={1} color="primary">
-              Appealed violations
-            </Badge>
-          }
+          label='Appealed violations'
           sx={{ fontWeight: "bold" }} />
 
       </Tabs>

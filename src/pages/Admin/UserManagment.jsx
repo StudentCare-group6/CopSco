@@ -67,6 +67,40 @@ export default function UserManagment() {
       flex: 1,
     },
     {
+      field: "user_activity",
+      headerName: "User Activity",
+      flex: 1,
+      renderCell: ({ row: { user_activity } }) => {
+       //if user_activity is 'Suspicous' show red else show green
+        if(user_activity === 'Suspicious'){
+          return (
+            <Button
+              variant="text"
+              color="error"
+              fullWidth = {true}
+              
+              sx={{ boxShadow: 'none', textTransform: 'none' }}
+            >
+              {user_activity}
+            </Button>
+          );
+        }else{
+          return (
+            <Button
+              variant="text"
+              color="success"
+              fullWidth = {true}
+             
+              sx={{ boxShadow: 'none', textTransform: 'none' }}
+            >
+              {user_activity}
+            </Button>
+          );
+        }
+      }
+    },
+
+    {
       field: "status",
       headerName: "Status",
       flex: 1,

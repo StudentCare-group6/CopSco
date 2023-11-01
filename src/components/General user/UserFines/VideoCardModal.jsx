@@ -79,8 +79,10 @@ const appealTypes = [
     // Add more violation types here
 ];
 
-function ChildModal() {
+function ChildModal(props) {
     const [open, setOpen] = React.useState(false);
+    const { register, errors, getValues } = useFormContext();
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -91,8 +93,11 @@ function ChildModal() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         handleClose();
+      
+
     }
-    const { register, errors } = useFormContext();
+    
+
     return (
         <div style={{ padding: '10px' }}>
             <Button size='large' startIcon={<RateReviewIcon />} color='error' onClick={handleOpen} sx={{ borderRadius: '20px', width: '200px', textTransform: 'none' }}>Appeal</Button>
@@ -151,7 +156,7 @@ function ChildModal() {
                             </Grid>
                         </Grid>
                         <Stack sx={{ width: "100%", marginTop: '5%' }} direction='row' justifyContent='space-evenly' margin spacing={2}>
-                            <DialogBox />
+                            <DialogBox caseId = {props.caseId} />
                         </Stack>
                     </Box>
                 </Modal>
@@ -197,9 +202,8 @@ export default function NestedModal(props) {
                                     <Typography>
                                         <Alert severity="error">Appeal date has passed</Alert>
                                     </Typography>
-                                    : <ChildModal /> 
+                                    : <ChildModal caseId = {props.items.reference_id}/> 
                                 )
-
                             }
                         </Stack>
                     </Box>

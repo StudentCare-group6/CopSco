@@ -21,14 +21,15 @@ function formatDate(inputDateString) {
   return formattedDate;
 }
 
-function getDivisionName(divisionId) {
-  for (const [divisionName, id] of policeDivisions) {
-    if (id === divisionId) {
-      return divisionName;
-    }
-  }
-  return "Unknown Division"; // Return a default value if the division ID is not found
-}
+// function getDivisionName(divisionId) {
+//   console.log(divisionId);
+//   for (const [divisionName, id] of policeDivisions) {
+//     if (id == divisionId) {
+//       return divisionName;
+//     }
+//   }
+//   return "Unknown Division"; // Return a default value if the division ID is not found
+// }
 
 export default function SpotFinesTable() {
 
@@ -58,7 +59,7 @@ export default function SpotFinesTable() {
       referenceId: fine.reference_id,
       offence: fine.description,
       status: fine.status,
-      division: getDivisionName(fine.police_divisionid),
+      division: fine.police_division,
       date: formatDate(fine.date),
       dueDate: formatDate(fine.due_date),
       amount: `Rs. ${fine.amount.toFixed(2)}`,
