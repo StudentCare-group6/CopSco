@@ -88,13 +88,6 @@ export default function RecipeReviewCard(props) {
   });
   keyValuePairs.push({ key: "Total Amount", value: "Rs." + totalAmount });
 
-  const handleIssueFine = async (caseID,demerits, amounts, violations) => {
-    console.log(caseID);
-    console.log(demerits);
-    console.log(amounts);
-    console.log(violations);
-  };
-
   return (
     <ThemeProvider theme={darkTheme}>
       <Card sx={{ maxWidth: "100%", boxShadow: "none", borderRadius: "15px" }}>
@@ -129,7 +122,7 @@ export default function RecipeReviewCard(props) {
         </CardContent>
         <CardActions>
           <Stack direction="row" spacing={2} justifyContent={'space-evenly'} sx = {{width:'100%', padding:'10px'}}>
-            <DeleteDialogBox caseId = {props.caseId} violations = {video.violations} demeritPoints = {demeritPointsList} amounts = {amountList} />
+            <DeleteDialogBox vehicleNo = {video.vehicleno} caseId = {props.caseId} violations = {video.violations} demeritPoints = {demeritPointsList} amounts = {amountList} />
             <Button
               variant="text"
               className="bg-red-500 rounded-full"

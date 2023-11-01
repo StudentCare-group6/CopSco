@@ -32,19 +32,29 @@ export default function ResponsiveDialog(props) {
     setOpen(false);
   };
 
+  // caseID
+  // vehicleNumber
+  // typeOfOffence,
+  // fineAmount,
+  //  demeritPoints,
+
   const deleteVideo = async (props) => {
-    console.log(props);
-    // const data = {
-    //   key: props.videoKey
-    // };
-    // try {
-    //   const response = await axiosPrivate.delete(`upload/delete-video/${props.caseId}`, {
-    //     data: data // Send data in the request body
-    //   });
-    //   window.location.reload();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    const fineData = {
+      caseID: props.caseId,
+      vehicleNumber: props.vehicleNo,
+      typeOfOffence: props.violations,
+      fineAmount: props.amounts,
+      demeritPoints: props.demeritPoints,
+    };
+
+   
+    try {
+      const response = await axiosPrivate.post('police-division/issueFine', fineData );
+      console.log(response.data)
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
