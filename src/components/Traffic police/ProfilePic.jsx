@@ -5,8 +5,7 @@ export default function Profile(props) {
   return (
     <Stack direction="row" alignItems="center" margin>
       <div className="px-5"> 
-        <h1>muunchee cream cracker</h1>
-        <Typography variant="subtitle1">Mr. {props.name}</Typography>
+        <Typography variant="subtitle1">Officer {props.name}</Typography>
       </div>
       <div>
         <img
